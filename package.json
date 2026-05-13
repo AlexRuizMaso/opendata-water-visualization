@@ -1,0 +1,31 @@
+{
+  "name": "opendata-water-visualization",
+  "version": "1.0.0",
+  "description": "Aplicació web per a la visualització de dades obertes sobre recursos hídrics de Catalunya",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "etl"
+  ],
+  "scripts": {
+    "install-all": "npm install",
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend",
+    "etl": "npm run dev --workspace=etl",
+    "etl:extract": "npm run extract --workspace=etl",
+    "backend": "npm run dev --workspace=backend",
+    "lint": "npm run lint --workspace=frontend && npm run lint --workspace=backend && npm run lint --workspace=etl",
+    "format": "npm run format --workspace=frontend && npm run format --workspace=backend && npm run format --workspace=etl"
+  },
+  "keywords": [
+    "water",
+    "data-visualization",
+    "opendata",
+    "Catalunya",
+    "ETL"
+  ],
+  "author": "Àlex",
+  "license": "MIT"
+}

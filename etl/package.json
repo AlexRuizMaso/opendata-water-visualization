@@ -1,0 +1,26 @@
+{
+  "name": "etl",
+  "version": "1.0.0",
+  "description": "ETL scripts for extracting and transforming water data",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "extract": "node src/extract.js",
+    "transform": "node src/transform.js",
+    "load": "node src/load.js",
+    "full-pipeline": "node src/pipeline.js",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "csv-parse": "^5.5.0",
+    "csv-stringify": "^6.4.0",
+    "node-schedule": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0"
+  }
+}

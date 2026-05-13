@@ -1,0 +1,79 @@
+@import '../styles/variables';
+
+.navbar {
+  background-color: $surface-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  @media (max-width: $breakpoint-md) {
+    flex-wrap: wrap;
+    padding: $spacing-md;
+  }
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: $primary-color;
+  white-space: nowrap;
+  
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+}
+
+.brand-text {
+  @media (max-width: $breakpoint-sm) {
+    display: none;
+  }
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: $spacing-lg;
+  
+  @media (max-width: $breakpoint-md) {
+    flex-basis: 100%;
+    margin-top: $spacing-md;
+    gap: $spacing-md;
+  }
+}
+
+.nav-item {
+  @media (max-width: $breakpoint-md) {
+    flex: 1;
+  }
+}
+
+.nav-link {
+  color: $text-color;
+  font-weight: 500;
+  padding: $spacing-sm $spacing-md;
+  border-radius: 4px;
+  transition: all $transition-normal;
+  display: inline-block;
+  
+  &:hover {
+    color: $primary-color;
+    background-color: rgba($primary-color, 0.05);
+  }
+}
