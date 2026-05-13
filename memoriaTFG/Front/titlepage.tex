@@ -1,0 +1,97 @@
+% !TEX root = ../main.tex
+
+%----------------------------------------------------------------------------------------
+% TITLE PAGE - PORTADA
+%----------------------------------------------------------------------------------------
+
+\newgeometry{margin=1in}
+\begin{titlepage}
+
+\setlength{\parskip}{0pt}
+
+\begin{center}
+
+% Universitat i departament
+{\Large \textbf{\univnamecat} \par}
+\vspace{0.3cm}
+{\large \deptname \par}
+
+\vspace{2cm}
+
+% Tipus de document
+\textsc{\Large \ttype}
+\vspace{0.2cm}
+
+\HRule
+\vspace{0.4cm}
+
+% Títol
+{\huge \bfseries \ttitle \par}
+
+\vspace{0.4cm}
+\HRule
+
+\vspace{1.5cm}
+
+% Dades de l'estudi
+{\large \studyprog \par}
+
+\vspace{1.5cm}
+
+% Autor i tutor
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{flushleft}
+        \large
+        \textbf{Autor/a:} \\
+        \authorname
+    \end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \begin{flushright}
+        \large
+        \textbf{Tutor/a:} \\
+        \supnameA
+    \end{flushright}
+\end{minipage}
+
+\vspace{2cm}
+
+% Curs
+{\large Curs: \tdate \par}
+
+\vfill
+
+% Data
+{\large \today \par}
+
+\end{center}
+
+\end{titlepage}
+\restoregeometry
+
+% Reverse side of title page
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{footnotesize}
+\begin{flushleft}
+\begin{tabular}{@{}lp{0.6\textwidth}@{}}
+\textbf{Projecte:} & \ttype \\
+\textbf{Títol:}    & \ttitle \\
+\textbf{Autor:}    & \authorname \\
+\textbf{Tutor:}    & \supnameA \\
+\textbf{Data:}     & \today \\
+\end{tabular}
+\end{flushleft}
+
+\vspace{0.5cm}
+
+\begin{flushleft}
+\textbf{Estudi:} \\
+\studyprog \\
+\univnamecat
+\end{flushleft}
+\end{footnotesize}
+

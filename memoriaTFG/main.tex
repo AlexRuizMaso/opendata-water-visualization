@@ -1,0 +1,204 @@
+% ===========================================================================
+% MAIN DOCUMENT - Treball Fi de Grau
+% Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya
+% ===========================================================================
+% !TEX program = pdflatex
+
+\documentclass[a4paper, 12pt, twoside, openright]{book}
+
+% ===========================================================================
+% PACKAGES
+% ===========================================================================
+
+\usepackage[utf8]{inputenc}                     % Suport per a caràcters especials
+\usepackage[catalan]{babel}                     % Idioma català
+\usepackage{amsmath, amssymb}                   % Matemàtiques
+\usepackage{graphicx}                           % Imatges
+\usepackage{hyperref}                           % Enllaços
+\usepackage[style=english]{csquotes}            % Citacions (requerit per babel)
+\usepackage[margin=2.5cm]{geometry}             % Marges
+\usepackage{fancyhdr}                           % Capçaleres i peus
+\usepackage{setspace}                           % Interlineat
+\usepackage{tocloft}                            % Personalització de la Taula de Continguts
+\usepackage{booktabs}                           % Taules professionals
+\usepackage{float}                              % Posicionament de figures
+\usepackage{xcolor}                             % Colors
+\usepackage{listings}                           % Codi font
+\usepackage{appendix}                           % Annexos
+\usepackage{titlesec}                           % Format de títols
+
+% ===========================================================================
+% DOCUMENT INFORMATION
+% ===========================================================================
+
+\newcommand{\ttitle}{Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya}
+\newcommand{\authorname}{Àlex Ruiz Masó}
+\newcommand{\supnameA}{Antoni Bardera Reig}
+\newcommand{\supinfoA}{Antoni Bardera Reig}
+\newcommand{\studyprog}{Grau en Enginyeria Informàtica}
+\newcommand{\deptname}{Escola Politècnica Superior}
+\newcommand{\univnamecat}{Universitat de Girona}
+\newcommand{\univlink}{https://www.udg.edu/}
+\newcommand{\ttype}{Treball de Fi de Grau}
+\newcommand{\tdocument}{Memòria del projecte}
+\newcommand{\tdate}{Curs 2025/2026}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% ===========================================================================
+% CUSTOM ENVIRONMENTS
+% ===========================================================================
+
+% Entorn abstract
+\newenvironment{abstract}{
+    \chapter*{Resum}
+    \addcontentsline{toc}{chapter}{Resum}
+}{\newpage}
+
+% Entorn acknowledgements
+\newenvironment{acknowledgements}{
+    \chapter*{Agraïments}
+    \addcontentsline{toc}{chapter}{Agraïments}
+}{\newpage}
+
+% Entorn abbreviations
+\newenvironment{abbreviations}[1]{
+    \chapter*{Llista d'abreviatures}
+    \addcontentsline{toc}{chapter}{Llista d'abreviatures}
+    \begin{tabular}{#1}
+}{
+    \end{tabular}
+    \newpage
+}
+
+% Entorn symbols
+\newenvironment{symbols}[1]{
+    \chapter*{Llista de símbols}
+    \addcontentsline{toc}{chapter}{Llista de símbols}
+    \begin{tabular}{#1}
+}{
+    \end{tabular}
+    \newpage
+}
+
+% Entorn constants
+\newenvironment{constants}[1]{
+    \chapter*{Constants}
+    \addcontentsline{toc}{chapter}{Constants}
+    \begin{tabular}{#1}
+}{
+    \end{tabular}
+    \newpage
+}
+
+% ===========================================================================
+% CUSTOM COMMANDS
+% ===========================================================================
+
+\newcommand{\addchaptertocentry}[1]{
+    \addcontentsline{toc}{chapter}{#1}
+}
+
+\newcommand{\abstractname}{Resum}
+\newcommand{\acknowledgementname}{Agraïments}
+
+% ===========================================================================
+% HEADER AND FOOTER STYLE
+% ===========================================================================
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\textit{\leftmark}}
+\fancyhead[RO]{\textit{\thepage}}
+\fancyhead[RE]{\thepage}
+\fancyhead[LO]{\textit{\rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ===========================================================================
+% FORMATTING
+% ===========================================================================
+
+\setstretch{1.5}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+% ===========================================================================
+% HYPERREF CONFIGURATION
+% ===========================================================================
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    bookmarks=true,
+    bookmarksnumbered=true,
+    pdfauthor={\authorname},
+    pdftitle={\ttitle},
+    pdfsubject={Treball de Fi de Grau - Enginyeria Informàtica},
+    pdfkeywords={open data, water resources, visualization, TFG}
+}
+
+% ===========================================================================
+% DOCUMENT START
+% ===========================================================================
+
+\begin{document}
+
+\frontmatter
+
+% ---------------------------------------------------------------------------
+% PORTADA
+% ---------------------------------------------------------------------------
+\input{Front/titlepage}
+
+% ---------------------------------------------------------------------------
+% AGRAÏMENTS
+% ---------------------------------------------------------------------------
+\input{Front/acknowledgements}
+
+% ---------------------------------------------------------------------------
+% RESUM
+% ---------------------------------------------------------------------------
+\input{Front/abstract}
+
+% ---------------------------------------------------------------------------
+% SIMBOLOGIA
+% ---------------------------------------------------------------------------
+\input{Front/symbols}
+
+% ---------------------------------------------------------------------------
+% ÍNDEX DE CONTINGUTS
+% ---------------------------------------------------------------------------
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+% ===========================================================================
+% MAIN MATTER - CAPÍTOLS
+% ===========================================================================
+
+\mainmatter
+
+\input{Chapters/Chapter01_Introduction}
+\input{Chapters/Chapter02_Viability}
+\input{Chapters/Chapter03_Methodology}
+\input{Chapters/Chapter04_Planning}
+\input{Chapters/Chapter05_Framework}
+\input{Chapters/Chapter06_Requirements}
+\input{Chapters/Chapter07_Studies}
+\input{Chapters/Chapter08_Analysis}
+\input{Chapters/Chapter09_Implementation}
+\input{Chapters/Chapter10_Deployment}
+\input{Chapters/Chapter11_Conclusions}
+\input{Chapters/Chapter12_FutureWork}
+\input{Chapters/Chapter13_Bibliography}
+
+% ===========================================================================
+% APPENDIX - ANNEXOS
+% ===========================================================================
+
+\appendix
+\input{Appendix/AppendixA}
+
+\end{document}
