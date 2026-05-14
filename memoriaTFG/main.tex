@@ -4,7 +4,7 @@
 % ===========================================================================
 % !TEX program = pdflatex
 
-\documentclass[a4paper, 12pt, twoside, openright]{book}
+\documentclass[a4paper, 12pt, oneside]{book}
 
 % ===========================================================================
 % PACKAGES
@@ -107,10 +107,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE]{\textit{\leftmark}}
-\fancyhead[RO]{\textit{\thepage}}
-\fancyhead[RE]{\thepage}
-\fancyhead[LO]{\textit{\rightmark}}
+\fancyhead[L]{\textit{\leftmark}}
+\fancyhead[R]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 
