@@ -34,6 +34,12 @@ yarn-error.log*
 # ETL specific
 etl/logs/*
 !etl/logs/.gitkeep
+etl/data/*
+!etl/data/.gitkeep
+
+# Frontend public data
+frontend/public/data/*
+!frontend/public/data/.gitkeep
 
 # Test coverage
 coverage/
