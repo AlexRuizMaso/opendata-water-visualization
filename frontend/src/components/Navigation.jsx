@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/Navigation.scss'
 
 export default function Navigation() {
+  const [showDashboardMenu, setShowDashboardMenu] = useState(false)
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -14,6 +16,38 @@ export default function Navigation() {
         <ul className="nav-menu">
           <li className="nav-item">
             <Link to="/" className="nav-link">Inici</Link>
+          </li>
+          <li className="nav-item dropdown">
+            <button 
+              className="nav-link dropdown-toggle"
+              onClick={() => setShowDashboardMenu(!showDashboardMenu)}
+            >
+              📊 Panells
+            </button>
+            {showDashboardMenu && (
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/dashboard/map" className="dropdown-link" onClick={() => setShowDashboardMenu(false)}>
+                    🗺️ Mapa + KPIs
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/temporal" className="dropdown-link" onClick={() => setShowDashboardMenu(false)}>
+                    📈 Evolució Temporal
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/correlation" className="dropdown-link" onClick={() => setShowDashboardMenu(false)}>
+                    🌧️ Correlació Clima-Aigua
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/alerts" className="dropdown-link" onClick={() => setShowDashboardMenu(false)}>
+                    🚨 Alertes de Sequera
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
           <li className="nav-item">
             <Link to="/embassaments" className="nav-link">Embassaments</Link>

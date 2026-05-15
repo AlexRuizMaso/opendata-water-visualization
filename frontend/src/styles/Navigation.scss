@@ -71,9 +71,67 @@
   border-radius: 4px;
   transition: all $transition-normal;
   display: inline-block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
   
   &:hover {
     color: $primary-color;
     background-color: rgba($primary-color, 0.05);
+  }
+}
+
+.dropdown {
+  position: relative;
+  
+  @media (max-width: $breakpoint-md) {
+    flex: 1;
+  }
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  &::after {
+    content: '▼';
+    font-size: 0.7rem;
+    margin-left: 4px;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: $surface-color;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  list-style: none;
+  padding: $spacing-sm 0;
+  margin-top: $spacing-sm;
+  min-width: 220px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  
+  li {
+    padding: 0;
+  }
+}
+
+.dropdown-link {
+  display: block;
+  padding: $spacing-sm $spacing-md;
+  color: $text-color;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all $transition-normal;
+  
+  &:hover {
+    color: $primary-color;
+    background-color: rgba($primary-color, 0.05);
+    padding-left: calc($spacing-md + 8px);
   }
 }
