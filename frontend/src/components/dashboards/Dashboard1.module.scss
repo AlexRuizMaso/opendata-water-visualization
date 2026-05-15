@@ -1,0 +1,246 @@
+.dashboard {
+  padding: 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+
+  h1 {
+    color: #1a3a5c;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mapSection {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  :global(.leaflet-container) {
+    font-family: inherit;
+  }
+}
+
+.kpisSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.statCard {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .statLabel {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .statValue {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a3a5c;
+  }
+}
+
+.embassamentsList {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
+  overflow-y: auto;
+
+  h2 {
+    font-size: 14px;
+    color: #1a3a5c;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+  }
+}
+
+.embassamentCard {
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 4px solid #999;
+  background-color: #fafbfc;
+
+  &:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &.critical {
+    border-left-color: #ff4444;
+    background-color: #ffe0e0;
+  }
+
+  &.warning {
+    border-left-color: #ffb700;
+    background-color: #fff5e0;
+  }
+
+  &.normal {
+    border-left-color: #44aa44;
+    background-color: #e0ffe0;
+  }
+
+  &.optimal {
+    border-left-color: #1e7e1e;
+    background-color: #d0f0d0;
+  }
+
+  .embassamentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    h3 {
+      margin: 0;
+      font-size: 13px;
+      color: #1a3a5c;
+    }
+
+    .percentage {
+      font-weight: bold;
+      font-size: 13px;
+      color: #1a3a5c;
+    }
+  }
+
+  .progressBar {
+    height: 6px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+
+    .progress {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+  }
+
+  .embassamentDetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #666;
+
+    span {
+      flex: 1;
+    }
+  }
+}
+
+.detailsPanel {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #1a3a5c;
+
+  h2 {
+    margin: 0 0 12px 0;
+    color: #1a3a5c;
+    font-size: 16px;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      color: #333;
+
+      strong {
+        color: #1a3a5c;
+      }
+
+      small {
+        color: #999;
+      }
+    }
+  }
+
+  .critical {
+    color: #ff4444;
+    font-weight: bold;
+  }
+
+  .warning {
+    color: #ffb700;
+    font-weight: bold;
+  }
+
+  .normal {
+    color: #44aa44;
+    font-weight: bold;
+  }
+
+  .optimal {
+    color: #1e7e1e;
+    font-weight: bold;
+  }
+}
+
+.popup {
+  font-size: 12px;
+
+  h3 {
+    margin: 0 0 8px 0;
+    color: #1a3a5c;
+  }
+
+  p {
+    margin: 4px 0;
+    line-height: 1.4;
+  }
+
+  strong {
+    color: #1a3a5c;
+  }
+}
+
+.loading,
+.error {
+  padding: 40px;
+  text-align: center;
+  background: white;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.error {
+  color: #ff4444;
+}
