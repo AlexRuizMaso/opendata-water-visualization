@@ -2,8 +2,8 @@ name: 'Data ETL Pipeline'
 
 on:
   schedule:
-    # Executa diàriament a les 6:00 AM UTC
-    - cron: '0 6 * * *'
+    # Executa diàriament a les 2:00 AM UTC
+    - cron: '0 2 * * *'
   workflow_dispatch:
     # Permet execució manual des de GitHub
 
@@ -30,6 +30,13 @@ jobs:
       - name: Run ETL Pipeline
         working-directory: ./etl
         run: npm run full-pipeline
+      
+      - name: Copy data files to frontend
+        run: |
+          mkdir -p frontend/public/data
+          cp etl/data/embassaments.json frontend/public/data/
+          cp etl/data/precipitation.json frontend/public/data/
+          cp etl/data/metadata.json frontend/public/data/
       
       - name: Commit changes
         run: |
