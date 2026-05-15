@@ -8,7 +8,7 @@
     "extract": "node src/extract.js",
     "transform": "node src/transform.js",
     "load": "node src/load.js",
-    "full-pipeline": "node src/pipeline.js",
+    "full-pipeline": "node src/index.js",
     "lint": "eslint . --ext .js",
     "format": "prettier --write \"src/**/*.js\""
   },
