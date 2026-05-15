@@ -1,33 +1,25 @@
+import ETLPipeline from './pipeline.js';
+
 /**
- * ETL Pipeline - Main Entry Point
- * 
- * Aquest script executa tot el procés ETL:
- * 1. Extract: Obtenir dades de les APIs de la Generalitat
- * 2. Transform: Processar i estructurar les dades
- * 3. Load: Guardar les dades en format JSON
+ * Main entry point for ETL execution
  */
+async function main() {
+  const pipeline = new ETLPipeline();
 
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+  try {
+    const result = await pipeline.run();
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-console.log('🚀 Iniciando ETL Pipeline...')
-
-// Crear directoris si no existeixen
-const dataDir = path.join(__dirname, '../data')
-const logsDir = path.join(__dirname, '../logs')
-
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true })
+    if (result.success) {
+      console.log('✅ All ETL tasks completed successfully!');
+      process.exit(0);
+    } else {
+      console.error('❌ ETL pipeline failed');
+      process.exit(1);
+    }
+  } catch (error) {
+    console.error('❌ Fatal error in ETL:', error);
+    process.exit(1);
+  }
 }
 
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true })
-}
-
-console.log('✅ ETL Pipeline estruturado correctamente')
-console.log(`📁 Data directory: ${dataDir}`)
-console.log(`📁 Logs directory: ${logsDir}`)
+main();
