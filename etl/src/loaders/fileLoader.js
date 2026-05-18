@@ -44,6 +44,11 @@ class DataLoader {
         }
       }
 
+      // Before writing, ensure directory permissions
+      const dirPath = path.dirname(filepath);
+      if (!fs.existsSync(dirPath)) {
+        throw new Error(`Destination directory does not exist: ${dirPath}`);
+      }
       // Write new file
       fs.writeFileSync(filepath, JSON.stringify(data, null, 2), 'utf8');
       console.log(`✅ Saved: ${filename} (${Math.round(fs.statSync(filepath).size / 1024)} KB)`);
