@@ -9,55 +9,130 @@
 
 \section{Estructura del document}
 
-\textit{
-    [En aquest capítol s'analitza la viabilitat del projecte des de diferents
-    perspectives: econòmica, tecnològica, ètica i legal. L'objectiu és
-    demostrar que el projecte és viable i que els seus beneficis justifiquen
-    els recursos necessaris.]
-}
+En aquest capítol s'analitza la viabilitat del projecte de visualització de dades hídriques
+des de diferents perspectives: econòmica (costos de desenvolupament i infraestructura),
+tecnològica (APIs disponibles i tecnologies open-source), ètica i legal (privacitat de dades públiques).
+L'objectiu és demostrar que el projecte és viable amb els recursos disponibles i que els seus
+beneficis justifiquen els recursos necessaris.
 
 %----------------------------------------------------------------------------------------
 
 \section{Viabilitat econòmica}
 
-\textit{
-    [Incloure els pressupostos inicials que comptabilitzin el cost del
-    desenvolupament. Es pot utilitzar un full de càlcul i adjuntar-lo com a annex.]
-}
+El projecte ha estat desenvolupat amb recursos mínim:
+
+\begin{itemize}
+    \item \textbf{Hardware}: Ordinador personal del desenvolupador (sense costos addicionals)
+    \item \textbf{Software}: Tecnologies completament open-source i gratuïtes:
+    \begin{itemize}
+        \item Node.js i npm per a la canonada ETL i frontend
+        \item React per a la interfície web
+        \item GitHub Actions per a l'automatització (gratuït per a repositoris públics)
+    \end{itemize}
+    \item \textbf{Dades}: APIs públiques gratuïtes de la Generalitat de Catalunya (Socrata)
+    \item \textbf{Hosting}: Pot ser desplegat a GitHub Pages (gratuït) o a altres plataformes low-cost
+\end{itemize}
+
+En conclusió, el cost econòmic del projecte és negligible, ja que utilitza exclusivament recursos gratuïts i infraestructura oberta.
 
 %----------------------------------------------------------------------------------------
 
 \section{Viabilitat tecnològica}
 
-\textit{
-    [Analitzar si la tecnologia necessària està disponible i és adequada per
-    al projecte.]
-}
+Les tecnologies necessàries estan totalment disponibles i ben establertes:
+
+\subsection{Extracció de dades}
+
+\begin{itemize}
+    \item \textbf{APIs Socrata}: Els datos dels embassaments i precipitacions estan disponibles através de les APIs públiques de la Generalitat de Catalunya. S'ha verificat que aquestes APIs són estables i proporcionen més de 50.000 registres per a cada dataset.
+    \item \textbf{Formats de dades}: Els datos es retornen en JSON, format estàndard i fàcil de processar.
+\end{itemize}
+
+\subsection{Processament i transformació}
+
+\begin{itemize}
+    \item \textbf{Node.js}: Runtime d'JavaScript robust i escalable per a backends.
+    \item \textbf{npm packages}: Modules madurs com \texttt{axios} (HTTP client), \texttt{fs} (file system) estan bé establerts.
+\end{itemize}
+
+\subsection{Visualització}
+
+\begin{itemize}
+    \item \textbf{React}: Framework frontend modern amb ecosistema madur.
+    \item \textbf{Recharts}: Biblioteca de gràfics construïda sobre React, perfecta per a visualitzacions de sèries temporals i gràfics compostos.
+    \item \textbf{Leaflet}: Biblioteca de mapes interactius de codi obert, ideal per a visualitzar embassaments en coordenades geogràfiques.
+\end{itemize}
+
+\subsection{Automatització}
+
+\begin{itemize}
+    \item \textbf{GitHub Actions}: Plataforma de CI/CD nativa de GitHub que permet executar workflows automàtics (ETL) en horaris programats.
+    \item \textbf{Cron jobs}: Suportats nativamente per a programar execucions diàries.
+\end{itemize}
+
+\textbf{Conclusió}: Totes les tecnologies necessàries estan disponibles, ben documentades, i han estat proven exitosament durant el desenvolupament del projecte.
 
 %----------------------------------------------------------------------------------------
 
 \section{Viabilitat ètica i legal}
 
-\textit{
-    [Valorar aspectes de risc, especialment relacionats amb ciberseguretat,
-    protecció de dades i, si escau, legalitat i ètica d'ús d'eines d'IA.]
-}
+\subsection{Privacitat de dades}
+
+Els datos utilizzats en aquest projecte provenen de fonts públiques de la Generalitat de Catalunya:
+\begin{itemize}
+    \item Els nivells dels embassaments són dades públiques de caràcter no personal.
+    \item Les dades de precipitació són recopilades per estacions meteorològiques i són agregades (sense identificar ubicacions específiques).
+    \item No es tracten dades personals de ciutadans.
+\end{itemize}
+
+\subsection{Compliment legal}
+
+\begin{itemize}
+    \item \textbf{Accés a dades públiques}: El projecte respecta les condicions d'ús de les APIs públiques de Socrata.
+    \item \textbf{Llicència open-source}: El codi és alliberat sota llicència MIT, permetent ús i modificació.
+    \item \textbf{RGPD}: No s'aplica, ja que no es tracten dades personals.
+\end{itemize}
+
+\subsection{Seguretat}
+
+\begin{itemize}
+    \item La canonada ETL utilitza connexions HTTPS per a comunicar-se amb les APIs.
+    \item No s'emmagatzemen credentials sensibles en el repositori (utilització de \texttt{.env}).
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Recursos}
 
-\textit{
-    [Descriure els recursos humans i materials necessaris per desenvolupar
-    el projecte.]
-}
+\subsection{Recursos humans}
+
+\begin{itemize}
+    \item Un desenvolupador (autor del projecte) responsable del disseny, implementació i documentació.
+    \item Aproximadament 200-250 hores de desenvolupament, incloent investigació inicial, implementació, testing i documentació.
+\end{itemize}
+
+\subsection{Recursos materials}
+
+\begin{itemize}
+    \item Ordinador de desenvolupament (ja disponible)
+    \item Connexió a Internet (ja disponible)
+    \item Accés a GitHub per a control de versions i CI/CD
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Conclusions de la viabilitat}
 
-\textit{
-    [La conclusió d'aquest apartat ha de ser que el PFG és viable.]
-}
+El projecte és completament viable pels següents motius:
+
+\begin{enumerate}
+    \item \textbf{Cost econòmic nul}: S'utilitzen exclusivament tecnologies gratuïtes i open-source.
+    \item \textbf{Tecnologies madures}: Totes les tecnologies necessàries estan bé establertes i comprovades en entorns de producció.
+    \item \textbf{Dades disponibles}: Les APIs públiques de la Generalitat proporcionen totes les dades necessàries.
+    \item \textbf{Legal i ètica}: No hi ha conflictes legals ni étics, ja que es tracta dades públiques sense identificació personal.
+    \item \textbf{Escala factible}: El volum de datos (50.000+ registres) es pot processar en poc de temps, i l'actualització diària és completament viable.
+\end{enumerate}
+
+En conclusió, el projecte de visualització de dades hídriques de Catalunya és viable de realitzar amb els recursos disponibles i ofereix valor significant per a la societat civil i els responsables de política hídrica.
 
 %----------------------------------------------------------------------------------------

@@ -9,54 +9,72 @@
 
 \section{Estructura del document}
 
-\textit{
-    [En aquest capítol es presenta el context del projecte, les motivacions
-    que han portat al seu desenvolupament, el propòsit general que es persegueix
-    i els objectius específics que s'han definit per assolir-lo.
-    L'objectiu és situar el lector en el marc del projecte i justificar la
-    seva realització.]
-}
+En aquest capítol es presenta el context del projecte de visualització de dades hídriques de Catalunya,
+les motivacions que han portat al seu desenvolupament, el propòsit general de crear una plataforma
+integrada de monitoratge, i els objectius específics de implementar quatre panells de visualització
+amb automatització diària. L'objectiu és situar el lector en el marc del projecte i justificar la
+seva realització en el context de l'era del canvi climàtic i la necessitat de gestió hídrica.
 
 %----------------------------------------------------------------------------------------
 
 \section{Introducció}
 
-\textit{
-    [Situar el marc del projecte. Establir les raons que justifiquen el
-    desenvolupament del projecte. Donar una idea àmplia del context.]
-}
+La gestió dels recursos hídrics és un dels reptes més importants que enfronta el planeta en l'era del canvi climàtic. A Catalunya, les sequeres repetides i els períodes de precipitació irregular han demonstrat la necessitat urgent de disposar de sistemes avançats de monitoratge i visualització de dades hídriques. Els embassaments són elements crítics de la infraestructura hídrica, emmagatzemant l'aigua per a consum humà, agrícola i industrial.
+
+En l'actualitat, les autoritats hídriques catalanes disposen de dades sobre nivells d'embassaments i precipitacions, però aquestes dades sovint es troben distribuïdes en múltiples fonts i no són fàcilment accessibles per al públic general ni per als responsables polítics en temps real. Aquest projecte aborda aquesta bresca creant un sistema integrat de visualització de dades hídriques que consolida informació de les APIs públiques de dades de la Generalitat de Catalunya (Socrata).
+
+El visualitzador permet als usuaris monitoritzar els nivells dels embassaments més importants de Catalunya, correlacionar aquesta informació amb dades de precipitació de més de 200 estacions meteorològiques, i generar alertes de sequera basades en umbrals de perill. La plataforma utilitza una arquitectura moderna que combina una canonada ETL robusta per a la extracció i processament de dades amb un frontend interactiu basat en React i Recharts.
 
 %----------------------------------------------------------------------------------------
 
 \section{Motivacions}
 
-\textit{
-    [Explicar les motivacions personals i/o acadèmiques que han portat a
-    realitzar aquest projecte.]
-}
+Les motivacions que han impulsat aquest projecte són múltiples:
+
+\begin{enumerate}
+    \item \textbf{Accés públic a dades hídriques}: Els governs tenen l'obligació de proporcionar accés a informació d'interès públic. Un visualitzador integrat fa que aquestes dades siguin més assequibles i comprensibles per al ciudadà mitjà.
+    
+    \item \textbf{Prevenció de crisis hídriques}: En períodes de sequera, es necessita informació en temps real per prendre decisions de política hídrica. Les alertes automàtiques permeten detectar ràpidament situacions crítiques.
+    
+    \item \textbf{Recerca en canvi climàtic}: Els estudiosos del clima necessiten accés a dades de qualitat per analitzar patrons de precipitació i evolució dels recursos hídrics. Una plataforma pública facilita aquesta recerca.
+    
+    \item \textbf{Experiència educativa}: Aquest projecte demostra l'aplicació de tecnologies modernes (ETL, data visualization, cloud deployment) a un problema del món real relevant per a la societat.
+\end{enumerate}
 
 %----------------------------------------------------------------------------------------
 
 \section{Propòsit}
 
-\textit{
-    [Expressar de forma general què s'espera aconseguir amb aquest projecte.]
-}
+El propòsit general d'aquest projecte és desenvolupar una \textbf{plataforma web de visualització integrada de dades hídriques de Catalunya} que permeti monitoritzar els nivells dels embassaments, correlacionar-los amb dades meteorològiques, i generar alertes de sequera automàtiques. La plataforma hauria de ser:
+
+\begin{itemize}
+    \item \textbf{Accessible}: El visualitzador hauria de ser fàcil d'usar per a usuaris amb diversos nivells de competència técnica.
+    \item \textbf{Automàtic}: Els datos s'actualitzen diàriament de forma automàtica a través d'una canonada ETL.
+    \item \textbf{Informativa}: Els panells proporcionen múltiples perspectives sobre les dades (mapa, sèries temporals, correlacions, alertes).
+    \item \textbf{Open-source}: El codi és públic, permetent contribucions de la comunitat.
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Objectius}
 
-\textit{
-    [Identificar les fites específiques que s'esperen assolir. Han de ser
-    precisos i permetre comprendre millor l'abast del projecte.]
-}
+Els principals objectius específics d'aquest projecte són:
 
-Els principals objectius d'aquest projecte són:
-
-\begin{itemize}
-    \item Objectiu 1
-    \item Objectiu 2
-    \item Objectiu 3
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{Implementar una canonada ETL robusta} que extregui dades de les APIs de Socrata (Generalitat de Catalunya), les transformi en un format estàndard, i les distribuïsca de forma automàtica.
+    
+    \item \textbf{Crear un frontend interactiu amb quatre panells de visualització}:
+    \begin{itemize}
+        \item Panell 1: Mapa interactiu amb KPIs dels embassaments
+        \item Panell 2: Evolució temporal dels nivells amb filters de data
+        \item Panell 3: Correlació entre precipitació i nivells d'embassaments
+        \item Panell 4: Matriu d'alertes de sequera amb indicadors semàfor
+    \end{itemize}
+    
+    \item \textbf{Assegurar l'automatització}: Configurar GitHub Actions per executar l'ETL diàriament a les 02:00 UTC, processant més de 100.000 registres de dades.
+    
+    \item \textbf{Implementar lògica de detecció de sequera}: Definir umbrals de perill basats en percentatge d'ocupació (crític <20\%, avís 20-50\%, normal 50-75\%, òptim >75\%).
+    
+    \item \textbf{Documentar adequadament}: Generar una memòria completa amb les decisions de disseny, arquitectura del sistema, i guies d'ús.
+\end{enumerate}
 %----------------------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 % PACKAGES
 % ===========================================================================
 
+\usepackage[T1]{fontenc}                        % Encodificació de fonts
 \usepackage[utf8]{inputenc}                     % Suport per a caràcters especials
 \usepackage[catalan]{babel}                     % Idioma català
 \usepackage{amsmath, amssymb}                   % Matemàtiques
@@ -26,6 +27,8 @@
 \usepackage{listings}                           % Codi font
 \usepackage{appendix}                           % Annexos
 \usepackage{titlesec}                           % Format de títols
+\usepackage[expansion=false]{microtype}         % Tipografia millorada (desactivant expansió per evitar errors)
+\usepackage{needspace}                          % Evitar capçaleres orfes
 
 % ===========================================================================
 % DOCUMENT INFORMATION
@@ -41,7 +44,7 @@
 \newcommand{\univlink}{https://www.udg.edu/}
 \newcommand{\ttype}{Treball de Fi de Grau}
 \newcommand{\tdocument}{Memòria del projecte}
-\newcommand{\tdate}{Curs 2025/2026}
+\newcommand{\tdate}{2025/2026}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 % ===========================================================================
@@ -151,25 +154,9 @@
 \input{Front/titlepage}
 
 % ---------------------------------------------------------------------------
-% AGRAÏMENTS
-% ---------------------------------------------------------------------------
-\input{Front/acknowledgements}
-
-% ---------------------------------------------------------------------------
-% RESUM
-% ---------------------------------------------------------------------------
-\input{Front/abstract}
-
-% ---------------------------------------------------------------------------
-% SIMBOLOGIA
-% ---------------------------------------------------------------------------
-\input{Front/symbols}
-
-% ---------------------------------------------------------------------------
 % ÍNDEX DE CONTINGUTS
 % ---------------------------------------------------------------------------
 \tableofcontents
-\thispagestyle{empty}
 \newpage
 
 % ===========================================================================

@@ -9,59 +9,165 @@
 
 \section{Estructura del document}
 
-\textit{
-    [En aquest capítol es descriu i justifica la metodologia de treball
-    escollida per al desenvolupament del projecte, incloent les eines
-    utilitzades i les possibles desviacions respecte a la planificació inicial.]
-}
+En aquest capítol es descriu la metodologia de treball escollida per al desenvolupament del projecte
+de visualització de dades hídriques, justificant l'enfocament àgil amb iteracions, la planificació
+temporal en fases, les eines de desenvolupament utilitzades (Git, GitHub Actions, React, Node.js),
+i l'ús transparent d'eines d'IA per a assistència en codificació i documentació.
 
 %----------------------------------------------------------------------------------------
 
 \section{Metodologia de desenvolupament}
 
-\textit{
-    [Descriure la metodologia de treball escollida (àgil, cascada, etc.),
-    justificar la seva elecció i explicar com s'ha aplicat al projecte.]
-}
+S'ha escollit una \textbf{metodologia àgil iterativa} amb les següents característiques:
+
+\subsection{Enfocament incremental}
+
+El desenvolupament s'ha estructurat en iteracions que van incrementant funcionalitat:
+
+\begin{enumerate}
+    \item \textbf{Fase 1 - Investigació i configuració}: Investigació de les APIs de Socrata, verificació de disponibilitat de dades, configuració de l'entorn de desenvolupament.
+    
+    \item \textbf{Fase 2 - Canonada ETL base}: Implementació dels extractors de dades, transformadors de dades i loaders de fitxers.
+    
+    \item \textbf{Fase 3 - Frontend - Dashboard 1 \& 2}: Creació del servei de dades, hooks personalitzats, i els primers dos panells de visualització (mapa i evolució temporal).
+    
+    \item \textbf{Fase 4 - Frontend - Dashboard 3 \& 4}: Implementació dels panells de correlació clima-aigua i matriu d'alertes de sequera.
+    
+    \item \textbf{Fase 5 - Automatització i desplegament}: Configuració de GitHub Actions per a execució diària de l'ETL i construcció del frontend.
+\end{enumerate}
+
+\subsection{Justificació de l'enfocament àgil}
+
+\begin{itemize}
+    \item \textbf{Flexibilitat}: Permet adaptar-se si les APIs canvien o si sorgeixen nous requisits.
+    \item \textbf{Entrega contínua}: Cada iteració proporciona valor incrementat (una canonada ETL funcional, un panell de visualització, etc.).
+    \item \textbf{Feedback ràpid}: Es pot provar cada component de forma independent.
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Planificació del projecte}
 
-\textit{
-    [Explicar les fases del projecte i la seva organització temporal.]
-}
+\subsection{Cronograma}
+
+El projecte ha estat desenvolupat al llarg d'aproximadament 12 setmanes:
+
+\begin{itemize}
+    \item \textbf{Setmanes 1-2}: Investigació de dades, configuració del repositori, estudi de les APIs.
+    \item \textbf{Setmanes 3-5}: Desenvolupament de la canonada ETL (extractors, transformadors, loaders).
+    \item \textbf{Setmanes 6-8}: Desenvolupament del frontend (dashboards 1-2, hooks, serveis).
+    \item \textbf{Setmanes 9-10}: Desenvolupament dels dashboards 3-4, integració de navegació.
+    \item \textbf{Setmanes 11-12}: Configuració de GitHub Actions, documentació, testing.
+\end{itemize}
+
+\subsection{Fases del projecte}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Fase} & \textbf{Objectiu} & \textbf{Deliverables} \\
+\hline
+1 & Investigació & Análisis de viabilitat, documentació de dades \\
+2 & ETL & Canonada completa amb 49k registres d'embassaments \\
+3 & Frontend Base & Dashboard 1 (mapa) i Dashboard 2 (temporal) \\
+4 & Frontend Avançat & Dashboard 3 (correlació) i Dashboard 4 (alertes) \\
+5 & Automatització & GitHub Actions, scripts de deploiement \\
+6 & Documentació & Memòria completa, guies d'ús \\
+\hline
+\end{tabular}
+\end{table}
 
 %----------------------------------------------------------------------------------------
 
 \section{Eines utilitzades}
 
-\textit{
-    [Detallar les eines de desenvolupament, control de versions, gestió de
-    tasques, etc. que s'han utilitzat.]
-}
+\subsection{Control de versions}
+
+\begin{itemize}
+    \item \textbf{Git}: Sistema de control de versions distribuït.
+    \item \textbf{GitHub}: Repositori remot i plataforma de col·laboració.
+    \item \textbf{GitHub Actions}: CI/CD per a l'automatització de l'ETL.
+\end{itemize}
+
+\subsection{Desenvolupament backend (ETL)}
+
+\begin{itemize}
+    \item \textbf{Node.js 18}: Runtime d'JavaScript.
+    \item \textbf{npm}: Gestor de paquets.
+    \item \textbf{axios}: Client HTTP per a fer peticions a les APIs.
+    \item \textbf{dotenv}: Gestió de variables d'entorn.
+\end{itemize}
+
+\subsection{Desenvolupament frontend}
+
+\begin{itemize}
+    \item \textbf{React 18}: Framework frontend.
+    \item \textbf{Vite}: Bundler ràpid i modern.
+    \item \textbf{React Router}: Navegació entre pàgines.
+    \item \textbf{Recharts}: Biblioteca de gràfics.
+    \item \textbf{Leaflet}: Biblioteca de mapes interactius.
+    \item \textbf{Sass}: Preprocessador CSS.
+\end{itemize}
+
+\subsection{Documentació i testing}
+
+\begin{itemize}
+    \item \textbf{LaTeX}: Preparació de la memòria del projecte.
+    \item \textbf{Visual Studio Code}: Editor de codi.
+    \item \textbf{Chrome DevTools}: Debugging del frontend.
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Ús d'eines d'intel·ligència artificial}
 
-\textit{
-    [Cal explicar l'ús d'eines d'IA generativa (p.ex., ChatGPT, Gemini,
-    Copilot) utilitzades en l'elaboració del PFG. Ha de declarar de manera
-    clara i detallada fins a quin punt i de quina manera s'han fet servir
-    aquestes eines.]
+\subsection{Assistència de codificació}
 
-    \textbf{Nota:} L'ús no declarat o excessiu de la IA pot considerar-se
-    una vulneració de la integritat acadèmica.
-}
+S'ha fet ús de \textbf{GitHub Copilot} com a assistent de codificació, principalment per a:
+
+\begin{itemize}
+    \item \textbf{Boilerplate de React}: Generació de estrutures de components, hooks, i renders.
+    \item \textbf{Estils SCSS}: Creació de stilesheets responsives.
+    \item \textbf{Funcions de transformació de dades}: Lògica de filtrat i agrupament de dades.
+\end{itemize}
+
+\subsection{Declaració d'ús de la IA}
+
+\begin{itemize}
+    \item \textbf{Nivell d'ús}: Aproximadament 30-40\% del codi a nivel de suggestion (propostes completades o parcials).
+    \item \textbf{Verificació}: Totes les suggerències van ser revisades, verificades i probades per al context específic del projecte.
+    \item \textbf{Lògica original}: Els algoritmes de processament de dades, arquitectura del sistema i decisións de disseny són originals del desenvolupador.
+    \item \textbf{Documentació}: La majoria de comments i documentació de codi va ser generada pel desenvolupador, amb assistència puntual de la IA per a claritat.
+\end{itemize}
+
+\textbf{Nota}: L'ús de la IA va ser \textbf{sempre transparent} i \textbf{sempre supervisat}. La IA va ser una eina d'assistència per a accelerar la codificació repetitiva, no per a substituir el pensament creatiu o la presa de decisions tècniques del desenvolupador.
 
 %----------------------------------------------------------------------------------------
 
 \section{Desviacions i incidències}
 
-\textit{
-    [Descriure les possibles desviacions respecte a la planificació inicial
-    i com s'han resolt.]
-}
+\subsection{Desviacions respecte a la planificació}
+
+\begin{enumerate}
+    \item \textbf{Ampliació del scope de dades}: Inicialment es planificava de fer ús només de l'embassament de Raimat. Es va decidir incloure tots els 9 embassaments principals de Catalunya per a proporcionar una visió més completa.
+    
+    \item \textbf{Inclusió de més estacions meteorològiques}: Originalment es planificava de mostrar només alguns estacions, però les APIs proporcionen 200+ estacions. S'ha inclòs tot el dataset per a máxima cobertura geogràfica.
+    
+    \item \textbf{Quatre dashboards en lloc de tres}: La viabilitat tècnica va demostrar que era fàcil afegir un quart dashboard (alertes), proporcionant més valor al usuari.
+\end{enumerate}
+
+\subsection{Incidències i resolucions}
+
+\begin{enumerate}
+    \item \textbf{Incidència}: Mida dels fitxers JSON generat és gran (30MB per a embassaments, 70MB per a precipitació).
+    \textbf{Resolució}: Els fitxers es serveixen desde \texttt{/public/data} i es carreguen al frontend de forma reactiva (es pot implementar compressió o paginació en futures millores).
+    
+    \item \textbf{Incidència}: Terser no estava instal·lat al desenvolupament inicial del frontend.
+    \textbf{Resolució}: S'instal·lació de forma manual com a dependència de desenvolupament.
+    
+    \item \textbf{Incidència}: Problemes amb caràcters especials (Àlex) en els paths de Windows.
+    \textbf{Resolució}: Ús consistent de comandes PowerShell amb \texttt{-LiteralPath} per a evitar problemes de codificació.
+\end{enumerate}
 
 %----------------------------------------------------------------------------------------
