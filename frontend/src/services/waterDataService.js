@@ -83,7 +83,7 @@ export const waterDataService = {
     const end = new Date(endDate).getTime();
 
     return records.filter(record => {
-      const recordTime = new Date(record.date).getTime();
+      const recordTime = new Date(record.date).setHours(12, 0, 0, 0); // Normalize time to noon
       return recordTime >= start && recordTime <= end;
     });
   },
@@ -103,7 +103,7 @@ export const waterDataService = {
     const end = new Date(endDate).getTime();
 
     return records.filter(record => {
-      const recordTime = new Date(record.date).getTime();
+      const recordTime = new Date(record.date).setHours(12, 0, 0, 0); // Normalize time to noon
       return recordTime >= start && recordTime <= end;
     });
   },

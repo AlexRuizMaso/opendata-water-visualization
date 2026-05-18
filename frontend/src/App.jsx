@@ -2,13 +2,13 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Dashboard from './pages/Dashboard'
-import Dashboard1 from './components/dashboards/Dashboard1'
-import Dashboard2 from './components/dashboards/Dashboard2'
-import Dashboard3 from './components/dashboards/Dashboard3'
-import Dashboard4 from './components/dashboards/Dashboard4'
-import Reservoirs from './pages/Reservoirs'
-import Weather from './pages/Weather'
-import About from './pages/About'
+const Dashboard1 = React.lazy(() => import('./components/dashboards/Dashboard1'));
+const Dashboard2 = React.lazy(() => import('./components/dashboards/Dashboard2'));
+const Dashboard3 = React.lazy(() => import('./components/dashboards/Dashboard3'));
+const Dashboard4 = React.lazy(() => import('./components/dashboards/Dashboard4'));
+const Reservoirs = React.lazy(() => import('./pages/Reservoirs'));
+const Weather = React.lazy(() => import('./pages/Weather'));
+const About = React.lazy(() => import('./pages/About'));
 
 function App() {
   return (
@@ -16,7 +16,8 @@ function App() {
       <div className="app">
         <Navigation />
         <main className="main-content">
-          <Routes>
+           <React.Suspense fallback={<div>Loading...</div>}>
+           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard/map" element={<Dashboard1 />} />
             <Route path="/dashboard/temporal" element={<Dashboard2 />} />
@@ -25,7 +26,8 @@ function App() {
             <Route path="/embassaments" element={<Reservoirs />} />
             <Route path="/meteorologia" element={<Weather />} />
             <Route path="/about" element={<About />} />
-          </Routes>
+           </Routes>
+           </React.Suspense>
         </main>
       </div>
     </Router>

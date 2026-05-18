@@ -45,7 +45,7 @@ const Dashboard2 = () => {
     // Group by date
     const groupedByDate = {};
     filtered.forEach(record => {
-      const dateKey = new Date(record.date).toLocaleDateString('ca-ES');
+      const dateKey = new Date(record.date).toISOString().split('T')[0];
       if (!groupedByDate[dateKey]) {
         groupedByDate[dateKey] = {};
       }
@@ -54,8 +54,12 @@ const Dashboard2 = () => {
 
     // Convert to array and sort by date
     const data = Object.entries(groupedByDate)
-      .map(([date, values]) => ({ date, ...values }))
-      .sort((a, b) => new Date(a.date) - new Date(b.date));
+      .map(([rawDate, values]) => ({ rawDate, ...values }))
+      .sort((a, b) => a.rawDate.localeCompare(b.rawDate))
+      .map(item => ({
+        ...item,
+        date: new Date(item.rawDate).toLocaleDateString('ca-ES')
+      }));
 
     setChartData(data);
   }, [embassaments, timeRange, selectedEmbassaments]);

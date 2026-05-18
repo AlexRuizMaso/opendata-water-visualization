@@ -69,7 +69,13 @@
         border-color: #999;
       }
 
-      &.active {
+       &.inactive {
+         background-color: #d9f3d9;
+         border-color: #c8eec8;
+         color: #555;
+       }
+
+       &.active {
         background-color: #1E7E1E;
         color: white;
         border-color: #1E7E1E;

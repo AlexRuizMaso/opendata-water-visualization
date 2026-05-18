@@ -81,7 +81,7 @@ const Dashboard3 = () => {
     const groupedByDate = {};
 
     filteredEmbassaments.forEach(record => {
-      const dateKey = new Date(record.date).toLocaleDateString('ca-ES');
+      const dateKey = new Date(record.date).toISOString().split('T')[0];
       if (!groupedByDate[dateKey]) {
         groupedByDate[dateKey] = {};
       }
@@ -90,7 +90,7 @@ const Dashboard3 = () => {
     });
 
     filteredPrecipitation.forEach(record => {
-      const dateKey = new Date(record.date).toLocaleDateString('ca-ES');
+      const dateKey = new Date(record.date).toISOString().split('T')[0];
       if (!groupedByDate[dateKey]) {
         groupedByDate[dateKey] = {};
       }
@@ -98,10 +98,13 @@ const Dashboard3 = () => {
       groupedByDate[dateKey].station = record.stationName;
     });
 
-    // Convert to array and sort by date
     const data = Object.entries(groupedByDate)
-      .map(([date, values]) => ({ date, ...values }))
-      .sort((a, b) => new Date(a.date) - new Date(b.date));
+      .map(([rawDate, values]) => ({ rawDate, ...values }))
+      .sort((a, b) => a.rawDate.localeCompare(b.rawDate))
+      .map(item => ({
+        ...item,
+        date: new Date(item.rawDate).toLocaleDateString('ca-ES')
+      }));
 
     setChartData(data);
   }, [embassaments, precipitation, timeRange, selectedEmbassament, selectedStation]);
@@ -124,19 +127,19 @@ const Dashboard3 = () => {
         <div className={styles.timeRange}>
           <label>Període:</label>
           <button
-            className={timeRange === '24hours' ? styles.active : ''}
+             className={timeRange === '24hours' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('24hours')}
           >
             Últimes 24h
           </button>
           <button
-            className={timeRange === '30days' ? styles.active : ''}
+            className={timeRange === '30days' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('30days')}
           >
             Últims 30 dies
           </button>
           <button
-            className={timeRange === '1year' ? styles.active : ''}
+            className={timeRange === '1year' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('1year')}
           >
             Últim any

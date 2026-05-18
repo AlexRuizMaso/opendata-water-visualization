@@ -16,11 +16,21 @@ export const useWaterData = () => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const [embData, precData, metaData] = await Promise.all([
-          waterDataService.getEmbassaments(),
-          waterDataService.getPrecipitation(),
-          waterDataService.getMetadata(),
-        ]);
+        const timing = {};
+
+        const embStart = Date.now();
+        const embData = await waterDataService.getEmbassaments();
+        timing.embassaments = Date.now() - embStart;
+
+        const precStart = Date.now();
+        const precData = await waterDataService.getPrecipitation();
+        timing.precipitation = Date.now() - precStart;
+
+        const metaStart = Date.now();
+        const metaData = await waterDataService.getMetadata();
+        timing.metadata = Date.now() - metaStart;
+
+        console.table(timing);
 
         setEmbassaments(embData);
         setPrecipitation(precData);
@@ -61,8 +71,8 @@ export const useEmbassamentTimeSeries = (embassamentName, dateRange = null) => {
       );
     }
 
-    // Sort by date descending
-    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Sort by date ascending (oldest first)
+    filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
     setData(filtered);
     setLoading(false);
   }, [embassaments, embassamentName, dateRange]);
@@ -95,8 +105,8 @@ export const usePrecipitationTimeSeries = (stationName, dateRange = null) => {
       );
     }
 
-    // Sort by date descending
-    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Sort by date ascending (oldest first)
+    filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
     setData(filtered);
     setLoading(false);
   }, [precipitation, stationName, dateRange]);
