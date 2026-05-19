@@ -7,17 +7,24 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,32 +33,18 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./frontend
-        # Use npm install to be resilient when package-lock.json is not present
         run: npm install
 
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
 
-      - name: Prepare dist for deployment
-        run: |
-          # Copy build output to a clean directory for deployment
-          rm -rf out || true
-          mkdir out
-          cp -R frontend/dist/* out/
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Pugem directament el resultat del build de Vite
+          path: ./frontend/dist
 
-      - name: Deploy to gh-pages branch
-        env:
-          REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd out
-          git init
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b gh-pages
-          git add -A
-          git commit -m "ci: deploy frontend ${GITHUB_SHA}"
-          git remote add origin https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git
-          # Force push to gh-pages (this will overwrite that branch)
-          git push --force origin gh-pages:gh-pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
