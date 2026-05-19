@@ -18,10 +18,9 @@ jobs:
           fetch-depth: 0
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
       
       - name: Install dependencies
         working-directory: ./etl
@@ -42,6 +41,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          # Force-add generated data files which may be ignored by .gitignore
+          git add -f etl/data/* || true
+          git add -f frontend/public/data/* || true
           git add -A
           git commit -m "chore: update water data [skip ci]" || echo "No changes to commit"
       
@@ -59,10 +61,9 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
       
       - name: Install dependencies
         working-directory: ./frontend
