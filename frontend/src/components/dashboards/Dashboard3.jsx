@@ -20,7 +20,7 @@ import styles from './Dashboard3.module.scss';
  * Features: dual-axis chart, embassament/station selectors, date range filtering
  */
 const Dashboard3 = () => {
-  const { embassaments, precipitation, loading, error } = useWaterData();
+  const { embassaments, precipitation, loading, error } = useWaterData(true);
   const [selectedEmbassament, setSelectedEmbassament] = useState('Sau');
   const [selectedStation, setSelectedStation] = useState('');
   const [timeRange, setTimeRange] = useState('30days');

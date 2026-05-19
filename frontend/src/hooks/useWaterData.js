@@ -5,7 +5,7 @@ import waterDataService from '../services/waterDataService';
  * Custom Hook: useWaterData
  * Fetches and manages water data with caching
  */
-export const useWaterData = () => {
+export const useWaterData = (requirePrecipitation = false) => {
   const [embassaments, setEmbassaments] = useState(null);
   const [precipitation, setPrecipitation] = useState(null);
   const [metadata, setMetadata] = useState(null);
@@ -13,38 +13,69 @@ export const useWaterData = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let active = true;
+
     const loadData = async () => {
       try {
         setLoading(true);
         const timing = {};
 
+        // Iniciar descàrrega dels embassaments (sempre requerits)
         const embStart = Date.now();
-        const embData = await waterDataService.getEmbassaments();
-        timing.embassaments = Date.now() - embStart;
+        const embassamentsPromise = waterDataService.getEmbassaments()
+          .then(data => {
+            timing.embassaments = Date.now() - embStart;
+            if (active) setEmbassaments(data);
+            return data;
+          });
 
-        const precStart = Date.now();
-        const precData = await waterDataService.getPrecipitation();
-        timing.precipitation = Date.now() - precStart;
-
+        // Iniciar descàrrega de metadades (sempre requerides)
         const metaStart = Date.now();
-        const metaData = await waterDataService.getMetadata();
-        timing.metadata = Date.now() - metaStart;
+        const metadataPromise = waterDataService.getMetadata()
+          .then(data => {
+            timing.metadata = Date.now() - metaStart;
+            if (active) setMetadata(data);
+            return data;
+          });
 
-        console.table(timing);
+        // Iniciar descàrrega de precipitacions només si es demana explícitament (Pas 2)
+        let precipitationPromise = Promise.resolve(null);
+        if (requirePrecipitation) {
+          const precStart = Date.now();
+          precipitationPromise = waterDataService.getPrecipitation()
+            .then(data => {
+              timing.precipitation = Date.now() - precStart;
+              if (active) setPrecipitation(data);
+              return data;
+            })
+            .catch(err => {
+              console.error('Error carregant precipitacions (no crític per a altres vistes):', err);
+              // Si falla la precipitació, no hauria de fer caure tot el panell si tenim embassaments
+              return null;
+            });
+        }
 
-        setEmbassaments(embData);
-        setPrecipitation(precData);
-        setMetadata(metaData);
+        // Esperar que es resolguin en paral·lel
+        await Promise.all([embassamentsPromise, metadataPromise, precipitationPromise]);
+
+        if (active) {
+          console.log('⏱️ Temps de descàrrega de dades:');
+          console.table(timing);
+        }
       } catch (err) {
-        console.error('Error loading water data:', err);
-        setError(err.message);
+        console.error('Error loading crucial water data:', err);
+        if (active) setError(err.message);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
     loadData();
-  }, []);
+
+    return () => {
+      active = false;
+    };
+  }, [requirePrecipitation]);
 
   return { embassaments, precipitation, metadata, loading, error };
 };
@@ -87,7 +118,7 @@ export const useEmbassamentTimeSeries = (embassamentName, dateRange = null) => {
 export const usePrecipitationTimeSeries = (stationName, dateRange = null) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { precipitation } = useWaterData();
+  const { precipitation } = useWaterData(true);
 
   useEffect(() => {
     if (!precipitation?.records) return;
