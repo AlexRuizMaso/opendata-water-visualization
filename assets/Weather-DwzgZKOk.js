@@ -1,0 +1,2 @@
+import{j as e}from"./index-xp8NXotc.js";function i(){return e.jsx("div",{className:"weather-page",children:e.jsxs("div",{className:"container",children:[e.jsx("h1",{children:"Meteorologia"}),e.jsx("p",{children:"Dades de precipitacions i condicions meteorològiques de la Xarxa d'Estacions Meteorològiques Automàtiques (XEMA)."})]})})}export{i as default};
+//# sourceMappingURL=Weather-DwzgZKOk.js.map
