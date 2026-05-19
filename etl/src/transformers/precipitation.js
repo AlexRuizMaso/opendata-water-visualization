@@ -54,7 +54,6 @@ class PrecipitationTransformer {
       value: isNaN(value) ? null : value,
       unit: record.unitat || this.variableUnits[record.codi_variable] || '',
       status: record.estat || 'unknown',
-      rawData: record,
     };
   }
 

@@ -53,7 +53,6 @@ class EmbassamentTransformer {
         lng: coords.lng,
       },
       status: this.calculateStatus(parseFloat(record.percentatge_volum_embassat)),
-      rawData: record, // Keep original for reference
     };
   }
 

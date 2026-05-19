@@ -6,7 +6,7 @@ import axios from 'axios';
  */
 
 // Configure base path for ETL data (adjust based on your setup)
-const ETL_DATA_PATH = '/data'; // Served from public folder or static
+const ETL_DATA_PATH = `${import.meta.env.BASE_URL}data`; // Served from public folder or static
 
 export const waterDataService = {
   /**
