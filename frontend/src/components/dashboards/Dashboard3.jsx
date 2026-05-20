@@ -43,6 +43,12 @@ const Dashboard3 = () => {
       case '1year':
         startDate.setFullYear(endDate.getFullYear() - 1);
         break;
+      case '2years':
+        startDate.setFullYear(endDate.getFullYear() - 2);
+        break;
+      case '5years':
+        startDate.setFullYear(endDate.getFullYear() - 5);
+        break;
       default:
         startDate.setDate(endDate.getDate() - 30);
     }
@@ -143,6 +149,18 @@ const Dashboard3 = () => {
             onClick={() => setTimeRange('1year')}
           >
             Últim any
+          </button>
+          <button
+            className={timeRange === '2years' ? styles.active : styles.inactive}
+            onClick={() => setTimeRange('2years')}
+          >
+            Últims 2 anys
+          </button>
+          <button
+            className={timeRange === '5years' ? styles.active : styles.inactive}
+            onClick={() => setTimeRange('5years')}
+          >
+            Últims 5 anys
           </button>
         </div>
 
