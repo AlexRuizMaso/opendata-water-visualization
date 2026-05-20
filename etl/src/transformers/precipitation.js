@@ -125,21 +125,54 @@ class PrecipitationTransformer {
       };
     }
 
-    const values = records.map(r => r.value).filter(v => v !== null && v !== undefined);
-    const stations = [...new Set(records.map(r => r.stationName))];
-    const dates = [...new Set(records.map(r => r.date))];
+    // O(N) loop to compute values stats, min/max, and date ranges without call stack overhead
+    let sum = 0;
+    let count = 0;
+    let maxPrec = -Infinity;
+    let minPrec = Infinity;
+    let latestTime = -Infinity;
+    let oldestTime = Infinity;
+    const stationsSet = new Set();
+    const datesSet = new Set();
+    let positiveCount = 0;
+    let dryCount = 0;
+
+    for (let i = 0; i < records.length; i++) {
+      const r = records[i];
+      if (r.stationName) stationsSet.add(r.stationName);
+      if (r.date) {
+        datesSet.add(r.date);
+        const t = new Date(r.date).getTime();
+        if (!isNaN(t)) {
+          if (t > latestTime) latestTime = t;
+          if (t < oldestTime) oldestTime = t;
+        }
+      }
+
+      const v = r.value;
+      if (v !== null && v !== undefined && !isNaN(v)) {
+        sum += v;
+        count++;
+        if (v > maxPrec) maxPrec = v;
+        if (v < minPrec) minPrec = v;
+        if (v > 0) positiveCount++;
+        if (v === 0) dryCount++;
+      }
+    }
+
+    const avg = count > 0 ? sum / count : 0;
 
     return {
-      totalStations: stations.length,
-      averagePrecipitation: (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2),
-      maxPrecipitation: Math.max(...values).toFixed(2),
-      minPrecipitation: Math.min(...values).toFixed(2),
-      totalDaysCovered: dates.length,
-      daysWithPrecipitation: values.filter(v => v > 0).length,
-      drySituation: ((values.filter(v => v === 0).length / values.length) * 100).toFixed(2) + '%',
+      totalStations: stationsSet.size,
+      averagePrecipitation: avg.toFixed(2),
+      maxPrecipitation: (count > 0 ? maxPrec : 0).toFixed(2),
+      minPrecipitation: (count > 0 ? minPrec : 0).toFixed(2),
+      totalDaysCovered: datesSet.size,
+      daysWithPrecipitation: positiveCount,
+      drySituation: (count > 0 ? (dryCount / count) * 100 : 0).toFixed(2) + '%',
       dateRange: {
-        latest: new Date(Math.max(...records.map(r => new Date(r.date)))).toISOString(),
-        oldest: new Date(Math.min(...records.map(r => new Date(r.date)))).toISOString(),
+        latest: latestTime !== -Infinity ? new Date(latestTime).toISOString() : new Date().toISOString(),
+        oldest: oldestTime !== Infinity ? new Date(oldestTime).toISOString() : new Date().toISOString(),
       },
     };
   }

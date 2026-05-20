@@ -4,10 +4,11 @@ import ETLPipeline from './pipeline.js';
  * Main entry point for ETL execution
  */
 async function main() {
+  const fullSync = process.argv.includes('--full-sync');
   const pipeline = new ETLPipeline();
 
   try {
-    const result = await pipeline.run();
+    const result = await pipeline.run(false, fullSync);
 
     if (result.success) {
       console.log('✅ All ETL tasks completed successfully!');

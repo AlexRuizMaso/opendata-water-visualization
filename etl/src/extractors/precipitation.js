@@ -63,7 +63,7 @@ class PrecipitationExtractor {
    */
   async extractPrecipitationOnly() {
     try {
-      console.log('\n🔄 Extracting Precipitation Data (1300 - Precipitació diària)...');
+      console.log('\n🔄 Extracting Precipitation Data (1300 - Standard Daily)...');
 
       const response = await axios.get(this.apiUrl, {
         params: {
@@ -83,6 +83,69 @@ class PrecipitationExtractor {
       return response.data;
     } catch (error) {
       console.error('❌ Error extracting precipitation:', error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch ALL historical precipitation records (variable code 1300) from API via Socrata pagination
+   * @param {number} customTimeout - Timeout in milliseconds for each request
+   * @returns {Promise<Array>} Array of all historical precipitation records
+   */
+  async extractAllPrecipitationOnly(customTimeout = 60000) {
+    try {
+      console.log('\n🔄 Extracting ALL Precipitation Data (Historical Pagination Sync)...');
+      console.log(`API URL: ${this.apiUrl}`);
+
+      const limit = 50000;
+      let offset = 0;
+      let allRecords = [];
+      let hasMore = true;
+
+      while (hasMore) {
+        console.log(`   📥 Fetching offset ${offset}...`);
+        
+        if (offset > 0) {
+          await new Promise(resolve => setTimeout(resolve, 500)); // 500ms politeness delay
+        }
+
+        const response = await axios.get(this.apiUrl, {
+          params: {
+            $where: `codi_variable = '${this.precipitationVariableCode}'`,
+            $order: 'data_lectura DESC',
+            $limit: limit,
+            $offset: offset,
+          },
+          timeout: customTimeout,
+          headers: {
+            'User-Agent': 'Water-Visualization-ETL/1.0',
+          },
+        });
+
+        const records = response.data;
+        if (!Array.isArray(records) || records.length === 0) {
+          hasMore = false;
+        } else {
+          allRecords.push(...records);
+          console.log(`   ✅ Fetched ${records.length} records (Total so far: ${allRecords.length})`);
+          if (records.length < limit) {
+            hasMore = false;
+          } else {
+            offset += limit;
+          }
+        }
+      }
+
+      console.log(`🎉 Successfully extracted all ${allRecords.length} historical precipitation records`);
+      
+      if (allRecords.length > 0) {
+        const stations = [...new Set(allRecords.map(r => r.nom_estacio))];
+        console.log(`📍 Coverage from ${stations.length} weather stations`);
+      }
+
+      return allRecords;
+    } catch (error) {
+      console.error('❌ Error extracting all historical precipitation:', error.message);
       throw error;
     }
   }

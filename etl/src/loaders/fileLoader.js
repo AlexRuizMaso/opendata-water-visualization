@@ -53,6 +53,14 @@ class DataLoader {
       fs.writeFileSync(filepath, JSON.stringify(data, null, 2), 'utf8');
       console.log(`✅ Saved: ${filename} (${Math.round(fs.statSync(filepath).size / 1024)} KB)`);
 
+      // Write direct copy to frontend if it exists in the workspace
+      const frontendDataDir = path.resolve(this.dataDir, '../../frontend/public/data');
+      if (fs.existsSync(frontendDataDir)) {
+        const frontendFilepath = path.join(frontendDataDir, filename);
+        fs.writeFileSync(frontendFilepath, JSON.stringify(data, null, 2), 'utf8');
+        console.log(`💻 Synchronized directly with frontend: ${filename}`);
+      }
+
       return filepath;
     } catch (error) {
       console.error(`❌ Error saving ${filename}:`, error.message);
@@ -113,6 +121,73 @@ class DataLoader {
    */
   savePrecipitation(data) {
     return this.saveJSON(config.output.precipitation, data);
+  }
+
+  /**
+   * Save precipitation data split into yearly archive files
+   * @param {Array} allRecords - All precipitation records to group and save
+   */
+  savePrecipitationSplitByYear(allRecords) {
+    try {
+      if (!Array.isArray(allRecords)) {
+        throw new Error('Expected array of precipitation records');
+      }
+
+      console.log(`\n🗄️  Splitting and archiving ${allRecords.length} precipitation records by year...`);
+
+      // Group records by year
+      const byYear = {};
+      allRecords.forEach(r => {
+        if (r.date) {
+          const year = new Date(r.date).getFullYear();
+          if (!byYear[year]) {
+            byYear[year] = [];
+          }
+          byYear[year].push(r);
+        }
+      });
+
+      const frontendDataDir = path.resolve(this.dataDir, '../../frontend/public/data');
+
+      // Save each year as a separate file
+      Object.keys(byYear).forEach(year => {
+        const filename = `precipitation_${year}.json`;
+        const filepath = path.join(this.dataDir, filename);
+
+        const yearData = {
+          timestamp: new Date().toISOString(),
+          totalRecords: byYear[year].length,
+          precipitationRecords: byYear[year].length, // Consistent with frontend structure
+          statistics: {
+            totalStations: [...new Set(byYear[year].map(r => r.stationName))].length,
+            totalDaysCovered: [...new Set(byYear[year].map(r => r.date))].length,
+          },
+          records: byYear[year],
+          precipitationOnly: byYear[year],
+          metadata: {
+            version: '1.0',
+            dataType: 'precipitation_yearly',
+            year: parseInt(year),
+            lastUpdated: new Date().toISOString(),
+          }
+        };
+
+        // Write to local etl/data
+        fs.writeFileSync(filepath, JSON.stringify(yearData, null, 2), 'utf8');
+        console.log(`   💾 Saved yearly archive: ${filename} (${byYear[year].length} records, ${Math.round(fs.statSync(filepath).size / 1024)} KB)`);
+
+        // Write to frontend public directory if it exists
+        if (fs.existsSync(frontendDataDir)) {
+          const frontendFilepath = path.join(frontendDataDir, filename);
+          fs.writeFileSync(frontendFilepath, JSON.stringify(yearData, null, 2), 'utf8');
+          console.log(`   💻 Synchronized yearly archive directly with frontend: ${filename}`);
+        }
+      });
+
+    } catch (error) {
+      console.error('❌ Error saving year-split precipitation archives:', error.message);
+      throw error;
+    }
   }
 
   /**

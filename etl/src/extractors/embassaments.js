@@ -30,7 +30,7 @@ class EmbassamentExtractor {
    */
   async extract() {
     try {
-      console.log('\n🔄 Extracting Embassaments Data...');
+      console.log('\n🔄 Extracting Embassaments Data (Standard Daily)...');
       console.log(`API URL: ${this.apiUrl}`);
 
       const response = await axios.get(this.apiUrl, {
@@ -61,6 +61,70 @@ class EmbassamentExtractor {
       } else if (error.code === 'ECONNABORTED') {
         console.error('   Request timeout. API may be slow or unreachable.');
       }
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch ALL historical embassaments data from API via Socrata pagination
+   * @param {number} customTimeout - Timeout in milliseconds for each request
+   * @returns {Promise<Array>} Array of all historical embassament records
+   */
+  async extractAll(customTimeout = 60000) {
+    try {
+      console.log('\n🔄 Extracting ALL Embassaments Data (Historical Pagination Sync)...');
+      console.log(`API URL: ${this.apiUrl}`);
+
+      const limit = 50000;
+      let offset = 0;
+      let allRecords = [];
+      let hasMore = true;
+
+      while (hasMore) {
+        console.log(`   📥 Fetching offset ${offset}...`);
+        
+        if (offset > 0) {
+          await new Promise(resolve => setTimeout(resolve, 500)); // 500ms politeness delay
+        }
+
+        const response = await axios.get(this.apiUrl, {
+          params: {
+            $order: 'dia DESC',
+            $limit: limit,
+            $offset: offset,
+          },
+          timeout: customTimeout,
+          headers: {
+            'User-Agent': 'Water-Visualization-ETL/1.0',
+          },
+        });
+
+        const records = response.data;
+        if (!Array.isArray(records) || records.length === 0) {
+          hasMore = false;
+        } else {
+          allRecords.push(...records);
+          console.log(`   ✅ Fetched ${records.length} records (Total so far: ${allRecords.length})`);
+          if (records.length < limit) {
+            hasMore = false;
+          } else {
+            offset += limit;
+          }
+        }
+      }
+
+      console.log(`🎉 Successfully extracted all ${allRecords.length} historical embassament records`);
+      
+      if (allRecords.length > 0) {
+        const dates = [...new Set(allRecords.map(r => r.dia))];
+        console.log(`📅 Data spans ${dates.length} unique dates`);
+        console.log(`   Latest: ${dates[0]}`);
+        console.log(`   Oldest: ${dates[dates.length - 1]}`);
+      }
+
+      return allRecords;
+    } catch (error) {
+      console.error('❌ Error extracting all historical embassaments data:', error.message);
       throw error;
     }
   }

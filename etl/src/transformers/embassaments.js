@@ -118,20 +118,58 @@ class EmbassamentTransformer {
       };
     }
 
-    const percentages = records.map(r => r.volumePercentage);
-    const statuses = records.map(r => r.status);
+    // O(N) loop to compute percentages stats, min/max, status counts and date ranges without call stack overhead
+    let sum = 0;
+    let count = 0;
+    let maxPct = -Infinity;
+    let minPct = Infinity;
+    let latestTime = -Infinity;
+    let oldestTime = Infinity;
+    let criticalDams = 0;
+    let warningDams = 0;
+    let normalDams = 0;
+    let optimalDams = 0;
+    const damsSet = new Set();
+
+    for (let i = 0; i < records.length; i++) {
+      const r = records[i];
+      if (r.name) damsSet.add(r.name);
+      if (r.date) {
+        const t = new Date(r.date).getTime();
+        if (!isNaN(t)) {
+          if (t > latestTime) latestTime = t;
+          if (t < oldestTime) oldestTime = t;
+        }
+      }
+
+      const p = r.volumePercentage;
+      if (p !== null && p !== undefined && !isNaN(p)) {
+        sum += p;
+        count++;
+        if (p > maxPct) maxPct = p;
+        if (p < minPct) minPct = p;
+      }
+
+      if (r.status === 'critical') criticalDams++;
+      else if (r.status === 'warning') warningDams++;
+      else if (r.status === 'normal') normalDams++;
+      else if (r.status === 'optimal') optimalDams++;
+    }
+
+    const avg = count > 0 ? sum / count : 0;
 
     return {
-      averageVolumePercentage: (percentages.reduce((a, b) => a + b, 0) / percentages.length).toFixed(2),
-      minVolumePercentage: Math.min(...percentages).toFixed(2),
-      maxVolumePercentage: Math.max(...percentages).toFixed(2),
-      criticalDams: statuses.filter(s => s === 'critical').length,
-      normalDams: statuses.filter(s => s === 'normal').length,
-      optimalDams: statuses.filter(s => s === 'optimal').length,
-      uniqueEmbassaments: [...new Set(records.map(r => r.name))].length,
+      averageVolumePercentage: avg.toFixed(2),
+      minVolumePercentage: (count > 0 ? minPct : 0).toFixed(2),
+      maxVolumePercentage: (count > 0 ? maxPct : 0).toFixed(2),
+      criticalDams,
+      warningDams,
+      normalDams,
+      optimalDams,
+      uniqueEmbassaments: damsSet.size,
       dateRange: {
-        latest: new Date(Math.max(...records.map(r => new Date(r.date)))).toISOString(),
-        oldest: new Date(Math.min(...records.map(r => new Date(r.date)))).toISOString(),
+        latest: latestTime !== -Infinity ? new Date(latestTime).toISOString() : new Date().toISOString(),
+        oldest: oldestTime !== Infinity ? new Date(oldestTime).toISOString() : new Date().toISOString(),
       },
     };
   }
