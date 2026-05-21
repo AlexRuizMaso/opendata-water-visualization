@@ -11,33 +11,56 @@
 
 \section{Millores potencials}
 
-\textit{
-    [Descriure les millores que es podrien implementar en el futur per
-    millorar el sistema actual.]
-}
+El sistema actual compleix els objectius principals del projecte, però existeixen diverses millores que es podrien implementar per augmentar-ne la qualitat i la funcionalitat:
 
 \begin{itemize}
-    \item Millora 1
-    \item Millora 2
-    \item Millora 3
+    \item \textbf{Exportació de dades des del frontend}: Implementar funcionalitat per descarregar les dades visualitzades en formats CSV o JSON directament des de la interfície web, facilitant l'anàlisi externa per part de professionals i investigadors.
+    
+    \item \textbf{Tests unitaris automatitzats}: Tot i que s'ha documentat l'estructura de proves, es podria ampliar la cobertura de tests amb eines com Jest per al backend i React Testing Library per al frontend, integrant-los al workflow de CI/CD per a validació automàtica abans de cada desplegament.
+    
+    \item \textbf{Millora de l'accessibilitat}: Implementar text alternatiu més detallat per a les visualitzacions, millorar el suport per a lectors de pantalla i afegir navegació completa per teclat, seguint les pautes WCAG 2.1 nivell AA.
+    
+    \item \textbf{Optimització de rendiment amb grans volums}: Per a conjunts de dades superiors a 100.000 registres, es podria implementar virtualització de llistes i càrrega progressiva per evitar bloquejos del navegador.
+    
+    \item \textbf{Sistema de notificacions}: Afegir un mecanisme d'alertes per correu electrònic o notificacions push quan un embassament arribi a nivells crítics, permetent una resposta més ràpida davant situacions de sequera.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Ampliacions possibles}
 
-\textit{
-    [Descriure possibles ampliacions del projecte, com noves funcionalitats,
-    integracions amb altres fonts de dades, etc.]
-}
+Més enllà de les millores del sistema actual, es podrien explorar les següents ampliacions:
+
+\begin{itemize}
+    \item \textbf{Nous tipus de dades}: Integrar dades addicionals de les APIs de la Generalitat, com temperatures, humitat, cabals de rius, qualitat de l'aigua o nivells freàtics, proporcionant una visió més completa del cicle hídric.
+    
+    \item \textbf{Prediccions meteorològiques}: Connectar amb APIs de predicció meteorològica (com AEMET o OpenWeatherMap) per mostrar previsions de precipitació i permetre projeccions dels nivells d'embassaments a curt termini.
+    
+    \item \textbf{Base de dades real}: Substituir els fitxers JSON per una base de dades com PostgreSQL amb extensió PostGIS per a consultes geoespacials avançades, o TimescaleDB per a sèries temporals eficients. Això permetria consultes complexes sobre l'historial complet de dades.
+    
+    \item \textbf{Backend API}: Desenvolupar una API REST amb Node.js/Express que serveixi les dades al frontend, permetent filtratge avançat, agregacions en temps real i suport per a múltiples clients (web, mòbil, tercers).
+    
+    \item \textbf{Aplicació mòbil}: Desenvolupar una aplicació nativa o multiplataforma (React Native, Flutter) per permetre la consulta de dades hídriques des de dispositius mòbils amb notificacions push.
+    
+    \item \textbf{Anàlisi amb intel·ligència artificial}: Aplicar algoritmes d'aprenentatge automàtic per a la predicció de nivells d'embassaments basant-se en patrons històrics de precipitació, temperatura i consum, utilitzant models com ARIMA o xarxes neuronals recurrents.
+    
+    \item \textbf{Comparativa entre regions}: Ampliar el sistema per incloure dades d'altres comunitats autònomes o països, permetent comparatives i anàlisis regionals.
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Línies d'investigació futures}
 
-\textit{
-    [Si escau, proposar línies d'investigació futures relacionades amb
-    el projecte.]
-}
+El projecte obre diverses línies d'investigació interessants:
+
+\begin{itemize}
+    \item \textbf{Impacte del canvi climàtic en els recursos hídrics}: Utilitzar les dades acumulades pel sistema per analitzar tendències a llarg termini en els nivells d'embassaments i patrons de precipitació, correlacionant-los amb models climàtics per avaluar l'impacte del canvi climàtic a Catalunya.
+    
+    \item \textbf{Optimització de la gestió hídrica}: Desenvolupar algoritmes d'optimització per a la gestió de recursos hídrics basant-se en les dades de precipitació i consum, ajudant a prendre decisions sobre distribució d'aigua entre sectors (urbà, agrícola, industrial).
+    
+    \item \textbf{Visualització de dades ambientals}: Investigar noves tècniques de visualització per a dades ambientals complexes, com mapes de calor temporals, animacions d'evolució o realitat augmentada per a la representació geoespacial.
+    
+    \item \textbf{Participació ciutadana en la monitorització ambiental}: Explorar com les plataformes de codi obert poden facilitar la participació ciutadana en la recollida i validació de dades ambientals, creant xarxes de sensors ciutadans que complementin les xarxes oficials.
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
