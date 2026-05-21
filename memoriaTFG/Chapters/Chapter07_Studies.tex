@@ -9,42 +9,186 @@
 
 \section{Estructura del document}
 
-[En aquest capítol es descriu i justifica el maquinari, el programari
-i les llibreries utilitzats durant el desenvolupament del projecte.
-S'analitzen les alternatives considerades i es justifiquen les decisions
-preses.]
-
-%----------------------------------------------------------------------------------------
+En aquest capítol es descriu i justifica el maquinari, el programari i les llibreries utilitzats durant el desenvolupament del projecte. S'analitzen les alternatives considerades i es justifiquen les decisions preses.
 
 \section{Estudi de tecnologies}
 
-\textit{
-    [Analitzar les diferents tecnologies disponibles i justificar les
-    eleccions fetes per al projecte.]
-}
+Abans de decidir les tecnologies finals a utilitzar en el projecte, es va realitzar un estudi exhaustiu de les alternatives disponibles, valorant criteris com a maduresa, suport comunitari, adaptabilitat al problema del projecte, i compatibilitat amb llicències obertes que facilitin la divulgació del codi font.
 
-%----------------------------------------------------------------------------------------
+\subsection{Avaluació de frameworks frontend}
+
+Es van considerar diverses opcions per a la capa d'interfície d'usuari:
+\begin{itemize}
+    \item \textbf{React 18}: Triat finalment per a la seva arquitectura basada en components que facilita la reutilització i mantenibilitat. La introducció de característiques concurrents (automatic batching, startTransition) millora significativament la resposta durant operacions costoses com el processament de grans conjunts de dades. El seu ecosistem abundante de biblioteques de tercers (com Recharts i React Leaflet) va ser un factor decisiu.
+    
+    \item \textbf{Vue 3}: Va ser considerada per a la seva sintaxi intuïtiva i documentació exellent. Tot i que ofereix una courbe d'aprenentatge més suave, el seu ecosistem, encara que fort, és més petit que el de React, i la integració amb biblioteques especialitzades com Recharts no és tan directa.
+    
+    \item \textbf{Angular}: Encara que és un framework complet i ben estructurat, la seva complexitat i la sobrecàrrega introduïda pel seu sistema de dependències i el seu compilador AOT van ser considerades excesives per a les necessitats del projecte, que no requeria totes les funcionalitats d'una solució empresarial completa.
+    
+    \item \textbf{Svelte}: Va ser admirada per a la seva aproximació innovadora de compilar components a codi JavaScript pur, eliminant la necessitat d'una biblioteca de temps d'execució. Tot i que té avantatges en termes de mida de paquet i rendiment, el seu ecosistem més reduït i la menor familiaritat de l'equip de desenvolupament van prendre la decisió en favour de React.
+\end{itemize}
+
+La decisió final per a React es va basar en l'equilibri entre maduresa, suport comunitari, disponibilitat de biblioteques especialitzades per a visualització de dades i mapes, i la familiaritat preexistente de l'equip de desenvolupament.
+
+\subsection{Avaluació d'eines de building i empaquetatge}
+
+Per a l'eina de compilació i empaquetatge del frontend, es van considerar:
+\begin{itemize}
+    \item \textbf{Vite}: Triat per a la seva velocitat de compilació durant el desenvolupament, adquirida gràcies al seu ús natiu de mòduls ES, que elimina la necessitat de recompilar tot l'aplicació cada vegada que es fa un canvi. La seva configuració mínima i el seu rendiment comparable a webpack en producció van ser factors clau.
+    
+    \item \textbf{Webpack 5}: Encara que és una opció poderosa i molt flexible, la seva complexitat de configuració i el temps de compilació més llarg durant el desenvolupament van ser considerats desavantajats per a un projecte on la velocitat d'iteració és important.
+    
+    \item \textbf{Create React App (CRA)}: Va ser descartada per a la seva dependència de webpack subjacent i la manca de flexibilitat per a personalitzar el proces de build quan fos necessari.
+\end{itemize}
+
+Vite va ser seleccionat per a la seva combinació òptima de velocitat en desenvolupament, simplicitat de configuració, i rendiment de producció comparable a les alternatives més establertes.
+
+\subsection{Avaluació de biblioteques de visualització de dades}
+
+Per als components de gràfic, es van valorar:
+\begin{itemize}
+    \item \textbf{Recharts}: Triat per a la seva construcció sobre components React, que permet una integració natural amb l'estat i el comportament de l'aplicació. La seva altament configurable nature through props elimina la necessitat de modificar el codi font de la biblioteca per a la majoria de les personalitzacions. La seva dependència única de D3.js per als càlculs d'escala i geometria garanteix precisió matemàtica, mentre que la capa d'abstracció de React simplifica l'ús per a desenvolupadors web.
+    
+    \item \textbf{Chart.js}: És una biblioteca popular i lleugera, però la seva integració amb React requereix d'envoltors addicionals o biblioteques de tercers que poden introduir compleixitat. El seu model basat en canvas, mentre és eficient, ofereix menor flexibilitat per a la manipulació d'elements individuals comparat amb l'enfoc SVG-based de Recharts.
+    
+    \item \textbf{D3.js direct}: Tot i que ofereix el màxim control i flexibilitat, l'ús directe de D3.js requereix una gestió manual més complexa de l'actualització del DOM i la integració amb l'estat de React, cosa que pot provocar ineficiències i augmentar la complexitat del codi.
+\end{itemize}
+
+Recharts va ser escollit per a la seva equilibrada combinació de facilitat d'ús, flexibilitat, i integració natural amb l'ecosistem de React.
+
+\subsection{Avaluació de biblioteques de mapes}
+
+Per a la visualització geoespacial, es van considerar:
+\begin{itemize}
+    \item \textbf{Leaflet 1.x}: Triat per a la seva lleugesa (aprox. 38KB gzipped), simplicitat d'ús per a necessitats bàsiques de visualització geoespacial com la representació de punts amb popups, i la seva ampla gamma de plugins disponibles per a funcionalitats addicionals quan fos necessari. El seu model de llicenciament BSD és completament compatible amb l'objectiu de codi obert del projecte.
+    
+    \item \textbf{Mapbox GL JS}: Encara que ofereix capacitats avançades de renderitzat vectorial i estils personalitzables, el seu pes significativament major (més de 200KB gzipped) i el requeriment d'un token d'accés (encore que gratuït per a usos limitats) van ser considerats desavantajats per a les necessitats relativament simples del projecte.
+    
+    \item \textbf{OpenLayers}: És una biblioteca poderosa i completa, però la seva complexitat i pes superiors la fan inadequada per a un projecte que només necessita funcionalitats bàsiques de mapes com la visualització de punts i linies simples.
+\end{itemize}
+
+Leaflet va ser seleccionat per a la seva adequació perfecta als requisits del projecte, oferint totes les funcionalitats necessàries amb un pes mínim i una curva d'aprenentatge seva.
+
+\subsection{Avaluació de tecnologies per a l'ETL}
+
+Per al procés d'extracció, transformació i càrrega de dades, es van considerar:
+\begin{itemize}
+    \item \textbf{Node.js 18.x}: Triat per a la seva eficient I/O asíncrona, ideal per a operacions d'extracció de dades que impliquen esperes de xarxa. La seva arquitectura basada en esdeveniments permet gestionar múltiples peticions concurrent amb mínim overhead, i el seu ecosistem npm ofereix mòduls madurs per a virtualment qualsevol necessitat de backend (HTTP/HTTPS clients, processament JSON, maneig de fitxers, etc.). La seva versió LTS assegura actualitzacions de seguretat per a un període llarg.
+    
+    \item \textbf{Python 3.x}: Encara que és una alternativa popular per a processament de dades amb biblioteques com \texttt{pandas} i \texttt{requests}, la seva integració amb un frontend basat en JavaScript requeriria una capa addicional o l'ús d'una tecnologia different per al backend. Per a un projecte on tant el frontend com el backend es desenvolupen en JavaScript/TypeScript, Node.js va oferir una coherència millor i una reducció de la complexitat per a l'equip de desenvolupament.
+    
+    \item \textbf{Denon}: Encara que ofereix algunes millores de seguretat i un sistema de mòduls més modern, la seva immaturitat relativa comparada amb Node.js, el seu ecosistem més petit, i la falta d'eines de desenvolupament tan establertes van prendre la decisió en favour de la tecnologia més consolidada.
+\end{itemize}
+
+Node.js va ser escollit per a la seva maduresa, rendiment en operacions I/O, i la coherència amb la tecnologia seleccionada per al frontend, facilitant el coneixement compartit entre les diferents capes del projecte.
+
+\subsection{Avaluació d'eines per a l'automatització i CI/CD}
+
+Per a l'automatització de l'execució del pipeline ETL, es van considerar:
+\begin{itemize}
+    \item \textbf{GitHub Actions}: Triat per a la seva integració nativa amb repositoris GitHub, la seva sintaxi declarativa basada en YAML, i el seu generous allotjament gratuït per a repositoris públics (fins a 2.000 minuts al mes). La seva capacitat de desencadenar workflows basada en events (push, pull request, schedule) i la seva ampla biblioteca d'accions oficials i de la comunitat el converteixen en una elecció ideal per a tasques d'automatització com a l'execució periòdica d'un pipeline ETL.
+    
+    \item \textbf{GitLab CI/CD}: Encara que és una plataforma powerful i completa, requereix d'emmagatzemar el codi a GitLab, cosa que suposaria un canvi d'infraestructura i la pèrdua dels beneficis de l'ecosistem GitHub ja en ús per al control de versions i la col·laboració.
+    
+    \item \textbf{Jenkins}: Encara que és extremadament flexible i potent, la seva instal·lació, configuració i manteniment introdueixen una sobrecàrrega operativa incompatible amb l'objectiu de mantenir el projecte amb recursos mínims. La seva complexitat de configuració inicial i la necessitat d'un servidor dedicat el fan inadequat per a un projecte d'escala petita a mitja.
+    
+    \item \textbf{Cron jobs en un servidor tradicional}: Va ser descartat per a la necessitat d'infraestructura addicional i la complexitat de gestionar els secrets i les dependències en un entorn separat.
+\end{itemize}
+
+GitHub Actions va ser seleccionat per a la seva integració sense friccions amb el repositori existent, la seva facilitat d'ús, i el seu model de cost zero per a projectes públics.
 
 \section{Decisions de disseny}
 
-\textit{
-    [Descriure les decisions de disseny importants i la seva justificació.]
-}
-
-%----------------------------------------------------------------------------------------
+Una vegada seleccionades les tecnologies base, es van prendre diverses decisions d'arquitectura i disseny que van influir directament en la qualitat, mantenibilitat i escalabilitat del producte final.
 
 \subsection{Frontend}
 
-\textit{
-    [Justificar l'elecció de React, Vite, Recharts, Leaflet, etc.]
-}
+\subsubsection{Arquitectura basada en components}
+Es va decidir organitzar el frontend seguint una arquitectura strictament basada en components, on cada funció visual o d'interacció s'encapsula en un component independent. Aquesta decisió facilita:
+\begin{itemize}
+    \item La reutilització de components en diferents parts de l'aplicació (per exemple, les targetes d'informació que apareixen en múltiples dashboards)
+    \item La mantenibilitat, ja que els canvis en un component afecten mínim a altres parts del sistema
+    \item La possibilitat de proves unitàries més simples i eficients
+    \item La paralelització del desenvolupament, permetent treballar en components diferents simultàniament
+\end{itemize}
 
-%----------------------------------------------------------------------------------------
+\subsubsection{Gestió d'estat amb Zustand}
+Per a la gestió d'estat global de l'aplicació, es va seleccionar Zustand sobre alternatives com Redux o l'API de Context de React motivada per:
+\begin{itemize}
+    \item La seva simplicitat i mínim codi boilerplate necessari
+    \item La seva aprogramesa natural als hooks de React, seguint les millors pràctiques moderns
+    \item La seva capacitat d'escalar bé tant per a aplicacions petites com mitjanes sense introduir complexitat innecesària
+    \item La seva mida reduïda que no afecta significativament al pes del paquet final
+\end{itemize}
+
+El disseny del store va seguir el principi de tenir només l'estat absolutament necessari, evitant la duplicació de dades i mantindre la coherència a través d'accions ben definides.
+
+\subsubsection{Modalitat SCSS i metodologia BEM}
+Per als estils, es va decidir utilitzar SCSS amb la metodologia BEM (Block, Element, Modifier) per a:
+\begin{itemize}
+    \item Millorar la mantenibilitat mitjançant unaestructura clara i previsible
+    \item Evitar l'especificitat excesiva i les col·lisions de noms de classes
+    \item Facilitar la llegibilitat del codi CSS/SCSS gràcies a noms descrits i estructurats
+    \item Permetre una modificació segura d'estils sense por a efectes secundaris inesperats
+\end{itemize}
+
+Les variables de colors, tipografia i espaiament van centralitzar-se en un fitxer \texttt{\_variables.scss} per a facilitar canvis globals i assegurar la consistència visual a través de tota l'aplicació.
+
+\subsection{Disseny responsable i mobile-first}
+Totes les interfícies van ser dissenyades seguint els principis de disseny responsable, aprofitant les característiques flexibles de CSS Grid i Flexbox. L'enfoc mobile-first va assegurar que:
+\begin{itemize}
+    \item L'experiència d'usuari sigui òptima en dispositius móbils, on una part significativa del trànsit pot produzir-se
+    \item L'aplicació s'adapti graciosament a grans pantalles sense perdre funcionalitat o estètica
+    \item El codi següent es mantingui senzill i eviti duplicacions d'estils per a diferents breakpoints
+\end{itemize}
 
 \subsection{ETL i backend}
 
-\textit{
-    [Justificar l'elecció de Node.js, GitHub Actions, etc.]
-}
+\subsubsection{Patró de pipeline modular}
+L'ETL va ser dissenyat seguint el patró clàssic de pipeline modular, dividint el procés en tres fases diferents i independents:
+\begin{itemize}
+    \item \textbf{Extract}: Responsable únicament d'obtenir les dades des de les fonts externes (APIs Socrata)
+    \item \textbf{Transform}: Encara de processar, netejar i estructurar les dades obtingudes
+    \item \textbf{Load}: Encàrrec de desar les dades processades en el format i lloc desitjat
+\end{itemize}
 
-%----------------------------------------------------------------------------------------
+Aquesta separació de responsabilitats facilita:
+\begin{itemize}
+    \item Les proves unitàries, ja que cada fase es pot provar de forma independent
+    \item La mantenibilitat, ja que les modificacions en una fase no affecten necessàriament a les altres
+    \item L'escalabilitat, permetent l'addició de nous extractors o transformadors sense modificar l'existent
+    \item La reutilitzabilitat de components individuals en altres contextos
+\end{itemize}
+
+Cada fase comunica amb la següent a través d'interfícies ben definides (normalment objectes JavaScript o arrays), reduint l'acobliment i facilitant possibles canvis futur.
+
+\subsection{Maneig d'errors i logging}
+Es va decidir implementar un sistema de maneig d'errors centralitzat que:
+\begin{itemize}
+    \item Captura i registra els errors en cada fase del pipeline amb suficient detail per a facilitar la depuració
+    \item Proporciona missatges d'error clars i accionables quan sigui possible
+    \item No atura tot el pipeline per a errors no crítics en individuals (per exemple, l'error d'una mesura específica no atura el processament de totes les altres)
+    \item Registra informació de depuració útil sense exposar informació sensible
+\end{itemize}
+
+Es van utilitzar nivells de log diferents (error, warn, info, debug) permetent ajustar la quantitat d'informació registrada segons l'entorn d'execució (desenvolupament vs produccio).
+
+\subsection{Configuració externalitzada}
+Totes les paràmetres configurables (freqüències de consulta, URLs de serveis, etc.) es van externalitzar a fitxers d'entorn (\texttt{.env}) seguint les millors pràctiques per a:
+\begin{itemize}
+    \item Mantindre separada la configuració sensible del codi font principal
+    \item Facilitar el canvi d'entorn (desenvolupament, proves, producció) sense modificar el codi
+    \item Millorar la seguretat evacuant d'incloure possibles secrets en el repositori de codi
+    \item Adherir-se a l'estàndard de l'indústria per a la gestió de configuració en aplicacions Node.js
+\end{itemize}
+
+\subsection{Independentia del frontend i l'ETL}
+Una decisió important d'arquitectura va ser mantenir totalment independents el frontend i el pipeline ETL, comunicant-se únicament a través del repositori de Git on es deshen les dades JSON processades. Aquesta decisió va proporcionar:
+\begin{itemize}
+    \item Robustesa: Falls en un component no affecten necessàriament a l'altre (per exemple, si el frontend no pot carregar, l'ETL continua executant-se i desa les dades)
+    \item Flexibilitat de desplegament: Cada part es pot desplegar a la plataforma més adequada (GitHub Pages/Netlify per al frontend, qualsevol servidor Node.js per a l'ETL)
+    \item Equips de treball diferenciats: En el futur, differents equips podrien treballar en el frontend i l'ETL sense interferències
+    \item Escalabilitat diferencial: Cada component es pot escalar independentment segons les seues necessitats específiques
+\end{itemize}
+
+Aquesta independentia es va aconseguir fent que el frontend consumi les dades JSON directament des del repositori (via HTTP), en comptes d'exposar una API interna o utilitzar bases de dades compartides.
