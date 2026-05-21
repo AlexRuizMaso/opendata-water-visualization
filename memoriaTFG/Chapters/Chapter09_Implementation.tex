@@ -15,7 +15,7 @@ L'entorn de desenvolupament del projecte s'ha configurat sobre un ordinador port
 
 El control de versions s'ha gestionat amb Git 2.39, seguint un model de branques adaptat de GitFlow amb les branques \texttt{main}, \texttt{develop} i branques de característica de vida curta. El repositori remot s'ha allotjat a GitHub, facilitant la còpia de seguretat, la col·laboració i la integració contínua amb GitHub Actions.
 
-Per al backend i l'ETL s'ha utilitzat Node.js v18.16.0 com a runtime de JavaScript, amb npm v9.5.1 com a gestor de paquets. Per al frontend, s'ha emprat React v18.2.0 amb Vite v5.0.0 com a bundler, Chrome v112 amb DevTools per a depuració, i Sass v1.77.0 com a preprocessador CSS.
+Per al backend i l'ETL s'ha utilitzat Node.js v18.16.0 com a runtime de JavaScript, amb npm v9.5.1 com a gestor de paquets. Per al frontend, s'ha emprat React v18.2.0 amb Vite v5.4.21 com a bundler, Chrome v112 amb DevTools per a depuració, i Sass v1.99.0 com a preprocessador CSS.
 
 %----------------------------------------------------------------------------------------
 
@@ -89,7 +89,7 @@ Els components dels quatre dashboards es carreguen de forma asíncrona amb \text
 El servei \texttt{waterDataService.js} encapsula tota la lògica d'accés a les dades. Utilitza \texttt{axios} per carregar els fitxers JSON generats per l'ETL des del directori \texttt{/public/data/}, i proporciona mètodes per:
 
 \begin{itemize}
-    \item Obtener dades d'embassaments, precipitació i metadades.
+    \item Obtenir dades d'embassaments, precipitació i metadades.
     \item Filtrar per rang de dates i per estació meteorològica.
     \item Agrupar embassaments per nom i obtenir els registres més recents.
     \item Calcular colors d'estat segons el percentatge d'ocupació.

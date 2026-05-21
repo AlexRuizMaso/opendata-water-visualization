@@ -24,7 +24,7 @@ document.
 \end{itemize}
 
 \subsection{Eines de treball}
-Les eines empleades durant el desenvolupament cobreixen tot el ciclo de vida del programari, des de la concepció fins al manteniment:
+Les eines empleades durant el desenvolupament cobreixen tot el cicle de vida del programari, des de la concepció fins al manteniment:
 \begin{itemize}
     \item \textbf{Gestió de projectes}: Trello per a l'organització de tasques i seguiment del progrés, amb tres llistes principals (Per a fer, En progrés, Finalitzat) i etiquetes per a prioritat i tipologia de tasca.
     \item \textbf{Control de versions}: Git 2.39 amb model de branques basat en GitFlow adaptat (branques \texttt{main}, \texttt{develop}, i branques de característica breus de vida).
@@ -38,10 +38,10 @@ Les eines empleades durant el desenvolupament cobreixen tot el ciclo de vida del
     \item \textbf{Entorn de desenvolupament frontend}: 
           \begin{itemize}
               \item React v18.2.0 com a framework d'interfície d'usuari
-              \item Vite v4.2.1 com a bundler i servidor de desenvolupament
+               \item Vite v5.4.21 com a bundler i servidor de desenvolupament
               \item Chrome v112 amb DevTools per a depuració i proves de rendiment
           \end{itemize}
-    \item \textbf{Eines de prove}:
+    \item \textbf{Eines de prova}:
           \begin{itemize}
               \item Jest v29.5.0 per a proves unitàries i d'integració del backend
               \item React Testing Library v5.14.0 per a proves del frontend
@@ -56,14 +56,14 @@ Les eines empleades durant el desenvolupament cobreixen tot el ciclo de vida del
 \end{itemize}
 
 \subsection{Punt de partida}
-El punt de partida del projecte es va definir durant les primers tres dies de desenvolupament i va consistir en:
+El punt de partida del projecte es va definir durant les primeres tres dies de desenvolupament i va consistir en:
 \begin{itemize}
     \item Un ordinador portàtil personal amb processador Intel Core i7-11800H, 16GB RAM, i SSD de 512GB, executant Windows 11 Home 22H2.
     \item Accés a Internet amb mitjana de 100Mbps de descàrrega i 20Mbps de pujada, suficient per a les proves inicials d'API.
     \item Coneixements previs en:
           \begin{itemize}
               \item Programació web full-stack (HTML/CSS/JS, React, Node.js)
-              \item Bases de dades relationales i no relationales
+               \item Bases de dades relacionals i no relacionals
               \item Metodologies de desenvolupament de programari (cascada i àgil)
               \item Principis de disseny d'interfície d'usuari i experiència d'usuari
           \end{itemize}
@@ -112,11 +112,11 @@ Les tecnologies seleccionades per a la implementació del projecte van ser escol
 \subsubsection{Frontend i visualització}
 \begin{itemize}
     \item \textbf{React 18.x}: Triat per a la seva arquitectura basada en components, que facilita la creació d'interfícies d'usuari complexes i mantenibles. La introducció de característiques concurrents en la versió 18 (com a \texttt{startTransition} i l'ús automàtic de \textit{batching}) millora la capacitat de resposta de l'interfície durant operacions costoses com el processament de grans conjunts de dades. La seva declarativitat redueix la complexitat mental necessària per a preveure estats d'interfície, i l'ecosistema abundant de components de tercers accelera el desenvolupament.
-    \item \textbf{Vite 4.x}: Escollit com a bundler per a la seva velocitat de compilació durant el desenvolupament (gràcies a l'ús natiu d'ESM) i la seva configuració mínima necessària. La seva empremta de mida de paquet de producció és comparable a la d'altres bundlers establerts, i el seu suport integrat per a mòduls CSS i assets estàtics ho forma una solució completa sense necessitat de plugins addicionals.
+    \item \textbf{Vite 5.x}: Escollit com a bundler per a la seva velocitat de compilació durant el desenvolupament (gràcies a l'ús natiu d'ESM) i la seva configuració mínima necessària. La seva empremta de mida de paquet de producció és comparable a la d'altres bundlers establerts, i el seu suport integrat per a mòduls CSS i assets estàtics ho forma una solució completa sense necessitat de plugins addicionals.
     \item \textbf{React Router 6.x}: Implementat per a la gestió de navegació entre els quatre dashboards, escollit per a la seva API intuïtiva basada en hooks, el seu suport nadiu per a càrrega diferida de components (code splitting), i la seva mida reduïda comparada amb alternatives com a Reach Router.
     \item \textbf{Recharts 2.x}: Biblioteca de gràfics seleccionada per a la seva construcció sobre components React, facilitant la integració amb l'estat i el comportament de l'aplicació. Els seus components són altament configurables via props, permetent una personalització fina sense necessitat de modificar el codi font de la biblioteca. La seva dependència única de D3.js per als càlculs de l'escala i geometria garanteix precisió matemàtica, mentre que la seva capa d'abstracció de React simplifica l'ús per a desenvolupadors web.
     \item \textbf{Leaflet 1.x}: Biblioteca de mapes triada per a la seva lleugesa (38KB gzipped), la seva simplicitat d'ús per a necessitats bàsiques de visualització geoespacial, i la seva àmplia gamma de plugins disponibles. Va ser preferida sobre alternatives més pesades com a Mapbox GL JS o OpenLayers per a la seva suficient per als requisits del projecte (visualització de punts amb popups) i el seu model de llicenciament BSD, completament compatible amb l'objectiu de codi obert.
-    \item \textbf{Sass 1.60}: Preprocessador CSS utilitzat per a la seva capacitat de niament, variables, i mixins, que milloren significativament la mantenibilitat i la consistència de l'estil en projectes de mida mitjana a gran. La seva sintaxi SCSS, compatible amb CSS estàndard, va permetre una migració progressiva des de fitxers .css existents sense perdre funcionalitat.
+    \item \textbf{Sass 1.99}: Preprocessador CSS utilitzat per a la seva capacitat de niament, variables, i mixins, que milloren significativament la mantenibilitat i la consistència de l'estil en projectes de mida mitjana a gran. La seva sintaxi SCSS, compatible amb CSS estàndard, va permetre una migració progressiva des de fitxers .css existents sense perdre funcionalitat.
 \end{itemize}
 
 \subsubsection{Infraestructura i automatització}

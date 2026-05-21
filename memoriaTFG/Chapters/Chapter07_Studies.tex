@@ -21,10 +21,10 @@ Es van considerar diverses opcions per a la capa d'interfície d'usuari:
     
     \item \textbf{Angular}: Encara que és un framework complet i ben estructurat, la seva complexitat i la sobrecàrrega introduïda pel seu sistema de dependències i el seu compilador AOT van ser considerades excessives per a les necessitats del projecte, que no requeria totes les funcionalitats d'una solució empresarial completa.
     
-    \item \textbf{Svelte}: Va ser admirada per a la seva aproximació innovadora de compilar components a codi JavaScript pur, eliminant la necessitat d'una biblioteca de temps d'execució. Tot i que té avantatges en termes de mida de paquet i rendiment, el seu ecosistem més reduït i la menor familiaritat de l'equip de desenvolupament van prendre la decisió en favour de React.
+    \item \textbf{Svelte}: Va ser admirada per a la seva aproximació innovadora de compilar components a codi JavaScript pur, eliminant la necessitat d'una biblioteca de temps d'execució. Tot i que té avantatges en termes de mida de paquet i rendiment, el seu ecosistema més reduït i la menor familiaritat de l'equip de desenvolupament van prendre la decisió en favor de React.
 \end{itemize}
 
-La decisió final per a React es va basar en l'equilibri entre maduresa, suport comunitari, disponibilitat de biblioteques especialitzades per a visualització de dades i mapes, i la familiaritat preexistente de l'equip de desenvolupament.
+La decisió final per a React es va basar en l'equilibri entre maduresa, suport comunitari, disponibilitat de biblioteques especialitzades per a visualització de dades i mapes, i la familiaritat preexistent de l'equip de desenvolupament.
 
 \subsection{Avaluació d'eines de building i empaquetatge}
 
@@ -43,14 +43,14 @@ Vite va ser seleccionat per a la seva combinació òptima de velocitat en desenv
 
 Per als components de gràfic, es van valorar:
 \begin{itemize}
-    \item \textbf{Recharts}: Triat per a la seva construcció sobre components React, que permet una integració natural amb l'estat i el comportament de l'aplicació. La seva altament configurable nature through props elimina la necessitat de modificar el codi font de la biblioteca per a la majoria de les personalitzacions. La seva dependència única de D3.js per als càlculs d'escala i geometria garanteix precisió matemàtica, mentre que la capa d'abstracció de React simplifica l'ús per a desenvolupadors web.
+    \item \textbf{Recharts}: Triat per a la seva construcció sobre components React, que permet una integració natural amb l'estat i el comportament de l'aplicació. La seva naturalesa altament configurable a través de props elimina la necessitat de modificar el codi font de la biblioteca per a la majoria de les personalitzacions. La seva dependència única de D3.js per als càlculs d'escala i geometria garanteix precisió matemàtica, mentre que la capa d'abstracció de React simplifica l'ús per a desenvolupadors web.
     
     \item \textbf{Chart.js}: És una biblioteca popular i lleugera, però la seva integració amb React requereix d'envoltors addicionals o biblioteques de tercers que poden introduir complexitat. El seu model basat en canvas, mentre és eficient, ofereix menor flexibilitat per a la manipulació d'elements individuals comparat amb l'enfocament SVG-based de Recharts.
     
     \item \textbf{D3.js direct}: Tot i que ofereix el màxim control i flexibilitat, l'ús directe de D3.js requereix una gestió manual més complexa de l'actualització del DOM i la integració amb l'estat de React, cosa que pot provocar ineficiències i augmentar la complexitat del codi.
 \end{itemize}
 
-Recharts va ser escollit per a la seva equilibrada combinació de facilitat d'ús, flexibilitat, i integració natural amb l'ecosistem de React.
+Recharts va ser escollit per a la seva equilibrada combinació de facilitat d'ús, flexibilitat, i integració natural amb l'ecosistema de React.
 
 \subsection{Avaluació de biblioteques de mapes}
 
@@ -69,7 +69,7 @@ Leaflet va ser seleccionat per a la seva adequació perfecta als requisits del p
 
 Per al procés d'extracció, transformació i càrrega de dades, es van considerar:
 \begin{itemize}
-    \item \textbf{Node.js 18.x}: Triat per a la seva eficient I/O asíncrona, ideal per a operacions d'extracció de dades que impliquen esperes de xarxa. La seva arquitectura basada en esdeveniments permet gestionar múltiples peticions concurrent amb mínim overhead, i el seu ecosistem npm ofereix mòduls madurs per a virtualment qualsevol necessitat de backend (HTTP/HTTPS clients, processament JSON, maneig de fitxers, etc.). La seva versió LTS assegura actualitzacions de seguretat per a un període llarg.
+    \item \textbf{Node.js 18.x}: Triat per a la seva eficient I/O asíncrona, ideal per a operacions d'extracció de dades que impliquen esperes de xarxa. La seva arquitectura basada en esdeveniments permet gestionar múltiples peticions concurrent amb mínim overhead, i el seu ecosistema npm ofereix mòduls madurs per a virtualment qualsevol necessitat de backend (HTTP/HTTPS clients, processament JSON, maneig de fitxers, etc.). La seva versió LTS assegura actualitzacions de seguretat per a un període llarg.
     
     \item \textbf{Python 3.x}: Encara que és una alternativa popular per a processament de dades amb biblioteques com \texttt{pandas} i \texttt{requests}, la seva integració amb un frontend basat en JavaScript requeriria una capa addicional o l'ús d'una tecnologia diferent per al backend. Per a un projecte on tant el frontend com el backend es desenvolupen en JavaScript/TypeScript, Node.js va oferir una coherència millor i una reducció de la complexitat per a l'equip de desenvolupament.
     
@@ -114,7 +114,7 @@ Per a la gestió d'estat global de l'aplicació, es va seleccionar Zustand sobre
     \item La seva simplicitat i mínim codi boilerplate necessari
     \item La seva adaptació natural als hooks de React, seguint les millors pràctiques modernes
     \item La seva capacitat d'escalar bé tant per a aplicacions petites com mitjanes sense introduir complexitat innecessària
-    \item La seva mida reduïda que no afecta significativament al pes del paquet final
+    \item La seva mida reduïda que no afecta significativament en el pes del paquet final
 \end{itemize}
 
 El disseny del store va seguir el principi de tenir només l'estat absolutament necessari, evitant la duplicació de dades i mantenir la coherència a través d'accions ben definides.
@@ -123,7 +123,7 @@ El disseny del store va seguir el principi de tenir només l'estat absolutament 
 Per als estils, es va decidir utilitzar SCSS amb la metodologia BEM (Block, Element, Modifier) per a:
 \begin{itemize}
     \item Millorar la mantenibilitat mitjançant una estructura clara i previsible
-    \item Evitar l'especificitat excesiva i les col·lisions de noms de classes
+    \item Evitar l'especificitat excessiva i les col·lisions de noms de classes
     \item Facilitar la llegibilitat del codi CSS/SCSS gràcies a noms descriptius i estructurats
     \item Permetre una modificació segura d'estils sense por a efectes secundaris inesperats
 \end{itemize}
@@ -167,18 +167,18 @@ Es va decidir implementar un sistema de maneig d'errors centralitzat que:
     \item Registra informació de depuració útil sense exposar informació sensible
 \end{itemize}
 
-Es van utilitzar nivells de log diferents (error, warn, info, debug) permetent ajustar la quantitat d'informació registrada segons l'entorn d'execució (desenvolupament vs produccio).
+Es van utilitzar nivells de log diferents (error, warn, info, debug) permetent ajustar la quantitat d'informació registrada segons l'entorn d'execució (desenvolupament vs producció).
 
 \subsection{Configuració externalitzada}
-Totes les paràmetres configurables (freqüències de consulta, URLs de serveis, etc.) es van externalitzar a fitxers d'entorn (\texttt{.env}) seguint les millors pràctiques per a:
+Tots els paràmetres configurables (freqüències de consulta, URLs de serveis, etc.) es van externalitzar a fitxers d'entorn (\texttt{.env}) seguint les millors pràctiques per a:
 \begin{itemize}
-    \item Mantindre separada la configuració sensible del codi font principal
+    \item Mantenir separada la configuració sensible del codi font principal
     \item Facilitar el canvi d'entorn (desenvolupament, proves, producció) sense modificar el codi
-    \item Millorar la seguretat evacuant d'incloure possibles secrets en el repositori de codi
+    \item Millorar la seguretat evitant d'incloure possibles secrets en el repositori de codi
     \item Adherir-se a l'estàndard de la indústria per a la gestió de configuració en aplicacions Node.js
 \end{itemize}
 
-\subsection{Independentia del frontend i l'ETL}
+\subsection{Independència del frontend i l'ETL}
 Una decisió important d'arquitectura va ser mantenir totalment independents el frontend i el pipeline ETL, comunicant-se únicament a través del repositori de Git on es desen les dades JSON processades. Aquesta decisió va proporcionar:
 \begin{itemize}
     \item Robustesa: Fallades en un component no afecten necessàriament a l'altre (per exemple, si el frontend no pot carregar, l'ETL continua executant-se i desa les dades)
