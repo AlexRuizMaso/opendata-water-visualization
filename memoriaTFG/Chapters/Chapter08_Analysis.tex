@@ -9,83 +9,371 @@
 
 \section{Estructura del document}
 
-[En aquest capítol s'analitzen les deduis extretes des del procés de desenvolupament i es presenta la Feina realitzada en el desenvolupament del projecte.]
+En aquest capítol s'analitzen les deduccions extretes del procés de desenvolupament i es presenta la feina realitzada en el disseny del sistema. S'hi descriuen els tipus d'usuari, l'anàlisi detallada dels requisits, els casos d'ús principals, el model conceptual de dades, l'arquitectura del sistema, el disseny de les interfícies d'usuari i els patrons de disseny aplicats.
 
 %----------------------------------------------------------------------------------------
 
 \section{Anàlisi del sistema}
 
-\textit{
-    [Estudiar de manera detallada les necessitats del sistema.]
-}
+El sistema de visualització de dades hídriques de Catalunya neix de la necessitat de proporcionar accés públic, intuïtiu i actualitzat a les dades d'embassaments i precipitació que la Generalitat de Catalunya publica a través de les seves APIs Socrata. L'anàlisi detallada de les necessitats del sistema revela diversos aspectes crítics:
+
+\begin{itemize}
+    \item \textbf{Accessibilitat de les dades}: Les dades hídriques estan disponibles però disperses en múltiples endpoints. Els usuaris han de navegar per diferents portals i formats per obtenir una visió completa. El sistema ha de consolidar aquesta informació en una única interfície coherent.
+    
+    \item \textbf{Actualització contínua}: Els nivells dels embassaments s'actualitzen cada 15 minuts i les dades de precipitació cada hora. El sistema ha de garantir que la informació visualitzada sigui sempre la més recent possible sense requerir intervenció manual.
+    
+    \item \textbf{Correlació de dades}: Per entendre l'evolució dels recursos hídrics és essencial poder correlacionar els nivells d'embassaments amb les dades de precipitació de les estacions meteorològiques més properes.
+    
+    \item \textbf{Detecció de situacions crítiques}: En períodes de sequera, és crucial poder identificar ràpidament quins embassaments es troben en situacions de risc mitjançant indicadors visuals clars.
+    
+    \item \textbf{Visualització geogràfica}: La ubicació geogràfica dels embassaments i estacions meteorològiques és rellevant per entendre la distribució territorial dels recursos hídrics i les precipitacions.
+\end{itemize}
+
+Aquestes necessitats han portat al disseny d'un sistema amb quatre panells de visualització diferenciats, una canonada ETL automatitzada i una arquitectura que separa clarament el processament de dades de la seva presentació.
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Tipus d'usuari i rols}
 
-\textit{
-    [Descriure els diferents tipus d'usuari i el seu rol en l'aplicació.]
-}
+El sistema està dissenyat per atendre tres perfils d'usuari principals, cadascun amb necessitats i nivells de coneixement tècnic diferents:
+
+\begin{enumerate}
+    \item \textbf{Ciutadà interessat}: Usuari no tècnic que vol consultar l'estat actual dels embassaments de Catalunya, entendre si hi ha situacions de sequera i visualitzar tendències bàsiques. Necessita interfícies intuïtives, indicadors visuals clars (com els semàfors d'alerta) i explicacions accessibles. Aquest perfil representa la majoria d'usuaris potencials.
+    
+    \item \textbf{Professional o investigador}: Usuari amb coneixements tècnics que necessita accedir a dades detallades, correlacionar variables (precipitació vs nivells), analitzar tendències temporals i possiblement exportar dades per a anàlisis externes. Valorarà la precisió de les dades, la possibilitat de filtrar per períodes i estacions, i la qualitat de les visualitzacions.
+    
+    \item \textbf{Administrador del sistema}: Responsable de mantenir la canonada ETL, verificar que les actualitzacions automàtiques funcionen correctament, i assegurar la disponibilitat del servei. Necessita logs detallats, mecanismes de monitorització i la capacitat de reexecutar processos en cas d'error.
+\end{enumerate}
+
+El disseny del sistema prioritza l'experiència del ciutadà interessat, assegurant que totes les funcionalitats siguin accessibles sense coneixements tècnics previs, mentre que els perfils professionals troben eines d'anàlisi més avançades als panells de correlació i alertes.
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Anàlisi de requisits}
 
-\textit{
-    [Analitzar i explicar què suposa cada requisit, quines dades caldrà
-    guardar, què implica, etc.]
-}
+A partir dels requisits definits al Capítol 6, s'ha realitzat una anàlisi detallada de què implica cada requisit i quines dades cal gestionar:
+
+\subsubsection{Requisits funcionals}
+
+\textbf{RF-1 (Extracció automàtica de dades)}: Implica la implementació de clients HTTP que realitzin peticions GET als endpoints de Socrata per als datasets d'embassaments i precipitació. Cal gestionar la paginació de resultats, els límits de taxa (1.000 peticions/hora), i els possibles errors de xarxa. Les dades obtingudes inclouen per a cada embassament: nom, percentatge d'ocupació, volum embassat (hm³), cota (msnm), i data d'actualització. Per a les estacions meteorològiques: codi, nom, precipitació (mm), i data de mesura.
+
+\textbf{RF-2 (Transformació i neteja)}: Les dades brutes de Socrata contenen inconsistències com valors nuls, formats de data heterogenis, i unitats que poden requerir conversió. El transformador ha de normalitzar totes les dates a format ISO 8601, eliminar registres duplicats, gestionar valors manquents (marcant-los explícitament), i estructurar les dades en un format JSON estàndard que el frontend pugui consumir directament.
+
+\textbf{RF-3 (Emmagatzematge en JSON versionat)}: Les dades processades es desen en fitxers JSON dins del repositori Git, amb timestamps que permeten mantenir l'historial. Això implica una estructura de carpetes clara (\texttt{/public/data/}) i noms de fitxers que indiquin el tipus de dada i la data. El versionat amb Git proporciona automàticament traçabilitat de canvis.
+
+\textbf{RF-4 (Quatre panells de visualització)}: Cada panell requereix components React específics:
+\begin{itemize}
+    \item Panell 1 (Mapa): Integració de Leaflet amb markers per a cada embassament i estació, popups informatius, i KPIs dinàmics.
+    \item Panell 2 (Evolució temporal): Gràfics de línies amb Recharts, selectors de data, i funcionalitat de comparació múltiple.
+    \item Panell 3 (Correlació): Gràfics de dispersió amb càlcul del coeficient de Pearson i selecció d'estacions.
+    \item Panell 4 (Alertes): Taula amb indicadors semàfor basats en thresholds predefinits i fletxes de tendència.
+\end{itemize}
+
+\textbf{RF-5 (Detecció de sequera)}: Requereix implementar la lògica de classificació basada en percentatge d'ocupació: crític (<20\%), avís (20-50\%), normal (50-75\%), òptim (>75\%). A més, s'ha afegit un algoritme de regressió lineal sobre les últimes 6 mesures per detectar tendències de millora o deteriorament.
+
+\textbf{RF-6 (Automatització amb GitHub Actions)}: Implica la configuració d'un workflow YAML amb programació cron (0 2 * * *) que executi l'script ETL diàriament. Cal gestionar el checkout del repositori, la instal·lació de dependències, l'execució de l'script, i el commit/push dels nous fitxers JSON.
+
+\textbf{RF-7 (Exportació de dades)}: Funcionalitat opcional que permetria descarregar les dades visualitzades en format CSV o JSON. Això requereix implementar funcions de conversió i generació de fitxers descarregables al frontend.
+
+\subsubsection{Requisits no funcionals}
+
+\textbf{RNF-1 (Rendiment)}: L'ETL ha de processar >50.000 registres en <5 minuts. Això implica optimitzar les peticions HTTP (paral·lelisme quan sigui possible), minimitzar el processament redundant, i utilitzar operacions de fitxer eficients. El frontend ha de carregar en <3 segons, requerint optimitzacions com la minificació de bundles, la compressió d'assets, i el carregament diferit de components no crítics.
+
+\textbf{RNF-2 (Usabilitat)}: La interfície ha de ser intuïtiva per a usuaris no tècnics. Això implica navegació clara amb etiquetes descriptives, elements interactius amb feedback visual immediat, i disseny responsive que funcioni en dispositius mòbils i d'escriptori.
+
+\textbf{RNF-3 (Seguretat)}: Totes les connexions a les APIs són HTTPS. No s'emmagatzemen credencials al repositori (les APIs són públiques). La configuració externalitzada amb \texttt{.env} permet gestionar paràmetres sensibles si calgués en el futur.
+
+\textbf{RNF-4 (Portabilitat)}: El frontend és una aplicació estàtica que es pot desplegar a qualsevol servidor web (GitHub Pages, Vercel, Netlify). L'ETL és un script Node.js que pot executar-se en qualsevol entorn amb Node.js 18+.
+
+\textbf{RNF-5 (Mantenibilitat)}: Codi modular amb separació clara de responsabilitats, convencions de nomenclatura consistents, comentaris explicatius, i documentació tècnica actualitzada.
+
+\textbf{RNF-6 (Escalabilitat)}: L'arquitectura permet afegir nous tipus de dades o augmentar el volum sense redesign complet. La separació ETL/frontend i l'ús de fitxers JSON com a intermediari faciliten aquesta escalabilitat.
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Casos d'ús}
 
-\textit{
-    [Descriure els principals casos d'ús amb diagrames UML i fitxes de
-    casos d'ús (actor, passos principals, excepcions, etc.).]
-}
+Els principals casos d'ús del sistema es descriuen a continuació, organitzats per actor principal:
+
+\subsubsection{CU-1: Visualitzar l'estat actual dels embassaments al mapa}
+
+\begin{itemize}
+    \item \textbf{Actor}: Ciutadà interessat, Professional
+    \item \textbf{Precondició}: Les dades han estat actualitzades per l'ETL
+    \item \textbf{Pas principal}:
+    \begin{enumerate}
+        \item L'usuari accedeix al Panell 1 (Mapa)
+        \item El sistema carrega les dades JSON dels embassaments
+        \item El sistema mostra un mapa interactiu amb markers per a cada embassament
+        \item Cada marker mostra el nom i el percentatge d'ocupació actual
+        \item L'usuari pot clicar en un marker per veure informació detallada (volum, cota, última actualització)
+    \end{enumerate}
+    \item \textbf{Excepcions}: Si les dades no estan disponibles, es mostra un missatge d'error amb opció de reintentar
+\end{itemize}
+
+\subsubsection{CU-2: Consultar l'evolució temporal d'un embassament}
+
+\begin{itemize}
+    \item \textbf{Actor}: Ciutadà interessat, Professional
+    \item \textbf{Precondició}: Hi ha dades històriques disponibles
+    \item \textbf{Pas principal}:
+    \begin{enumerate}
+        \item L'usuari accedeix al Panell 2 (Evolució temporal)
+        \item El sistema mostra un gràfic de línies amb l'evolució del nivell
+        \item L'usuari selecciona un rang de dates amb el control de filtratge
+        \item El gràfic s'actualitza mostrant només el període seleccionat
+        \item L'usuari pot seleccionar múltiples embassaments per comparar-los
+    \end{enumerate}
+    \item \textbf{Excepcions}: Si el rang de dates no té dades, es mostra un missatge informatiu
+\end{itemize}
+
+\subsubsection{CU-3: Analitzar la correlació entre precipitació i nivells}
+
+\begin{itemize}
+    \item \textbf{Actor}: Professional, Investigador
+    \item \textbf{Precondició}: Hi ha dades d'embassaments i precipitació disponibles
+    \item \textbf{Pas principal}:
+    \begin{enumerate}
+        \item L'usuari accedeix al Panell 3 (Correlació)
+        \item L'usuari selecciona un embassament i una estació meteorològica
+        \item El sistema calcula i mostra un gràfic de dispersió amb les dues variables
+        \item El sistema mostra el coeficient de correlació de Pearson calculat
+        \item L'usuari pot ajustar el període temporal per veure com varia la correlació
+    \end{enumerate}
+    \item \textbf{Excepcions}: Si no hi ha dades solapades entre l'embassament i l'estació, es mostra un avís
+\end{itemize}
+
+\subsubsection{CU-4: Consultar l'estat d'alerta de sequera}
+
+\begin{itemize}
+    \item \textbf{Actor}: Ciutadà interessat, Professional
+    \item \textbf{Precondició}: Les dades han estat processades per l'ETL
+    \item \textbf{Pas principal}:
+    \begin{enumerate}
+        \item L'usuari accedeix al Panell 4 (Alertes)
+        \item El sistema mostra una taula amb tots els embassaments
+        \item Cada embassament té un indicador semàfor segons el seu percentatge d'ocupació
+        \item L'usuari pot veure la tendència (millora/deteriorament) amb una fletxa
+        \item El sistema mostra un resum global de l'estat de sequera
+    \end{enumerate}
+    \item \textbf{Excepcions}: Si un embassament no té dades recents, es marca com a "dades no disponibles"
+\end{itemize}
+
+\subsubsection{CU-5: Executar l'actualització automàtica de dades}
+
+\begin{itemize}
+    \item \textbf{Actor}: Sistema (GitHub Actions)
+    \item \textbf{Precondició}: És les 02:00 UTC o s'ha activat manualment
+    \item \textbf{Pas principal}:
+    \begin{enumerate}
+        \item GitHub Actions dispara el workflow programat
+        \item Es fa checkout del repositori i s'instal·len les dependències
+        \item S'executa l'script ETL principal
+        \item L'ETL extreu dades de les APIs de Socrata
+        \item Les dades es transformen i netegen
+        \item Es desen els fitxers JSON actualitzats
+        \item Es fa commit i push dels canvis al repositori
+    \end{enumerate}
+    \item \textbf{Excepcions}: Si l'API no respon, es registra l'error i es reintenta. Si falla repetidament, s'envia una notificació
+\end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Model conceptual de dades}
 
-\textit{
-    [Diagrama ER o diagrama de classes que reflecteixi com es guarden les
-    dades i les seves relacions.]
-}
+El sistema gestiona principalment tres entitats interrelacionades: embassaments, estacions meteorològiques i mesures. El model conceptual es pot representar mitjançant un diagrama entitat-relació simplificat:
+
+\begin{itemize}
+    \item \textbf{Embassament} (\texttt{Reservoir}):
+    \begin{itemize}
+        \item \texttt{id} (identificador únic)
+        \item \texttt{nom} (nom de l'embassament)
+        \item \texttt{percentatge\_ocupacio} (\%)
+        \item \texttt{volum\_embassat} (hm³)
+        \item \texttt{cota} (msnm)
+        \item \texttt{capacitat\_total} (hm³)
+        \item \texttt{latitud}, \texttt{longitud} (coordenades geogràfiques)
+        \item \texttt{ultima\_actualitzacio} (timestamp)
+    \end{itemize}
+    
+    \item \textbf{Estació meteorològica} (\texttt{WeatherStation}):
+    \begin{itemize}
+        \item \texttt{codi} (identificador únic)
+        \item \texttt{nom} (nom de l'estació)
+        \item \texttt{latitud}, \texttt{longitud} (coordenades geogràfiques)
+        \item \texttt{ultima\_actualitzacio} (timestamp)
+    \end{itemize}
+    
+    \item \textbf{Mesura de precipitació} (\texttt{PrecipitationMeasurement}):
+    \begin{itemize}
+        \item \texttt{estacio\_codi} (referència a Estació)
+        \item \texttt{data\_mesura} (timestamp)
+        \item \texttt{precipitacio\_mm} (mm)
+    \end{itemize}
+    
+    \item \textbf{Alerta de sequera} (\texttt{DroughtAlert}):
+    \begin{itemize}
+        \item \texttt{embassament\_id} (referència a Embassament)
+        \item \texttt{data} (timestamp)
+        \item \texttt{percentatge\_ocupacio} (\%)
+        \item \texttt{nivell\_alerta} (crític, avís, normal, òptim)
+        \item \texttt{tendencia} (millora, estable, deteriorament)
+    \end{itemize}
+\end{itemize}
+
+Les relacions són:
+\begin{itemize}
+    \item Una \textbf{Estació} pot tenir múltiples \textbf{Mesures de precipitació} (1:N)
+    \item Un \textbf{Embassament} pot generar múltiples \textbf{Alertes de sequera} al llarg del temps (1:N)
+    \item Les \textbf{Mesures} i els \textbf{Embassaments} es relacionen indirectament a través de la proximitat geogràfica per a l'anàlisi de correlació
+\end{itemize}
+
+Aquest model es materialitza en fitxers JSON estructurats que el frontend consumeix directament, sense necessitat d'una base de dades relacional.
 
 %----------------------------------------------------------------------------------------
 
 \section{Disseny del sistema}
 
-\textit{
-    [Descriure la solució proposada per al sistema basada en l'anàlisi.]
-}
+La solució proposada per al sistema de visualització de dades hídriques es basa en una arquitectura desacoblada que separa clarament el processament de dades (ETL) de la seva presentació (frontend). Aquesta separació proporciona robustesa, flexibilitat de desplegament i facilitat de manteniment.
+
+El sistema es compon de tres components principals:
+
+\begin{enumerate}
+    \item \textbf{Canonada ETL}: Scripts Node.js que s'executen periòdicament per extreure dades de les APIs de Socrata, transformar-les en un format estàndard, i desar-les com a fitxers JSON versionats al repositori Git.
+    
+    \item \textbf{Repositori de dades}: Fitxers JSON estructurats dins del repositori que actuen com a font de dades per al frontend. El versionat amb Git proporciona historial i traçabilitat automàtics.
+    
+    \item \textbf{Frontend React}: Aplicació web de pàgina única (SPA) que consumeix els fitxers JSON i els presenta mitjançant quatre panells de visualització interconnectats, amb navegació fluida entre ells.
+\end{enumerate}
+
+Aquesta arquitectura té l'avantatge que no requereix un servidor de backend en producció: el frontend és completament estàtic i es pot servir des de qualsevol CDN o servidor web estàtic. L'ETL s'executa en l'entorn de GitHub Actions, aprofitant la infraestructura gratuïta disponible per a repositoris públics.
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Arquitectura del sistema}
 
-\textit{
-    [Descriure l'arquitectura general del sistema: components, flux de
-    dades, etc.]
-}
+L'arquitectura general del sistema segueix un patró de pipeline de dades amb separació clara entre les capes d'extracció, emmagatzematge i presentació:
+
+\begin{enumerate}
+    \item \textbf{Capa d'extracció (Extract)}:
+    \begin{itemize}
+        \item Mòdul \texttt{extractReservoirs}: Realitza peticions HTTP GET a l'endpoint de Socrata per a dades d'embassaments
+        \item Mòdul \texttt{extractPrecipitation}: Realitza peticions HTTP GET a l'endpoint de Socrata per a dades de precipitació
+        \item Gestió centralitzada d'errors, reintents i logging
+    \end{itemize}
+    
+    \item \textbf{Capa de transformació (Transform)}:
+    \begin{itemize}
+        \item Normalització de formats de data a ISO 8601
+        \item Eliminació de duplicats i registres inconsistents
+        \item Càlcul de mètriques derivades (percentatges, tendències)
+        \item Classificació d'alertes segons thresholds predefinits
+        \item Estructuració en format JSON estàndard
+    \end{itemize}
+    
+    \item \textbf{Capa de càrrega (Load)}:
+    \begin{itemize}
+        \item Escriptura de fitxers JSON a \texttt{/public/data/}
+        \item Generació de fitxers d'índex per a càrrega eficient
+        \item Commit i push automàtic dels canvis al repositori
+    \end{itemize}
+    
+    \item \textbf{Capa de presentació (Frontend)}:
+    \begin{itemize}
+        \item Servei de dades (\texttt{waterDataService}): Wrapper amb axios per carregar fitxers JSON
+        \item Hooks personalitzats (\texttt{useWaterData}): Gestió d'estat de càrrega, error i dades
+        \item Store global (Zustand): Estat compartit entre components
+        \item Components de dashboards: Quatre panells amb visualitzacions específiques
+        \item Sistema de navegació: React Router per a transicions entre panells
+    \end{itemize}
+\end{enumerate}
+
+El flux de dades és unidireccional: les APIs $\rightarrow$ ETL $\rightarrow$ JSON $\rightarrow$ Frontend $\rightarrow$ Usuari. No hi ha comunicació bidireccional ni escriptura des del frontend, simplificant l'arquitectura i reduint els punts de fallada.
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Disseny de les interfícies d'usuari}
 
-\textit{
-    [Comentar la filosofia seguida en el disseny de les interfícies.
-    No s'han de posar captures de pantalla.]
-}
+La filosofia de disseny de les interfícies segueix els principis de \textbf{disseny responsiu} (responsive design) amb enfocament \textbf{mobile-first}, assegurant que l'experiència sigui òptima en tots els dispositius:
+
+\begin{itemize}
+    \item \textbf{Simplicitat i claredat}: Cada panell té un objectiu clar i evita la sobrecàrrega visual. Els elements es presenten de forma jeràrquica, amb la informació més important destacada.
+    
+    \item \textbf{Consistència visual}: S'utilitza una paleta de colors coherent amb el tema hídric (tons de blau i verd), tipografia uniforme, i espaiament consistent entre elements. Les variables SCSS centralitzades a \texttt{\_variables.scss} garanteixen aquesta consistència.
+    
+    \item \textbf{Feedback visual immediat}: Els estats de càrrega es mostren amb spinners, els errors amb missatges clars, i les accions de l'usuari amb transicions suaus. Els indicadors semàfor del Panell 4 proporcionen informació instantània sobre l'estat de sequera.
+    
+    \item \textbf{Accesibilitat}: S'utilitzen etiquetes descriptives, contrast adequat entre text i fons, i elements interactius prou grans per a ser clicables en dispositius tàctils.
+    
+    \item \textbf{Metodologia BEM}: L'estructuració CSS segueix la metodologia Block-Element-Modifier, facilitant la mantenibilitat i evitant col·lisions de noms de classes. Per exemple: \texttt{dashboard\_\_card--active} indica un element \texttt{card} dins del bloc \texttt{dashboard} amb el modificador \texttt{active}.
+    
+    \item \textbf{Grid i Flexbox}: S'utilitza CSS Grid per a layouts principals i Flexbox per a alineació de components interns, proporcionant flexibilitat i adaptabilitat a diferents mides de pantalla.
+\end{itemize}
+
+El disseny evita captures d' pantalla excessives i se centra en proporcionar una experiència fluida on l'usuari pugui navegar entre els quatre panells sense perdre el context dels filtres aplicats.
 
 %----------------------------------------------------------------------------------------
 
 \subsection{Patrons de disseny}
 
-\textit{
-    [Explicar els patrons de disseny aplicats, si se n'han utilitzat.]
-}
+S'han aplicat diversos patrons de disseny per garantir un codi mantenible, escalable i ben estructurat:
 
-%----------------------------------------------------------------------------------------
+\subsubsection{Patró de pipeline modular (ETL)}
+
+L'ETL segueix el patró clàssic de pipeline modular, dividint el procés en tres fases independents (\textit{Extract}, \textit{Transform}, \textit{Load}) que comuniquen a través d'interfícies ben definides. Aquest patró facilita:
+\begin{itemize}
+    \item Proves unitàries independents per a cada fase
+    \item Addició de nous extractors o transformadors sense modificar l'existent
+    \item Reutilització de components en altres contextos
+    \item Maneig d'errors granular (un error en un extractor no atura tot el pipeline)
+\end{itemize}
+
+\subsubsection{Patró de servei (Service Layer)}
+
+El frontend implementa un servei de dades (\texttt{waterDataService.js}) que encapsula tota la lògica de comunicació amb les fonts de dades. Aquest patró proporciona:
+\begin{itemize}
+    \item Centralització de la lògica d'accés a dades
+    \item Maneig consistent d'estats de càrrega i error
+    \item Facilitat per canviar la font de dades en el futur (per exemple, afegir una API real)
+    \item Cacheig de respostes per evitar peticions redundants
+\end{itemize}
+
+\subsubsection{Patró de component (Component-Based Architecture)}
+
+El frontend segueix una arquitectura estrictament basada en components React, on cada funció visual o d'interacció s'encapsula en un component independent. Aquest patró facilita:
+\begin{itemize}
+    \item Reutilització de components (targetes d'informació, controls de filtratge, etc.)
+    \item Proves unitàries aïllades per a cada component
+    \item Desenvolupament paral·lel de diferents parts de la interfície
+    \item Mantenibilitat millorada (canvis localitzats)
+\end{itemize}
+
+\subsubsection{Patró d'observador (Observer Pattern - Zustand)}
+
+La gestió d'estat global amb Zustand implementa el patró d'observador, on els components es subscriuen a canvis en l'estat global i es re-renderitzen automàticament quan aquest canvia. Aquest patró proporciona:
+\begin{itemize}
+    \item Desacoblement entre components que necessiten compartir dades
+    \item Actualització automàtica de la interfície quan canvien les dades
+    \item Centralització de la lògica d'estat en un únic store
+    \item Minimització de re-renderitzats innecessaris gràcies a subscripcions selectives
+\end{itemize}
+
+\subsubsection{Patró de decorador (Decorator Pattern - Middleware)}
+
+El sistema de logging i maneig d'errors de l'ETL utilitza un patró similar al decorador, envoltant les funcions principals amb capes de logging, reintents i gestió d'errors. Això permet:
+\begin{itemize}
+    \item Afegir funcionalitats transversals (logging, monitoring) sense modificar la lògica de negoci
+    \item Configurar diferents nivells de verbositat segons l'entorn
+    \item Centralitzar la gestió d'errors en un únic lloc
+\end{itemize}
+
+\subsubsection{Patró de strategy (Strategy Pattern - Transformadors)}
+
+Els transformadors de dades segueixen un patró strategy, on diferents algoritmes de transformació es poden intercanviar segons el tipus de dada a processar. Això permet:
+\begin{itemize}
+    \item Afegir nous transformadors sense modificar l'orquestrador principal
+    \item Provar diferents estratègies de transformació de forma aïllada
+    \item Configurar pipelines diferents per a diferents fonts de dades
+\end{itemize}
+
+Aquests patrons de disseny treballen conjuntament per crear un sistema robust, mantenible i escalable que pot adaptar-se a futurs requisits sense necessitat de redissenys importants.

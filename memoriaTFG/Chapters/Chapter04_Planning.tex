@@ -13,7 +13,7 @@ En aquest capítol es defineix l'estratègia seguida per arribar als objectius p
 
 \section{Pla de treball}
 
-El pla de treball s'ha estructurat en cinc fases principals, basant-se en una metodologia àgil iterativa que permet rebre feedback contínuat i adaptar-se a canvis de requisits o limitacions tècniques descobertes durant el desenvolupament. Cada fase inclou objectius clairs, deliverables tangibles i criteris d'acceptació verificables.
+El pla de treball s'ha estructurat en cinc fases principals, basant-se en una metodologia àgil iterativa que permet rebre feedback continuat i adaptar-se a canvis de requisits o limitacions tècniques descobertes durant el desenvolupament. Cada fase inclou objectius clars, deliverables tangibles i criteris d'acceptació verificables.
 
 Les cinc fases identificades són:
 \begin{enumerate}
@@ -24,15 +24,15 @@ Les cinc fases identificades són:
     \item \textbf{Fase 5: Automatització, desplegament i documentació} (Setmanes 11-12)
 \end{enumerate}
 
-Aquesta estructurat permet generar valor incrementat en cada iteració, facilitant la detecció precoce de problemes i l'ajust del pla de treball consequent.
+Aquesta estructura permet generar valor incrementat en cada iteració, facilitant la detecció precoç de problemes i l'ajust del pla de treball consegüent.
 
 \section{Tasques i estimació temporal}
 
-Les tasques planificades per a cada fase, amb el temps estimat basat en l'experiència prèvia amb projectes similars i elsria de complexitat tècnica, són les següents:
+Les tasques planificades per a cada fase, amb el temps estimat basat en l'experiència prèvia amb projectes similars i el criteri de complexitat tècnica, són les següents:
 
 \subsection{Fase 1: Investigació i configuració inicial}
 \begin{itemize}
-    \item Anàlisi detallada de les APIs de Socrata de la Generalitat de Catalunya: identificació d'endpoints rellevants per a embassaments i precipitació, verificació de limits de taxa, examen de formats de resposta (JSON) - 8 hores
+    \item Anàlisi detallada de les APIs de Socrata de la Generalitat de Catalunya: identificació d'endpoints rellevants per a embassaments i precipitació, verificació de límits de taxa, examen de formats de resposta (JSON) - 8 hores
     \item Estudi de la documentació tècnica disponible i fomini de proves per a validar la qualitat i completitud de les dades - 6 hores
     \item Configuració del repositori Git, estructura de carpetes del projecte i definició de les convencions de codi - 4 hores
     \item Instal·lació i configuració de l'entorn de desenvolupament (Node.js 18, npm 9, Git) - 3 hores
@@ -48,7 +48,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
     \item Implementació del mòdul de càrrega: emmagatzematge eficient de dades processades en fitxers JSON estructurats per a consum frontend - 10 hores
     \item Creació de l'orquestrador ETL que coordina l'execució seqüencial dels tres mòduls - 5 hores
     \item Implementació del sistema de logging detallat per a monitorització i depuració - 4 hores
-    \item Prueves unitàries de cada mòdul ETL amb Jest (90\% de cobertura de codi) - 8 hores
+    \item Proves unitàries de cada mòdul ETL amb Jest (90\% de cobertura de codi) - 8 hores
     \item Integració i proves de tota la canonada ETL amb simulació de condicions de xarxa adverses - 6 hores
     \item \textbf{Total Fase 2:} 60 hores
 \end{itemize}
@@ -90,7 +90,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
           - Algoritme de predicció tendencial per a detecció precoce de deteriorament (basat en tendència de 7 dies)
           - Sistema de classificació automàtica per nivell de risc global - 14 hores
     \item Implementació del sistema de navegació entre dashboards amb manteniment d'estat de filtres - 5 hores
-    \item Optimització de rendiment: memoització de components costosos, carregue diferit de recursos no crítics - 8 hores
+    \item Optimització de rendiment: memoització de components costosos, càrrega diferida de recursos no crítics - 8 hores
     \item Proves d'usabilitat amb 5 usuaris externes (tècics i no tècics) - 6 hores
     \item \textbf{Total Fase 4:} 49 hores
 \end{itemize}
@@ -99,12 +99,12 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \begin{itemize}
     \item Configuració de GitHub Actions per a workflow de CI/CD:
           - Workflow d'ETL programat (cron: 0 2 * * *) per a execució diària a les 02:00 UTC
-          - Workflow de desplegament frontend activat per apush a la branca main
-          - Configuració de secrets per a accès segur a recursos externs (cap aquí necessari ja que les APIs són públiques)
+          - Workflow de desplegament frontend activat per push a la branca main
+          - Configuració de secrets per a accés segur a recursos externs (no calen ja que les APIs són públiques)
           - Notificacions automàtiques per correu electrònic en cas de fallada del workflow - 8 hores
     \item Preparació del medi de desplegament:
           - Configuració de variables d'entorn per a diferències entre entorns de desenvolupament, proves i producció
-          - Optimització de l'arxematge de dades JSON per a servei estatic (tècniques de compressió gzip a nivell de servidor)
+          - Optimització de l'emmagatzematge de dades JSON per a servei estàtic (tècniques de compressió gzip a nivell de servidor)
           - Implementació de mecanisme de cache-control per a reduir tràfic redundant - 6 hores
     \item Redacció de la memòria del TFG segons les normes de la EPSG - 20 hores
     \item Creació de la documentació tècnica d'ús i manteniment del sistema - 8 hores
@@ -141,7 +141,7 @@ La estimació total de 258 hores s'acosta molt a l'investiment real de 250 hores
 
 \section{Cronograma}
 
-El cronograma detallat de les tasques al llarg del projecte es presenta a la \textit{Figura \ref{fig:gantt}}. El diagrama de Gantt mostra les dependències entre fases, permetent identificar el camí crític i els pobles de temps disponibles.
+El cronograma detallat de les tasques al llarg del projecte es presenta a la \textit{Figura \ref{fig:gantt}}. El diagrama de Gantt mostra les dependències entre fases, permetent identificar el camí crític i els marges de temps disponibles.
 
 % \begin{figure}[h]
 % \centering
@@ -156,10 +156,10 @@ El cronograma detallat de les tasques al llarg del projecte es presenta a la \te
 
 Els elements destacables del cronograma són:
 \begin{itemize}
-    \item La Fase 2 (ETL) i Fase 3 (Frontend base) van executar-se en paral·lial durant les setmanes 4-5, aprofitant la independència tècnica dels dos subsistemes.
+    \item La Fase 2 (ETL) i Fase 3 (Frontend base) van executar-se en paral·lel durant les setmanes 4-5, aprofitant la independència tècnica dels dos subsistemes.
     \item La Fase 4 (Frontend avançat) va beneficiar-se dels components i serveis creats en la Fase 3, reduint el temps necessari per a la implementació del Dashboard 3 i 4.
     \item Les setmanes 11-12 van dedicar-se predominantement a tasques de qualitat (proves, documentació) en lloc de desenvolupament de noves funcionalitats, assegurant l'estabilitat del lliurament final.
-    \item S'hi van asignar 12 hores de col·loqui (10\%) per a revisions de progrés i ajusts del pla de treball, essencials en una metodologia àgil.
+    \item S'hi van assignar 12 hores de col·loqui (10\%) per a revisions de progrés i ajusts del pla de treball, essencials en una metodologia àgil.
 \end{itemize}
 
 \section{Paquets de treball}
@@ -168,22 +168,22 @@ El desenvolupament s'ha dividit en tres paquets de treball (PT) principals, cada
 
 \textbf{PT1: Canonada de Processament de Dades (ETL)}
 \begin{itemize}
-    \item \textbf{Objectiu}: Construir un pipeline fiable i escalable per a l'extracció, transformació i carregue de dades hidrològiques des de lesFonts públiques de la Generalitat de Catalunya.
-    \item \textbf{Livrables}: Scripts d'extracció parametritzats, funcions de transformació verificades, mòdul d'emmagatzematge optimitzat, orchestrador ETL amb maneig d'errors robust.
+    \item \textbf{Objectiu}: Construir un pipeline fiable i escalable per a l'extracció, transformació i càrrega de dades hidrològiques des de les fonts públiques de la Generalitat de Catalunya.
+    \item \textbf{Lliurables}: Scripts d'extracció parametritzats, funcions de transformació verificades, mòdul d'emmagatzematge optimitzat, orquestrador ETL amb maneig d'errors robust.
     \item \textbf{S'explica en}: Capítols 3 (secció ETL i backend), 9 (implementació del pipeline ETL).
 \end{itemize}
 
 \textbf{PT2: Aplicació Web de Visualització}
 \begin{itemize}
     \item \textbf{Objectiu}: Desenvolupar una interfície web intuïtiva i responsiva que permeti l'exploració interactiva de dades hidrològiques mitjançant diversos paradigmes de visualització.
-    \item \textbf{Livrables}: Aplicació React de pàgina única amb quatre dashboards interconectats, servei de consum de dades optimitzat, sistemes de gestió d'estat i navegació.
+    \item \textbf{Lliurables}: Aplicació React de pàgina única amb quatre dashboards interconnectats, servei de consum de dades optimitzat, sistemes de gestió d'estat i navegació.
     \item \textbf{S'explica en}: Capítols 3 (secció frontend), 9 (implementació del frontend), 10 (validació de requisits funcionals).
 \end{itemize}
 
 \textbf{PT3: Infraestructura d'Automatització i Desplegament}
 \begin{itemize}
-    \item \textbf{Objectiu}: Implementar un sistema d'integració i desplegament continu que asseguri la frescor de les dades i la disponibilitat del servei amb mínima intervençió manual.
-    \item \textbf{Livrables}: Workflows de GitHub Actions configurats, scripts de desplegament parametritzats, mechanismes de monitorització i alertes.
+    \item \textbf{Objectiu}: Implementar un sistema d'integració i desplegament continu que asseguri la frescor de les dades i la disponibilitat del servei amb mínima intervenció manual.
+    \item \textbf{Lliurables}: Workflows de GitHub Actions configurats, scripts de desplegament parametritzats, mecanismes de monitorització i alertes.
     \item \textbf{S'explica en}: Capítols 3 (secció d'automatització), 10 (desplegament del sistema, validació de requisits no funcionals).
 \end{itemize}
 
@@ -194,29 +194,29 @@ Aquesta descomposició en paquets de treball va facilitar la distribució de les
 Durant l'execució del projecte, es van produir diverses desviacions respecte al pla inicial, la major part de les quals van risultar en una millora del resultat final:
 
 \begin{enumerate}
-    \item \textbf{Ampliació del scope de fonts de dades}: El pla original previstia d'utilitzar únicament dades de l'embassament de Raimat per a la prova de concepte. Tot i això, durant la Fase 1 es va comprovar la facilitat d'accés a les dades de tots els embassaments principals de Catalunya a través de les APIs de Socrata. Es va decidir ampliar el scope a 9 embassaments (Sau, Susqueda, La Baells, Cambrils, Riudecanyes, Foix, Castelló de Farfanya, Sant Ponç i Raimat) per a proporcionar una visió més completa i reprezentativa del territori català. Aquesta decisió va incrementar l'esforç de la Fase 2 en aproximadament 8 hores però va augmentar significativament el valor del projecte per a usuaris professionals i académics.
+    \item \textbf{Ampliació del scope de fonts de dades}: El pla original previstia d'utilitzar únicament dades de l'embassament de Raimat per a la prova de concepte. Tot i això, durant la Fase 1 es va comprovar la facilitat d'accés a les dades de tots els embassaments principals de Catalunya a través de les APIs de Socrata. Es va decidir ampliar el scope a 9 embassaments (Sau, Susqueda, La Baells, Cambrils, Riudecanyes, Foix, Castelló de Farfanya, Sant Ponç i Raimat) per a proporcionar una visió més completa i representativa del territori català. Aquesta decisió va incrementar l'esforç de la Fase 2 en aproximadament 8 hores però va augmentar significativament el valor del projecte per a usuaris professionals i acadèmics.
     
-    \item \textbf{Canvi d'enfoque en la visualització de correlació}: Inicialment es va planificar utilitzar maps de calor per a mostrar la correlació entre precipitació i nivells d'embassament. Tot i això, durant els proves inicials de la Fase 3 es va observar que aquesta representació obscudia les tendències temporals i podia llevar a interpretations errònies. Es va canviar per a un gràfic de dispersió amb línies de tendència i càlcul del coeficient de correlació, proporcionant una mesura quantitativa més rigorousa i una visualitat més accessible per a l'usuari. Aquest canvi va requerir 4 hores addicionals de desenvolupament en la Fase 4 però va mejorar notablement la qualitat analítica del Dashboard 3.
+    \item \textbf{Canvi d'enfocament en la visualització de correlació}: Inicialment es va planificar utilitzar mapes de calor per a mostrar la correlació entre precipitació i nivells d'embassament. Tot i això, durant les proves inicials de la Fase 3 es va observar que aquesta representació obscudia les tendències temporals i podia conduir a interpretacions errònies. Es va canviar per a un gràfic de dispersió amb línies de tendència i càlcul del coeficient de correlació, proporcionant una mesura quantitativa més rigorosa i una visibilitat més accessible per a l'usuari. Aquest canvi va requerir 4 hores addicionals de desenvolupament en la Fase 4 però va millorar notablement la qualitat analítica del Dashboard 3.
     
-    \item \textbf{Incorporació de mecanisme de predicció tendencial}: El pla original no incloeva cap funcionabilitat predictiva dins del Dashboard 4 d'alertes. Tot i això, durant la implementació de les regles d'alerta basades en thresholds estatics es va detectar que els usuaris beneficiarien d'una indicació de la tendència recent (millora o deteriorament). Es va implementar un algoritme senzill de regressió lineal sobre les últimes 6 mesures per a detectar canvis significatius, afegint una flecha de tendència accanto a cada indicador. Aquesta millora va requerir 3 hores de desenvolupament addicional i va ser ben rebuda durant les proves d'usabilitat.
+    \item \textbf{Incorporació de mecanisme de predicció tendencial}: El pla original no incloïa cap funcionalitat predictiva dins del Dashboard 4 d'alertes. Tot i això, durant la implementació de les regles d'alerta basades en llindars estàtics es va detectar que els usuaris beneficiarien d'una indicació de la tendència recent (millora o deteriorament). Es va implementar un algoritme senzill de regressió lineal sobre les últimes 6 mesures per a detectar canvis significatius, afegint una fletxa de tendència al costat de cada indicador. Aquesta millora va requerir 3 hores de desenvolupament addicional i va ser ben rebuda durant les proves d'usabilitat.
 \end{enumerate}
 
-Les desviacions van gestionar-se mediante el mecanisme de revisió bihebdomadaire del pla de treball, permetent reavaluar prioritats i redistribuir recursos sense perdre la visió general del projecte. Cap desviació va compromellre el lliurament dels objectius essencials, i diverses van contribuir a superar les expectatives inicials.
+Les desviacions van gestionar-se mitjançant el mecanisme de revisió quinzenal del pla de treball, permetent reavaluar prioritats i redistribuir recursos sense perdre la visió general del projecte. Cap desviació va comprometre el lliurament dels objectius essencials, i diverses van contribuir a superar les expectatives inicials.
 
 \section{Conclusions de la planificació}
 
-El pla de treball resultà eficaç per a guiar el desenvolupament del projecte des de la concepció fins al lliurament, demostrant les següents caracteristiques positives:
+El pla de treball va resultar eficaç per a guiar el desenvolupament del projecte des de la concepció fins al lliurament, demostrant les següents característiques positives:
 \begin{itemize}
-    \item La decomposició en fases clares amb objectius verificables va facilitar el seguiment del progrés i la detecció temprana de desviacions.
-    \item L'estimació temporal va risultar prou precisa (error de +3,2\%), indicant una bona comprensió de la complexitat tècnica involucrada.
-    \item La flexibilitat inherents a la metodologia àgil va permetre incorporar millores significatives sense compromindre els límitis temporals.
+    \item La descomposició en fases clares amb objectius verificables va facilitar el seguiment del progrés i la detecció primerenca de desviacions.
+    \item L'estimació temporal va resultar prou precisa (error de +3,2\%), indicant una bona comprensió de la complexitat tècnica involucrada.
+    \item La flexibilitat inherents a la metodologia àgil va permetre incorporar millores significatives sense comprometre els límits temporals.
     \item La documentació del pla de treball va servir com a eina de comunicació eficient amb el tutor i altres interessats.
 \end{itemize}
 
 Les principals aprenentatges negatius relacionats amb la planificació van ser:
 \begin{itemize}
-    \item \textbf{Subestimació de la complexitat de l'optimització de rendiment frontend}: Tot i que es va preure temps per a tasques d'optimització, la magnitud de l'esforç necessari per a mantenir una experiéncia fluida amb conjonjuts de dades >50K punts va ser major al esperat, requerint una redistribució de 5 hores des de tasques de funcionalitats noves a tasques d'optimització durant les darreres setmanes.
-    \item \textbf{Dependència excesiva de proves manuals per a validació d'usabilitat }: La planificació inicial va donar massa pes a les proves automatitzades i poc a les proves amb usuaris reals. Durant la Fase 4 es va detectar problemes d'usabilitat que no van ser capturats per les proves unitàries, necessitant una reassignació de 4 hores per a proves d'usabilitat estructurades amb el públic objectiu. En futures planificacions s'haurà d'allotjar un mínim del 20\% del temps de proves avalidació amb usuaris reals des de les fases inicials.
+    \item \textbf{Subestimació de la complexitat de l'optimització de rendiment frontend}: Tot i que es va preveure temps per a tasques d'optimització, la magnitud de l'esforç necessari per a mantenir una experiència fluida amb conjunts de dades >50K punts va ser major a l'esperat, requerint una redistribució de 5 hores des de tasques de funcionalitats noves a tasques d'optimització durant les darreres setmanes.
+    \item \textbf{Dependència excessiva de proves manuals per a validació d'usabilitat }: La planificació inicial va donar massa pes a les proves automatitzades i poc a les proves amb usuaris reals. Durant la Fase 4 es va detectar problemes d'usabilitat que no van ser capturats per les proves unitàries, necessitant una reassignació de 4 hores per a proves d'usabilitat estructurades amb el públic objectiu. En futures planificacions s'haurà de destinar un mínim del 20\% del temps de proves a validació amb usuaris reals des de les fases inicials.
 \end{itemize}
 
-En general, el pla de treball va proporcionar un marc solide que va permetre adaptar-se a les circonstances canviants mantenint el focus en l'objectiu final: crear una plataforma útil i accessible per a la monitorització de recursos hídrics a Catalunya.
+En general, el pla de treball va proporcionar un marc sòlid que va permetre adaptar-se a les circumstàncies canviants mantenint l'objectiu final: crear una plataforma útil i accessible per a la monitorització de recursos hídrics a Catalunya.

@@ -68,7 +68,7 @@ El projecte ha estat desenvolupat al llarg d'aproximadament 12 setmanes:
 \hline
 \textbf{Fase} & \textbf{Objectiu} & \textbf{Deliverables} \\
 \hline
-1 & Investigació & Análisis de viabilitat, documentació de dades \\
+1 & Investigació & Anàlisi de viabilitat, documentació de dades \\
 2 & ETL & Canonada completa amb 49k registres d'embassaments \\
 3 & Frontend Base & Dashboard 1 (mapa) i Dashboard 2 (temporal) \\
 4 & Frontend Avançat & Dashboard 3 (correlació) i Dashboard 4 (alertes) \\
@@ -135,9 +135,9 @@ S'ha fet ús de \textbf{GitHub Copilot} com a assistent de codificació, princip
 \subsection{Declaració d'ús de la IA}
 
 \begin{itemize}
-    \item \textbf{Nivell d'ús}: Aproximadament 30-40\% del codi a nivel de suggestion (propostes completades o parcials).
+    \item \textbf{Nivell d'ús}: Aproximadament 30-40\% del codi a nivell de suggeriments (propostes completades o parcials).
     \item \textbf{Verificació}: Totes les suggerències van ser revisades, verificades i probades per al context específic del projecte.
-    \item \textbf{Lògica original}: Els algoritmes de processament de dades, arquitectura del sistema i decisións de disseny són originals del desenvolupador.
+    \item \textbf{Lògica original}: Els algoritmes de processament de dades, arquitectura del sistema i decisions de disseny són originals del desenvolupador.
     \item \textbf{Documentació}: La majoria de comments i documentació de codi va ser generada pel desenvolupador, amb assistència puntual de la IA per a claritat.
 \end{itemize}
 
@@ -152,19 +152,19 @@ S'ha fet ús de \textbf{GitHub Copilot} com a assistent de codificació, princip
 \begin{enumerate}
     \item \textbf{Ampliació del scope de dades}: Inicialment es planificava de fer ús només de l'embassament de Raimat. Es va decidir incloure tots els 9 embassaments principals de Catalunya per a proporcionar una visió més completa.
     
-    \item \textbf{Inclusió de més estacions meteorològiques}: Originalment es planificava de mostrar només alguns estacions, però les APIs proporcionen 200+ estacions. S'ha inclòs tot el dataset per a máxima cobertura geogràfica.
+    \item \textbf{Inclusió de més estacions meteorològiques}: Originalment es planificava de mostrar només algunes estacions, però les APIs proporcionen 200+ estacions. S'ha inclòs tot el dataset per a màxima cobertura geogràfica.
     
-    \item \textbf{Quatre dashboards en lloc de tres}: La viabilitat tècnica va demostrar que era fàcil afegir un quart dashboard (alertes), proporcionant més valor al usuari.
+    \item \textbf{Quatre dashboards en lloc de tres}: La viabilitat tècnica va demostrar que era fàcil afegir un quart dashboard (alertes), proporcionant més valor a l'usuari.
 \end{enumerate}
 
 \subsection{Incidències i resolucions}
 
 \begin{enumerate}
-    \item \textbf{Incidència}: Mida dels fitxers JSON generat és gran (30MB per a embassaments, 70MB per a precipitació).
-    \textbf{Resolució}: Els fitxers es serveixen desde \texttt{/public/data} i es carreguen al frontend de forma reactiva (es pot implementar compressió o paginació en futures millores).
+    \item \textbf{Incidència}: Mida dels fitxers JSON generats és gran (30MB per a embassaments, 70MB per a precipitació).
+    \textbf{Resolució}: Els fitxers es serveixen des de \texttt{/public/data} i es carreguen al frontend de forma reactiva (es pot implementar compressió o paginació en futures millores).
     
     \item \textbf{Incidència}: Terser no estava instal·lat al desenvolupament inicial del frontend.
-    \textbf{Resolució}: S'instal·lació de forma manual com a dependència de desenvolupament.
+    \textbf{Resolució}: S'instal·la de forma manual com a dependència de desenvolupament.
     
     \item \textbf{Incidència}: Problemes amb caràcters especials (Àlex) en els paths de Windows.
     \textbf{Resolució}: Ús consistent de comandes PowerShell amb \texttt{-LiteralPath} per a evitar problemes de codificació.
