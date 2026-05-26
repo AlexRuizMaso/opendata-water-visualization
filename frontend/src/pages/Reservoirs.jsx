@@ -31,7 +31,7 @@ export default function Reservoirs() {
               <ul>
                 <li>Monitoritzar en temps real l'estat dels embassaments critiques</li>
                 <li>Identificar tendències estacionals i anuals en la disponibilitat d'aigua</li>
-                <li>Detectar antecedents de situacions de secca o d'abundància hídrica</li>
+                <li>Detectar antecedents de situacions de sequera o d'abundància hídrica</li>
                 <li>Facilitar la presa de decisions informades per a la gestió de recursos hídrics</li>
               </ul>
             </div>

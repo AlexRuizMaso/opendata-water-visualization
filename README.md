@@ -129,8 +129,8 @@ MIT License - veure fitxer LICENSE per a més detalls.
 
 ## 👤 Autor
 
-Àlex - Universitat Autònoma de Barcelona
+Àlex - Universitat de Girona
 
 ---
 
-**Última actualització**: 13 de Maig de 2026
+**Última actualització**: 26 de Maig de 2026
