@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-05-26T20:21:44.505Z",
+  "timestamp": "2026-05-27T06:27:31.346Z",
   "pipelineVersion": "1.0",
-  "duration": "-1779826871.07s",
+  "duration": "-1779863232.78s",
   "statistics": {
     "embassaments": {
       "averageVolumePercentage": "65.58",
@@ -13,27 +13,27 @@
       "optimalDams": 39145,
       "uniqueEmbassaments": 9,
       "dateRange": {
-        "latest": "2026-05-23T22:00:00.000Z",
+        "latest": "2026-05-24T00:00:00.000Z",
         "oldest": "1999-12-31T23:00:00.000Z"
       }
     },
     "precipitation": {
       "totalStations": 260,
-      "averagePrecipitation": "2.11",
+      "averagePrecipitation": "2.10",
       "maxPrecipitation": "276.00",
       "minPrecipitation": "0.00",
-      "totalDaysCovered": 730,
-      "daysWithPrecipitation": 46454,
-      "drySituation": "65.68%",
+      "totalDaysCovered": 731,
+      "daysWithPrecipitation": 46414,
+      "drySituation": "65.71%",
       "dateRange": {
-        "latest": "2026-05-23T22:00:00.000Z",
-        "oldest": "2024-05-26T22:00:00.000Z"
+        "latest": "2026-05-25T00:00:00.000Z",
+        "oldest": "2024-05-27T22:00:00.000Z"
       }
     }
   },
   "dataFiles": {
-    "embassaments": "gn9e-3qhr.json",
-    "precipitation": "7bvh-jvq2.json"
+    "embassaments": "undefined.json",
+    "precipitation": "undefined.json"
   },
   "sources": {
     "embassaments": "https://analisi.transparenciacatalunya.cat/resource/gn9e-3qhr.json",
