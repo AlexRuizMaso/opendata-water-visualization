@@ -29,7 +29,7 @@ const Dashboard1 = () => {
       <div className={styles.container}>
         {/* Map Section */}
         <div className={styles.mapSection}>
-          <MapContainer center={centerCoords} zoom={7} style={{ height: '600px' }}>
+          <MapContainer center={centerCoords} zoom={7} style={{ height: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; OpenStreetMap contributors'

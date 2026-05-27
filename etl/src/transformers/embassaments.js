@@ -19,15 +19,15 @@ class EmbassamentTransformer {
 
     // Coordinates for each embassament (for mapping)
     this.coordinates = {
-      'Siurana': { lat: 41.2672, lng: 1.0514 },
-      'Riudecanyes': { lat: 41.2881, lng: 1.6294 },
-      'Sant Ponç': { lat: 42.0489, lng: 1.6561 },
-      'Sau': { lat: 41.8672, lng: 2.1939 },
-      'Susqueda': { lat: 41.9833, lng: 2.3833 },
-      'Llosa del Cavall': { lat: 42.1250, lng: 1.5556 },
-      'Foix': { lat: 41.4172, lng: 1.8500 },
-      'Baells': { lat: 42.1375, lng: 1.7931 },
-      'Darnius-Boadella': { lat: 42.3500, lng: 2.9333 },
+      'Siurana': { lat: 41.2581, lng: 0.9314 },
+      'Riudecanyes': { lat: 41.1444, lng: 0.9602 },
+      'Sant Ponç': { lat: 41.9658, lng: 1.6015 },
+      'Sau': { lat: 41.9702, lng: 2.3983 },
+      'Susqueda': { lat: 41.9791, lng: 2.5298 },
+      'Llosa del Cavall': { lat: 42.0993, lng: 1.6033 },
+      'Foix': { lat: 41.2520, lng: 1.6521 },
+      'Baells': { lat: 42.1215, lng: 1.8845 },
+      'Darnius-Boadella': { lat: 42.3427, lng: 2.8139 },
     };
   }
 

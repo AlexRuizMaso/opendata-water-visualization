@@ -14,6 +14,7 @@
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 20px;
+  min-height: calc(100vh - 120px); /* Account for header and padding */
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
