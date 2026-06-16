@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useWaterData from '../../hooks/useWaterData';
 import waterDataService from '../../services/waterDataService';
@@ -78,7 +77,9 @@ const Dashboard1 = () => {
             <div className={styles.statCard}>
               <div className={styles.statLabel}>Ocupació Mitjana</div>
               <div className={styles.statValue}>
-                {(latestData.reduce((sum, r) => sum + r.volumePercentage, 0) / latestData.length).toFixed(1)}%
+                {latestData.length > 0
+                  ? (latestData.reduce((sum, r) => sum + r.volumePercentage, 0) / latestData.length).toFixed(1)
+                  : '0.0'}%
               </div>
             </div>
 
