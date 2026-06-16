@@ -1,7 +1,5 @@
-/**
- * Transformer for Precipitation Data
- * Normalizes and enriches meteorological records with focus on precipitation
- */
+import { normalizeStationName } from '../utils/stationNameMap.js';
+
 class PrecipitationTransformer {
   constructor() {
     // Variable mappings for easier interpretation
@@ -46,7 +44,7 @@ class PrecipitationTransformer {
     return {
       id: record.id,
       stationCode: record.codi_estacio,
-      stationName: record.nom_estacio,
+      stationName: normalizeStationName(record.nom_estacio),
       date: new Date(record.data_lectura).toISOString(),
       variableCode: record.codi_variable,
       variableName: this.variableNames[record.codi_variable] || record.nom_variable,
