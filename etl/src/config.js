@@ -9,7 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const config = {
-  // Socrata API Configuration
   socrata: {
     baseUrl: process.env.SOCRATA_BASE_URL || 'https://analisi.transparenciacatalunya.cat',
     embassaments: {
@@ -21,22 +20,14 @@ export const config = {
       apiUrl: process.env.PRECIPITATION_API_URL || 'https://analisi.transparenciacatalunya.cat/resource/7bvh-jvq2.json',
     },
     maxRecords: parseInt(process.env.API_MAX_RECORDS || '50000'),
-    timeout: 10000, // 10 seconds
+    timeout: 10000,
   },
 
-  // Data Configuration
-  data: {
-    retentionDays: parseInt(process.env.DATA_RETENTION_DAYS || '365'),
-    updateFrequency: process.env.DATA_UPDATE_FREQUENCY || 'daily',
-  },
-
-  // Health Check Configuration
   healthCheck: {
     enabled: process.env.ENABLE_HEALTH_CHECK === 'true',
     timeout: parseInt(process.env.HEALTH_CHECK_TIMEOUT_MS || '5000'),
   },
 
-  // File Paths
   paths: {
     root: __dirname,
     data: path.join(__dirname, '../data'),
@@ -46,26 +37,12 @@ export const config = {
     loaders: path.join(__dirname, 'loaders'),
   },
 
-  // Output Files
   output: {
     embassaments: 'embassaments.json',
     precipitation: 'precipitation.json',
     metadata: 'metadata.json',
   },
 
-  // Logging Configuration
-  logging: {
-    level: process.env.LOG_LEVEL || 'info',
-    file: process.env.LOG_FILE || './logs/etl.log',
-  },
-
-  // Backend Configuration
-  backend: {
-    port: parseInt(process.env.BACKEND_PORT || '5000'),
-    host: process.env.BACKEND_HOST || 'localhost',
-  },
-
-  // Environment
   environment: process.env.NODE_ENV || 'development',
 };
 
