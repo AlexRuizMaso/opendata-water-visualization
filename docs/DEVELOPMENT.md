@@ -34,8 +34,7 @@ opendata-water-visualization/
 │   ├── src/
 │   │   ├── components/         # Components React reutilitzables
 │   │   ├── pages/              # Pàgines principals (Dashboard, Reservoirs, Weather, About)
-│   │   ├── services/           # API services (planejat)
-│   │   ├── store/              # Zustand state management (planejat)
+│   │   ├── services/           # Serveis API (waterDataService)
 │   │   ├── styles/             # SCSS modularitzat
 │   │   ├── utils/              # Funcions utilitàries
 │   │   ├── hooks/              # Custom React hooks
@@ -58,12 +57,6 @@ opendata-water-visualization/
 │   ├── logs/                   # 📝 Logs del ETL
 │   ├── package.json
 │   └── .env.example
-│
-├── backend/                     # 🔧 Backend Express (opcional)
-│   ├── src/
-│   │   └── server.js
-│   ├── package.json
-│   └── (estructura base per a futures millores)
 │
 ├── .github/workflows/
 │   └── etl-pipeline.yml         # 🤖 Automatització GitHub Actions
@@ -89,7 +82,6 @@ opendata-water-visualization/
 - Recharts (gràfics)
 - Leaflet (mapes)
 - SCSS (estilos)
-- Zustand (state management futur)
 
 **Estructura de componentes**:
 ```

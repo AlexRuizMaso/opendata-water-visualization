@@ -9,7 +9,6 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 │                      Frontend (React)                        │
 │          - Components reutilitzables                        │
 │          - Visualització de dades (Recharts, Leaflet)       │
-│          - State management (Zustand)                       │
 │          - Responsive design                                │
 └──────────────────────┬──────────────────────────────────────┘
                        │
@@ -50,9 +49,6 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 
 - `services/`: Servei d'API
   - `api.js`: Funcions per fer peticions HTTP
-
-- `store/`: State management
-  - `dataStore.js`: Zustand store per a dades globals
 
 - `styles/`: Estilos SCSS
   - `_variables.scss`: Variables de color, tipografia, etc.
@@ -115,17 +111,7 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 - `.env.example`: Template de variables d'entorn
 - `package.json`: Dependencies del ETL
 
-### 3. Backend (Opcional)
-
-**Ubicació**: `backend/`
-
-*Actualment no és necessari, però es preveu per a futures millores com:*
-- Autenticació d'usuaris
-- API cache
-- Endpoints personalitzats
-- WebSockets per a actualizacions en temps real
-
-### 4. GitHub Actions Automation
+### 3. GitHub Actions Automation
 
 **Ubicació**: `.github/workflows/`
 
@@ -165,7 +151,7 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 - **Reutilitzabilitat**: Components React reutilitzables
 
 ### Mantenibilitat
-- **Separació de responsabilitats**: ETL separate del frontend
+- **Separació de responsabilitats**: ETL separada del frontend
 - **Documentació inline**: Comentaris en el codi
 - **Configuració externalitzada**: Variables d'entorn per a secrets
 
@@ -190,7 +176,6 @@ npm run etl            # ETL final
 
 ## Futures Millores
 
-- [ ] Backend API amb Express
 - [ ] WebSockets per a actualizacions en temps real
 - [ ] Base de dades per a historial complet
 - [ ] Autenticació d'usuaris

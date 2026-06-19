@@ -23,7 +23,6 @@ opendata-water-visualization/
 │   │   ├── components/         # Components reutilitzables
 │   │   ├── pages/              # Pàgines principals
 │   │   ├── services/           # Serveis per a API calls
-│   │   ├── store/              # State management (Zustand)
 │   │   ├── styles/             # Styles SCSS
 │   │   ├── utils/              # Funcions utilitàries
 │   │   ├── hooks/              # Custom React hooks
@@ -39,11 +38,8 @@ opendata-water-visualization/
 │   │   └── pipeline.js         # Orquestrador del ETL
 │   ├── data/                   # Dades JSON processades
 │   └── logs/                   # Logs de l'ETL
-├── backend/                     # API Backend (Express, opcional)
-│   └── src/
 ├── .github/workflows/           # Automatització amb GitHub Actions
-├── docs/                        # Documentació del projecte
-└── config/                      # Fitxers de configuració
+└── docs/                        # Documentació del projecte
 
 ```
 
@@ -54,14 +50,12 @@ opendata-water-visualization/
 - **Vite**: Build tool i dev server
 - **Recharts**: Visualització de gràfics
 - **Leaflet + React Leaflet**: Mapes interactius
-- **Zustand**: State management
 - **SCSS**: Styles modularitzats
 - **React Router**: Enrutament
 
 ### ETL
 - **Node.js**: Runtime JavaScript
 - **Axios**: HTTP client
-- **node-schedule**: Planificació de tasques
 
 ### DevOps
 - **GitHub Actions**: Automatització del pipeline ETL
