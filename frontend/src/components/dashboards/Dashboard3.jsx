@@ -26,6 +26,12 @@ const Dashboard3 = () => {
   const [timeRange, setTimeRange] = useState('30days');
   const [chartData, setChartData] = useState([]);
 
+  const safeAverage = (records, getValue) => {
+    const valid = records.filter(d => getValue(d) !== undefined);
+    if (valid.length === 0) return null;
+    return valid.reduce((sum, d) => sum + (getValue(d) || 0), 0) / valid.length;
+  };
+
   // Handle data correlation
   React.useEffect(() => {
     if (!embassaments?.records || !precipitation?.records) return;
@@ -61,6 +67,9 @@ const Dashboard3 = () => {
     );
 
     // Filter precipitation data
+    // Nota: Utilitzem precipitation.records en lloc de precipitation.precipitationOnly
+    // perquè el pipeline actual ja filtra només la variable 1300 en l'extracció.
+    // Si el pipeline canvia en el futur, caldrà revisar aquest component.
     let filteredPrecipitation = waterDataService.filterPrecipitationByDateRange(
       precipitation.records,
       startDate,
@@ -261,35 +270,30 @@ const Dashboard3 = () => {
               <div className={styles.statRow}>
                 <span>Ocupació mitjana:</span>
                 <strong>
-                  {(
-                    chartData
-                      .filter(d => d.occupancy !== undefined)
-                      .reduce((a, b) => a + (b.occupancy || 0), 0) /
-                    chartData.filter(d => d.occupancy !== undefined).length
-                  ).toFixed(1)}
-                  %
+                  {(() => {
+                    const avg = safeAverage(chartData, d => d.occupancy);
+                    return avg !== null ? `${avg.toFixed(1)}%` : 'Sense dades';
+                  })()}
                 </strong>
               </div>
               <div className={styles.statRow}>
                 <span>Precipitació acumulada:</span>
                 <strong>
-                  {chartData
-                    .filter(d => d.precipitation !== undefined)
-                    .reduce((a, b) => a + (b.precipitation || 0), 0)
-                    .toFixed(1)}
-                  mm
+                  {(() => {
+                    const total = chartData
+                      .filter(d => d.precipitation !== undefined)
+                      .reduce((sum, d) => sum + (d.precipitation || 0), 0);
+                    return total > 0 ? `${total.toFixed(1)} mm` : 'Sense dades';
+                  })()}
                 </strong>
               </div>
               <div className={styles.statRow}>
                 <span>Precipitació mitjana:</span>
                 <strong>
-                  {(
-                    chartData
-                      .filter(d => d.precipitation !== undefined)
-                      .reduce((a, b) => a + (b.precipitation || 0), 0) /
-                    chartData.filter(d => d.precipitation !== undefined).length
-                  ).toFixed(2)}
-                  mm
+                  {(() => {
+                    const avg = safeAverage(chartData, d => d.precipitation);
+                    return avg !== null ? `${avg.toFixed(2)} mm` : 'Sense dades';
+                  })()}
                 </strong>
               </div>
               <div className={styles.statRow}>
