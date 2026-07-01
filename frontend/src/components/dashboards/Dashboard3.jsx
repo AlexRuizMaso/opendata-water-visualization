@@ -22,13 +22,14 @@ import styles from './Dashboard3.module.scss';
  * Features: dual-axis chart, embassament/station selectors, date range filtering
  */
 const Dashboard3 = () => {
-  const { embassaments, precipitation, loading, error } = useWaterData(true);
-  const [selectedEmbassament, setSelectedEmbassament] = useState('Sau');
+  const [selectedEmbassament, setSelectedEmbassament] = useState('');
   const [selectedStation, setSelectedStation] = useState('');
   const [timeRange, setTimeRange] = useState('30days');
+  const { embassaments, precipitation, loading, error } = useWaterData(true, timeRange);
 
   const chartData = useMemo(() => {
     if (!embassaments?.records || !precipitation?.records) return [];
+    if (!selectedEmbassament || !selectedStation) return [];
 
     const latestDate = findLatestRecordDate(embassaments.records, precipitation.records);
     const { startDate, endDate } = calculateDateRange(timeRange, {
@@ -42,24 +43,10 @@ const Dashboard3 = () => {
     );
 
     let filteredPrecipitation = waterDataService.filterPrecipitationByDateRange(
-      precipitation.records,
+      precipitation.records.filter(r => r.stationName === selectedStation),
       startDate,
       endDate
     );
-
-    if (selectedStation) {
-      filteredPrecipitation = filteredPrecipitation.filter(
-        r => r.stationName === selectedStation
-      );
-    } else if (filteredPrecipitation.length > 0) {
-      const stationsByDate = {};
-      filteredPrecipitation.forEach(r => {
-        if (!stationsByDate[r.date]) {
-          stationsByDate[r.date] = r;
-        }
-      });
-      filteredPrecipitation = Object.values(stationsByDate);
-    }
 
     const groupedByDate = {};
 
@@ -143,6 +130,7 @@ const Dashboard3 = () => {
             value={selectedEmbassament}
             onChange={(e) => setSelectedEmbassament(e.target.value)}
           >
+            <option value="">Selecciona un embassament</option>
             {allEmbassaments.map(embassament => (
               <option key={embassament} value={embassament}>
                 {embassament}
@@ -152,12 +140,12 @@ const Dashboard3 = () => {
         </div>
 
         <div className={styles.stationSelector}>
-          <label>Estacio (opcional):</label>
+          <label>Estacio:</label>
           <select
             value={selectedStation}
             onChange={(e) => setSelectedStation(e.target.value)}
           >
-            <option value="">Totes les estacions</option>
+            <option value="">Selecciona una estacio</option>
             {allStations.map(station => (
               <option key={station} value={station}>
                 {station}
@@ -168,7 +156,16 @@ const Dashboard3 = () => {
       </div>
 
       <div className={styles.chartContainer}>
-        {chartData.length > 0 ? (
+        {!selectedEmbassament && !selectedStation && (
+          <div className={styles.noData}>Selecciona un embassament i una estacio per veure les dades</div>
+        )}
+        {selectedEmbassament && !selectedStation && (
+          <div className={styles.noData}>Selecciona una estacio per veure les dades</div>
+        )}
+        {!selectedEmbassament && selectedStation && (
+          <div className={styles.noData}>Selecciona un embassament per veure les dades</div>
+        )}
+        {selectedEmbassament && selectedStation && chartData.length > 0 && (
           <ResponsiveContainer width="100%" height={400}>
             <ComposedChart data={chartData} margin={{ top: 5, right: 80, left: 0, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -211,14 +208,15 @@ const Dashboard3 = () => {
               />
             </ComposedChart>
           </ResponsiveContainer>
-        ) : (
+        )}
+        {selectedEmbassament && selectedStation && chartData.length === 0 && (
           <div className={styles.noData}>No hi ha dades per al periode seleccionat</div>
         )}
       </div>
 
       <div className={styles.statistics}>
         <h2>Estadistiques de Correlacio</h2>
-        {chartData.length > 0 && (
+        {selectedEmbassament && selectedStation && chartData.length > 0 && (
           <div className={styles.statCard}>
             <h3>Embassament: {selectedEmbassament}</h3>
             {selectedStation && <p className={styles.station}>Estacio: {selectedStation}</p>}
