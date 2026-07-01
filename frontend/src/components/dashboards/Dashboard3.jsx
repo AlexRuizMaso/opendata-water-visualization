@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ComposedChart,
   Line,
@@ -12,6 +12,8 @@ import {
 } from 'recharts';
 import useWaterData from '../../hooks/useWaterData';
 import waterDataService from '../../services/waterDataService';
+import { tooltipFormatter, formatValue, calcAverage, calcTotal } from '../../utils/chartFormatters';
+import { calculateDateRange, findLatestRecordDate } from '../../utils/timeRangeFilter';
 import styles from './Dashboard3.module.scss';
 
 /**
@@ -24,65 +26,32 @@ const Dashboard3 = () => {
   const [selectedEmbassament, setSelectedEmbassament] = useState('Sau');
   const [selectedStation, setSelectedStation] = useState('');
   const [timeRange, setTimeRange] = useState('30days');
-  const [chartData, setChartData] = useState([]);
 
-  const safeAverage = (records, getValue) => {
-    const valid = records.filter(d => getValue(d) !== undefined);
-    if (valid.length === 0) return null;
-    return valid.reduce((sum, d) => sum + (getValue(d) || 0), 0) / valid.length;
-  };
+  const chartData = useMemo(() => {
+    if (!embassaments?.records || !precipitation?.records) return [];
 
-  // Handle data correlation
-  React.useEffect(() => {
-    if (!embassaments?.records || !precipitation?.records) return;
+    const latestDate = findLatestRecordDate(embassaments.records, precipitation.records);
+    const { startDate, endDate } = calculateDateRange(timeRange, {
+      latestRecordDate: latestDate,
+    });
 
-    const endDate = new Date();
-    let startDate = new Date();
-
-    switch (timeRange) {
-      case '24hours':
-        startDate.setDate(endDate.getDate() - 1);
-        break;
-      case '30days':
-        startDate.setDate(endDate.getDate() - 30);
-        break;
-      case '1year':
-        startDate.setFullYear(endDate.getFullYear() - 1);
-        break;
-      case '2years':
-        startDate.setFullYear(endDate.getFullYear() - 2);
-        break;
-      case '5years':
-        startDate.setFullYear(endDate.getFullYear() - 5);
-        break;
-      default:
-        startDate.setDate(endDate.getDate() - 30);
-    }
-
-    // Filter embassament data
     let filteredEmbassaments = waterDataService.filterEmbassamentsByDateRange(
       embassaments.records.filter(r => r.name === selectedEmbassament),
       startDate,
       endDate
     );
 
-    // Filter precipitation data
-    // Nota: Utilitzem precipitation.records en lloc de precipitation.precipitationOnly
-    // perquè el pipeline actual ja filtra només la variable 1300 en l'extracció.
-    // Si el pipeline canvia en el futur, caldrà revisar aquest component.
     let filteredPrecipitation = waterDataService.filterPrecipitationByDateRange(
       precipitation.records,
       startDate,
       endDate
     );
 
-    // If a station is selected, filter precipitation
     if (selectedStation) {
       filteredPrecipitation = filteredPrecipitation.filter(
         r => r.stationName === selectedStation
       );
     } else if (filteredPrecipitation.length > 0) {
-      // Group by date and get first station if none selected
       const stationsByDate = {};
       filteredPrecipitation.forEach(r => {
         if (!stationsByDate[r.date]) {
@@ -92,7 +61,6 @@ const Dashboard3 = () => {
       filteredPrecipitation = Object.values(stationsByDate);
     }
 
-    // Group by date
     const groupedByDate = {};
 
     filteredEmbassaments.forEach(record => {
@@ -113,15 +81,13 @@ const Dashboard3 = () => {
       groupedByDate[dateKey].station = record.stationName;
     });
 
-    const data = Object.entries(groupedByDate)
+    return Object.entries(groupedByDate)
       .map(([rawDate, values]) => ({ rawDate, ...values }))
       .sort((a, b) => a.rawDate.localeCompare(b.rawDate))
       .map(item => ({
         ...item,
-        date: new Date(item.rawDate).toLocaleDateString('ca-ES')
+        date: new Date(item.rawDate).toLocaleDateString('ca-ES'),
       }));
-
-    setChartData(data);
   }, [embassaments, precipitation, timeRange, selectedEmbassament, selectedStation]);
 
   if (loading) return <div className={styles.loading}>Carregant dades...</div>;
@@ -129,51 +95,48 @@ const Dashboard3 = () => {
   if (!embassaments?.records || !precipitation?.records)
     return <div className={styles.error}>No data available</div>;
 
-  // Get unique embassaments and stations
   const allEmbassaments = [...new Set(embassaments.records.map(r => r.name))].sort();
   const allStations = [...new Set(precipitation.records.map(r => r.stationName))].sort();
 
   return (
     <div className={styles.dashboard}>
-      <h1>🌧️ Correlació Precipitació - Nivell d'Embassaments</h1>
+      <h1>Correlacio Precipitacio - Nivell d'Embassaments</h1>
 
       <div className={styles.controls}>
-        {/* Time Range Selector */}
         <div className={styles.timeRange}>
-          <label>Període:</label>
+          <label>Periodo:</label>
           <button
-             className={timeRange === '24hours' ? styles.active : styles.inactive}
+            className={timeRange === '24hours' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('24hours')}
           >
-            Últimes 24h
+            Ultim dia disponible
           </button>
           <button
             className={timeRange === '30days' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('30days')}
           >
-            Últims 30 dies
+            Ultims 30 dies
           </button>
           <button
             className={timeRange === '1year' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('1year')}
           >
-            Últim any
+            Ultim any
           </button>
           <button
             className={timeRange === '2years' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('2years')}
           >
-            Últims 2 anys
+            Ultims 2 anys
           </button>
           <button
             className={timeRange === '5years' ? styles.active : styles.inactive}
             onClick={() => setTimeRange('5years')}
           >
-            Últims 5 anys
+            Ultims 5 anys
           </button>
         </div>
 
-        {/* Embassament Selector */}
         <div className={styles.embassamentSelector}>
           <label>Embassament:</label>
           <select
@@ -188,9 +151,8 @@ const Dashboard3 = () => {
           </select>
         </div>
 
-        {/* Station Selector */}
         <div className={styles.stationSelector}>
-          <label>Estació (opcional):</label>
+          <label>Estacio (opcional):</label>
           <select
             value={selectedStation}
             onChange={(e) => setSelectedStation(e.target.value)}
@@ -205,7 +167,6 @@ const Dashboard3 = () => {
         </div>
       </div>
 
-      {/* Dual-Axis Chart */}
       <div className={styles.chartContainer}>
         {chartData.length > 0 ? (
           <ResponsiveContainer width="100%" height={400}>
@@ -218,20 +179,16 @@ const Dashboard3 = () => {
               />
               <YAxis
                 yAxisId="left"
-                label={{ value: 'Ocupació (%)', angle: -90, position: 'insideLeft' }}
+                label={{ value: 'Ocupacio (%)', angle: -90, position: 'insideLeft' }}
                 domain={[0, 110]}
               />
               <YAxis
                 yAxisId="right"
                 orientation="right"
-                label={{ value: 'Precipitació (mm)', angle: 90, position: 'insideRight' }}
+                label={{ value: 'Precipitacio (mm)', angle: 90, position: 'insideRight' }}
               />
               <Tooltip
-                formatter={(value) => {
-                  if (value === undefined) return 'N/A';
-                  // Check if it's likely precipitation or occupancy based on value range
-                  return value > 110 ? `${value.toFixed(1)} mm` : `${value.toFixed(1)}%`;
-                }}
+                formatter={(value, name) => tooltipFormatter(value, name)}
                 labelStyle={{ color: '#333' }}
               />
               <Legend />
@@ -242,66 +199,58 @@ const Dashboard3 = () => {
                 stroke="#1E7E1E"
                 dot={false}
                 strokeWidth={2}
-                name="Ocupació Embassament (%)"
+                name="Ocupacio Embassament (%)"
                 isAnimationActive={false}
               />
               <Bar
                 yAxisId="right"
                 dataKey="precipitation"
                 fill="#4ECDC4"
-                name="Precipitació (mm)"
+                name="Precipitacio (mm)"
                 opacity={0.7}
               />
             </ComposedChart>
           </ResponsiveContainer>
         ) : (
-          <div className={styles.noData}>No hi ha dades per al període seleccionat</div>
+          <div className={styles.noData}>No hi ha dades per al periode seleccionat</div>
         )}
       </div>
 
-      {/* Statistics */}
       <div className={styles.statistics}>
-        <h2>Estadístiques de Correlació</h2>
+        <h2>Estadistiques de Correlacio</h2>
         {chartData.length > 0 && (
-          <>
-            <div className={styles.statCard}>
-              <h3>Embassament: {selectedEmbassament}</h3>
-              {selectedStation && <p className={styles.station}>Estació: {selectedStation}</p>}
-              <div className={styles.statRow}>
-                <span>Ocupació mitjana:</span>
-                <strong>
-                  {(() => {
-                    const avg = safeAverage(chartData, d => d.occupancy);
-                    return avg !== null ? `${avg.toFixed(1)}%` : 'Sense dades';
-                  })()}
-                </strong>
-              </div>
-              <div className={styles.statRow}>
-                <span>Precipitació acumulada:</span>
-                <strong>
-                  {(() => {
-                    const total = chartData
-                      .filter(d => d.precipitation !== undefined)
-                      .reduce((sum, d) => sum + (d.precipitation || 0), 0);
-                    return total > 0 ? `${total.toFixed(1)} mm` : 'Sense dades';
-                  })()}
-                </strong>
-              </div>
-              <div className={styles.statRow}>
-                <span>Precipitació mitjana:</span>
-                <strong>
-                  {(() => {
-                    const avg = safeAverage(chartData, d => d.precipitation);
-                    return avg !== null ? `${avg.toFixed(2)} mm` : 'Sense dades';
-                  })()}
-                </strong>
-              </div>
-              <div className={styles.statRow}>
-                <span>Registres:</span>
-                <strong>{chartData.length}</strong>
-              </div>
+          <div className={styles.statCard}>
+            <h3>Embassament: {selectedEmbassament}</h3>
+            {selectedStation && <p className={styles.station}>Estacio: {selectedStation}</p>}
+            <div className={styles.statRow}>
+              <span>Ocupacio mitjana:</span>
+              <strong>
+                {formatValue(calcAverage(chartData, d => d.occupancy), 'occupancy') !== 'N/A'
+                  ? formatValue(calcAverage(chartData, d => d.occupancy), 'occupancy')
+                  : 'Sense dades'}
+              </strong>
             </div>
-          </>
+            <div className={styles.statRow}>
+              <span>Precipitacio acumulada:</span>
+              <strong>
+                {formatValue(calcTotal(chartData, d => d.precipitation), 'precipitation') !== 'N/A'
+                  ? formatValue(calcTotal(chartData, d => d.precipitation), 'precipitation')
+                  : 'Sense dades'}
+              </strong>
+            </div>
+            <div className={styles.statRow}>
+              <span>Precipitacio mitjana:</span>
+              <strong>
+                {formatValue(calcAverage(chartData, d => d.precipitation), 'precipitation') !== 'N/A'
+                  ? formatValue(calcAverage(chartData, d => d.precipitation), 'precipitation')
+                  : 'Sense dades'}
+              </strong>
+            </div>
+            <div className={styles.statRow}>
+              <span>Registres:</span>
+              <strong>{chartData.length}</strong>
+            </div>
+          </div>
         )}
       </div>
     </div>
