@@ -20,39 +20,7 @@ document.
 \begin{itemize}
     \item \textbf{Desenvolupador únic}: Àlex Ruiz Masó (autor del present document), responsable de totes les fases del projecte, des de la investigació inicial fins al desplegament final i documentació.
     \item \textbf{Tutor acadèmic}: Antoni Bardera Reig, professor del Departament d'Informàtica i Matemàtica Aplicada de la Universitat de Girona, qui ha ofert orientació metodològica, revisió de progrés i feedback tècnic durant totes les etapes del projecte.
-    \item \textbf{Consultes informals}: Interaccions esporàdiques amb companyes del grau i professionals del sector de l'aigua per a validació de supòsits i obtenció de perspectives d'usuari, totalitzant aproximadament 10 hores de consultes no formals.
-\end{itemize}
-
-\subsection{Eines de treball}
-Les eines empleades durant el desenvolupament cobreixen tot el cicle de vida del programari, des de la concepció fins al manteniment:
-\begin{itemize}
-    \item \textbf{Gestió de projectes}: Trello per a l'organització de tasques i seguiment del progrés, amb tres llistes principals (Per a fer, En progrés, Finalitzat) i etiquetes per a prioritat i tipologia de tasca.
-    \item \textbf{Control de versions}: Git 2.39 amb model de branques basat en GitFlow adaptat (branques \texttt{main}, \texttt{develop}, i branques de característica breus de vida).
-    \item \textbf{Plataforma de col·laboració}: GitHub com a repositori remot, facilitant la còpia de seguretat, el control d'accés, i la integració amb GitHub Actions per a automatització.
-    \item \textbf{Entorn de desenvolupament backend}: 
-          \begin{itemize}
-              \item Node.js v18.16.0 com a runtime de JavaScript
-              \item npm v9.5.1 com a gestor de paquets
-              \item Visual Studio Code v1.78 com a editor principal, extensificat amb ESLint, Prettier, i GitLens
-          \end{itemize}
-    \item \textbf{Entorn de desenvolupament frontend}: 
-          \begin{itemize}
-              \item React v18.2.0 com a framework d'interfície d'usuari
-               \item Vite v5.4.21 com a bundler i servidor de desenvolupament
-              \item Chrome v112 amb DevTools per a depuració i proves de rendiment
-          \end{itemize}
-    \item \textbf{Eines de prova}:
-          \begin{itemize}
-              \item Jest v29.5.0 per a proves unitàries i d'integració del backend
-              \item React Testing Library v5.14.0 per a proves del frontend
-              \item Postman v10.12 per a proves manuals d'API durant la Fase 1
-          \end{itemize}
-    \item \textbf{Eines de documentació}:
-          \begin{itemize}
-              \item LaTeX v2022 amb distribució TeX Live 2022 per a la memòria del TFG
-              \item Draw.io v19.0 per a la creació de diagrames i il·lustracions tècniques
-              \item Typora v1.6.0 per a notes preliminars i esquemes de redactació
-          \end{itemize}
+    \item \textbf{Consultes informals}: Interaccions esporàdiques amb companys del grau i professionals del sector de l'aigua per a validació de supòsits i obtenció de perspectives d'usuari, totalitzant aproximadament 10 hores de consultes no formals.
 \end{itemize}
 
 \subsection{Punt de partida}
@@ -80,7 +48,7 @@ el projecte, establint una base comuna de terminologia i coneixement.
 \subsection{Open Data}
 Les dades obertes (Open Data) són conjunts de dades que qualsevol pot usar, compartir i modificar lliurement, subjectes únicament al requisit d'atribució i/o compartició igual. A l'àmbit de l'administració pública, les dades obertes representen una estratègia per a augmentar la transparència, fomentar la innovació, i millorar la presa de decisions basada en evidències.
 
-A Catalunya, l'\textbf{Iniciativa d'Open Data de la Generalitat} publica més de 1.500 conjunts de dades a través del portal \texttt{dadesobertes.gencat.cat}, que actua com a punt d'accés centralitzat a les fonts oficials. Les dades d'interès per a aquest projecte provenen específicament de les \textbf{APIs Socrata}, una plataforma de gestió de dades obertes que permet la consulta programàtica via protocols REST sobre HTTP/HTTPS, retornant resultats en format JSON estructurat.
+A Catalunya, l'\textbf{Iniciativa d'Open Data de la Generalitat} publica més de 1.500 conjunts de dades a través del portal \texttt{dadesobertes.gencat.cat} \cite{gencat_dades}, que actua com a punt d'accés centralitzat a les fonts oficials. Les dades d'interès per a aquest projecte provenen específicament de les \textbf{APIs Socrata} \cite{socrata}, una plataforma de gestió de dades obertes que permet la consulta programàtica via protocols REST sobre HTTP/HTTPS, retornant resultats en format JSON estructurat.
 
 Les característiques clau de les APIs Socrata rellevants per a aquest projecte són:
 \begin{itemize}
@@ -88,7 +56,7 @@ Les característiques clau de les APIs Socrata rellevants per a aquest projecte 
     \item \textbf{Format estandarditzat}: Les respostes JSON segueixen l'esquema Socrata, amb camps com \texttt{:id}, \texttt{:created\_at}, \texttt{:updated\_at}, i camps de dades específics a cada dataset.
     \item \textbf{Límits de taxa}: Permet fins a 1.000 peticions per hora per IP d'origen, suficient per a les necessitats d'actualització diària del projecte.
     \item \textbf{Consultes filtrades}: Suporta paràmetres de consulta com \texttt{\$select}, \texttt{\$where}, \texttt{\$limit}, i \texttt{\$order} per a optimitzar la transferència de dades.
-    \item \textbf{Actualitat}: Les datasets d'embassaments s'actualitzen cada 15 minuts, mentre que les de precipitació s'actualitzen cada hora, assegurant que les dades disponibles siguin raonablement actuals.
+    \item \textbf{Actualitat}: Els conjunts de dades d'embassaments s'actualitzen cada 15 minuts, mentre que els de precipitació s'actualitzen cada hora, assegurant que les dades disponibles siguin raonablement actuals.
 \end{itemize}
 
 Durant la Fase 1 d'investigació es va verificar que les fonts necessàries estan disponibles i estables:
@@ -100,29 +68,29 @@ Durant la Fase 1 d'investigació es va verificar que les fonts necessàries esta
 Aquest accés directe i gratuït a dades d'alta freqüència i bona cobertura geogràfica va ser un factor clau per a la decisió d'emprendre el projecte, eliminant la necessitat d'acords d'intercanvi de dades o pagaments per accés a informació propietària.
 
 \subsection{Tecnologies del projecte}
-Les tecnologies seleccionades per a la implementació del projecte van ser escollides seguint criteris de maduresa, suport comunitari, adaptabilitat al problema, i llicències obertes compatibles amb l'objectiu de divulgació del codi font.
+Les tecnologies seleccionades per a la implementació del projecte van ser escollides seguint criteris de maduresa, suport comunitari, adaptabilitat al problema, i llicències obertes compatibles amb l'objectiu de divulgació del codi font. L'estudi comparatiu detallat de les alternatives avaluades es presenta al Capítol 5.
 
 \subsubsection{Backend i processament de dades}
 \begin{itemize}
-    \item \textbf{Node.js 18.x}: Escollit per a la seva eficient I/O asíncrona, ideal per a operacions d'extracció de dades que impliquen esperes de xarxa. La seva arquitectura d'esdeveniments permet gestionar múltiples peticions concurrent amb mínim overhead, i el seu ecosistema npm ofereix mòduls estabilitzats per a virtualment qualsevol necessitat de backend. La versió LTS (Long-Term Support) assegura actualitzacions de seguretat per a un període llarg, reduint el risc d'obsolescència a curt termini.
-    \item \textbf{axios 1.4.0}: Biblioteca HTTP escollida per a la seva promesa-based API, mida reduïda (10KB gzipped), i capacitat avançada d'interceptors per a maneig centralitzat d'encapçalaments, reintents automàtics, i transformació de dades. Va ser preferida sobre l'API \texttt{fetch} nativa per a la seva compatibilitat retroactiva amb versions antigues de Node.js i el seu suport nadiu per a la cancel·lació de peticions.
-    \item \textbf{dotenv 16.0.3}: Utilitzat per a la gestió segura de variables d'entorn, permetent separar la configuració sensible (encara que en aquest cas no hi hagi credentials, sí paràmetres configurables com a freqüències de consulta o camps de dades) del codi font principal, millorant la portabilitat entre diferents entorns d'execució.
+    \item \textbf{Node.js 18.x}: Runtime de JavaScript escollit per la seva eficient I/O asíncrona, ideal per a operacions d'extracció de dades que impliquen esperes de xarxa.
+    \item \textbf{axios 1.4.0}: Biblioteca HTTP amb API basada en promeses, maneig centralitzat d'encapçalaments i reintents automàtics.
+    \item \textbf{dotenv 16.0.3}: Gestió segura de variables d'entorn per a separar configuració del codi font.
 \end{itemize}
 
 \subsubsection{Frontend i visualització}
 \begin{itemize}
-    \item \textbf{React 18.x}: Triat per a la seva arquitectura basada en components, que facilita la creació d'interfícies d'usuari complexes i mantenibles. La introducció de característiques concurrents en la versió 18 (com a \texttt{startTransition} i l'ús automàtic de \textit{batching}) millora la capacitat de resposta de l'interfície durant operacions costoses com el processament de grans conjunts de dades. La seva declarativitat redueix la complexitat mental necessària per a preveure estats d'interfície, i l'ecosistema abundant de components de tercers accelera el desenvolupament.
-    \item \textbf{Vite 5.x}: Escollit com a bundler per a la seva velocitat de compilació durant el desenvolupament (gràcies a l'ús natiu d'ESM) i la seva configuració mínima necessària. La seva empremta de mida de paquet de producció és comparable a la d'altres bundlers establerts, i el seu suport integrat per a mòduls CSS i assets estàtics ho forma una solució completa sense necessitat de plugins addicionals.
-    \item \textbf{React Router 6.x}: Implementat per a la gestió de navegació entre els quatre dashboards, escollit per a la seva API intuïtiva basada en hooks, el seu suport nadiu per a càrrega diferida de components (code splitting), i la seva mida reduïda comparada amb alternatives com a Reach Router.
-    \item \textbf{Recharts 2.x}: Biblioteca de gràfics seleccionada per a la seva construcció sobre components React, facilitant la integració amb l'estat i el comportament de l'aplicació. Els seus components són altament configurables via props, permetent una personalització fina sense necessitat de modificar el codi font de la biblioteca. La seva dependència única de D3.js per als càlculs de l'escala i geometria garanteix precisió matemàtica, mentre que la seva capa d'abstracció de React simplifica l'ús per a desenvolupadors web.
-    \item \textbf{Leaflet 1.x}: Biblioteca de mapes triada per a la seva lleugesa (38KB gzipped), la seva simplicitat d'ús per a necessitats bàsiques de visualització geoespacial, i la seva àmplia gamma de plugins disponibles. Va ser preferida sobre alternatives més pesades com a Mapbox GL JS o OpenLayers per a la seva suficient per als requisits del projecte (visualització de punts amb popups) i el seu model de llicenciament BSD, completament compatible amb l'objectiu de codi obert.
-    \item \textbf{Sass 1.99}: Preprocessador CSS utilitzat per a la seva capacitat de niament, variables, i mixins, que milloren significativament la mantenibilitat i la consistència de l'estil en projectes de mida mitjana a gran. La seva sintaxi SCSS, compatible amb CSS estàndard, va permetre una migració progressiva des de fitxers .css existents sense perdre funcionalitat.
+    \item \textbf{React 18.x}: Framework basat en components amb característiques concurrents per a millorar la capacitat de resposta.
+    \item \textbf{Vite 5.x}: Bundler ràpid amb compilació basada en ESM i configuració mínima.
+    \item \textbf{React Router 6.x}: Gestió de navegació entre dashboards amb suport per a càrrega diferida de components.
+    \item \textbf{Recharts 2.x}: Biblioteca de gràfics construïda sobre components React i D3.js per als càlculs d'escala.
+    \item \textbf{Leaflet 1.x}: Biblioteca de mapes lleugera (38KB gzipped) amb llicència BSD.
+    \item \textbf{Sass 1.99}: Preprocessador CSS amb metodologia BEM per a mantenibilitat.
 \end{itemize}
 
 \subsubsection{Infraestructura i automatització}
 \begin{itemize}
-    \item \textbf{GitHub Actions}: Plataforma de CI/CD triada per a la seva integració nativa amb repositoris GitHub, la seva sintaxi declarativa basada en YAML, i el seu generós allotjament gratuït per a repositoris públics (fins a 2.000 minuts al mes). La seva capacitat de desencadenar workflows basada en esdeveniments (push, pull request, schedule) i la seva àmplia biblioteca d'accions oficials i de la comunitat el converteixen en una elecció ideal per a tasques d'automatització com a l'execució periòdica d'un pipeline ETL.
-    \item \textbf{Cron scheduling}: Utilitzat dins de GitHub Actions per a programar l'execució diària de la canonada ETL a les 02:00 UTC, escollint aquesta hora per a minimitzar l'impacte sobre possibles usuaris de l'aplicació (assumint menor activitat durant les hores nocturnes) i aprofitant les finestres de baixa activitat de les APIs públiques.
+    \item \textbf{GitHub Actions}: Plataforma CI/CD amb integració nativa i allotjament gratuït per a repositoris públics.
+    \item \textbf{Cron scheduling}: Programació d'execució diària de l'ETL a les 02:00 UTC per a minimitzar impacte.
 \end{itemize}
 
 Aquesta selecció de tecnologies ha resultat en un stack coherent i ben integrat, on cada component compleix una funció clara i els seus punts forts es complementen mutuament, permetent un desenvolupament eficient i un resultat final de qualitat professional.

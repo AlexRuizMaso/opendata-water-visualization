@@ -11,110 +11,66 @@
 
 \section{Assoliment dels objectius}
 
-Els objectius del projecte, definits al Capítol 1, s'han assolit en la seva totalitat amb un grau de compliment elevat. A continuació es detalla l'avaluació de cadascun:
+Els objectius del projecte, definits al Capítol 1, s'han assolit en la seva totalitat:
 
 \begin{enumerate}
-    \item \textbf{Implementar una canonada ETL robusta} -- \textbf{ASSOLIT}. S'ha desenvolupat un pipeline ETL complet amb Node.js que extreu dades de les APIs de Socrata de la Generalitat de Catalunya, les transforma amb normalització i neteja, i les desa en fitxers JSON estructurats. El sistema suporta tant el mode incremental com la sincronització completa amb paginació.
+    \item \textbf{Implementar una canonada ETL robusta} -- \textbf{ASSOLIT}. Pipeline complet amb Node.js que extreu, transforma i desa dades de les APIs de Socrata en JSON versionat.
     
-    \item \textbf{Crear un frontend interactiu amb quatre panells} -- \textbf{ASSOLIT}. S'han implementat els quatre panells de visualització amb React: mapa interactiu amb Leaflet, evolució temporal amb Recharts, correlació precipitació-nivells amb gràfics de dispersió i coeficient de Pearson, i matriu d'alertes amb indicadors semàfor i tendències. A més, s'han afegit pàgines addicionals per a embassaments, meteorologia i informació del projecte.
+    \item \textbf{Crear un frontend interactiu amb quatre panells} -- \textbf{ASSOLIT}. Quatre dashboards amb React: mapa (Leaflet), evolució temporal (Recharts), correlació (scatter plot + Pearson), i alertes (semàfor + tendències).
     
-    \item \textbf{Assegurar l'automatització} -- \textbf{ASSOLIT}. S'han configurat dos workflows de GitHub Actions: un per a l'execució diària de l'ETL a les 02:00 UTC i un altre per al desplegament automàtic del frontend a GitHub Pages. El sistema funciona de forma autònoma sense intervenció manual.
+    \item \textbf{Assegurar l'automatització} -- \textbf{ASSOLIT}. Dos workflows de GitHub Actions: ETL diari a les 02:00 UTC i desplegament automàtic a GitHub Pages.
     
-    \item \textbf{Implementar lògica de detecció de sequera} -- \textbf{ASSOLIT}. S'ha implementat el sistema de classificació basat en llindars de percentatge d'ocupació (crític, avís, normal, òptim) i s'ha afegit un algoritme de regressió lineal per detectar tendències de millora o deteriorament.
+    \item \textbf{Implementar lògica de detecció de sequera} -- \textbf{ASSOLIT}. Sistema de classificació per llindars i algoritme de regressió lineal per detectar tendències.
     
-    \item \textbf{Documentar adequadament} -- \textbf{ASSOLIT}. S'ha generat aquesta memòria completa amb totes les decisions de disseny, l'arquitectura del sistema, la implementació detallada i les guies d'ús.
+    \item \textbf{Documentar adequadament} -- \textbf{ASSOLIT}. Memòria completa amb decisions d'arquitectura, implementació i guies d'ús.
 \end{enumerate}
 
-Pel que fa als requisits de l'aplicació (Capítol 6), tots els requisits funcionals d'alta prioritat (RF-1 a RF-4) s'han assolit completament, els de mitjana prioritat (RF-5 i RF-6) també s'han implementat, i el de baixa prioritat (RF-7, exportació de dades) s'ha assolit parcialment.
-
-%----------------------------------------------------------------------------------------
-
-\section{Desviacions de la planificació}
-
-La planificació original, descrita al Capítol 4, va servir com a guia efectiva durant el desenvolupament. Les principals desviacions respecte al pla inicial van ser:
-
-\begin{enumerate}
-    \item \textbf{Ampliació de l'abast de dades}: El pla original preveia utilitzar només dades de l'embassament de Raimat per a la prova de concepte. Durant la Fase 1 es va comprovar que les APIs de Socrata proporcionaven accés a tots els embassaments principals de Catalunya, i es va decidir ampliar l'abast a 9 embassaments. Aquesta decisió va incrementar l'esforç de la Fase 2 en aproximadament 8 hores, però va augmentar significativament el valor del projecte.
-    
-    \item \textbf{Canvi en la visualització de correlació}: Inicialment es va planificar utilitzar mapes de calor per mostrar la correlació entre precipitació i nivells. Durant les proves es va observar que aquesta representació no era prou clara, i es va substituir per un gràfic de dispersió amb càlcul del coeficient de Pearson, proporcionant una mesura quantitativa més rigorosa.
-    
-    \item \textbf{Incorporació de predicció tendencial}: El pla original no incloïa funcionalitat predictiva al Panell 4. Durant la implementació es va detectar que els usuaris es beneficiarien d'una indicació de tendència, i es va implementar un algoritme de regressió lineal sobre les últimes 6 mesures.
-    
-    \item \textbf{Subestimació de l'optimització frontend}: L'esforç necessari per mantenir un rendiment fluid amb grans conjunts de dades va ser superior a l'estimat, requerint una redistribució de 5 hores des de funcionalitats noves cap a optimització.
-    
-    \item \textbf{Reforç de les proves d'usabilitat}: Es va detectar que les proves automatitzades no capturaven problemes d'usabilitat, i es van assignar 4 hores addicionals per a proves estructurades amb usuaris reals.
-\end{enumerate}
-
-Malgrat aquestes desviacions, l'estimació total de 258 hores va resultar prou precisa, amb un error de només un 3,2\% respecte a les 250 hores reals invertides. Cap desviació va comprometre els objectius essencials del projecte.
+Pel que fa als requisits (Capítol 5), tots els funcionals (RF-1 a RF-6) s'han assolit completament.
 
 %----------------------------------------------------------------------------------------
 
 \section{Principals resultats}
 
-Els principals resultats obtinguts amb aquest projecte són:
-
 \begin{itemize}
-    \item \textbf{Sistema complet de visualització hídrica}: Una plataforma web funcional que consolida dades de 9 embassaments i més de 200 estacions meteorològiques de Catalunya en una única interfície accessible.
-    
-    \item \textbf{Pipeline ETL automatitzat}: Un sistema robust d'extracció, transformació i càrrega que s'executa diàriament sense intervenció manual, amb gestió d'errors, reintents i logging detallat.
-    
-    \item \textbf{Arquitectura de cost zero}: La combinació de GitHub Actions per a l'ETL i GitHub Pages per al frontend permet un funcionament complet sense costos d'infraestructura, aprofitant recursos gratuïts per a projectes de codi obert.
-    
-    \item \textbf{Codi font obert i reutilitzable}: Tot el projecte és públic a GitHub, permetent que altres desenvolupadors el revisin, reprodueixin o adaptin per a altres regions o tipus de dades.
+    \item \textbf{Sistema complet}: Plataforma web funcional amb dades de 9 embassaments i 200+ estacions meteorològiques de Catalunya.
+    \item \textbf{Cost zero}: GitHub Actions per a l'ETL i GitHub Pages per al frontend permeten funcionament sense costos d'infraestructura.
+    \item \textbf{Codi obert}: Tot el projecte és públic a GitHub, reutilitzable per a altres regions o tipus de dades.
+    \item \textbf{Més enllà del portal oficial}: Ofereix correlacions automàtiques i alertes de sequera integrades que no estan disponibles al portal d'ACA.
 \end{itemize}
-
-Comparant amb altres solucions existents, com el portal oficial d'ACA (Agència Catalana de l'Aigua), el nostre projecte ofereix una experiència d'usuari més intuïtiva i centrada en la visualització, amb correlacions automàtiques i alertes de sequera que no estan disponibles de forma integrada al portal oficial. La principal diferència és que el nostre sistema és un projecte acadèmic de codi obert, mentre que el portal d'ACA és una plataforma institucional amb més funcionalitats però també més complexa per a l'usuari mitjà.
 
 %----------------------------------------------------------------------------------------
 
 \section{Aportacions personals}
 
-Durant el desenvolupament d'aquest projecte, les aportacions personals més rellevants han estat:
-
 \begin{itemize}
-    \item \textbf{Disseny d'arquitectura desacoblada}: La decisió de separar l'ETL del frontend mitjançant fitxers JSON com a intermediari ha permès una arquitectura senzilla, econòmica i mantenible, sense necessitat de servidors de backend ni bases de dades en producció.
-    
-    \item \textbf{Implementació del mecanisme de finestra lliscant}: Per gestionar el creixement de les dades de precipitació, es va dissenyar un sistema que manté un fitxer principal amb una finestra de 2 anys i arxiva l'historial complet separat per anys, equilibrant rendiment i accessibilitat.
-    
-    \item \textbf{Algoritme de detecció de tendències}: La implementació de regressió lineal sobre les últimes mesures per detectar tendències de millora o deteriorament dels embassaments afegeix valor analític al sistema d'alertes.
-    
-    \item \textbf{Integració completa amb GitHub Actions}: La configuració de dos workflows coordinats (ETL + desplegament) amb gestió de credencials, control de bucles infinits i optimització de recursos demostra una integració CI/CD professional.
-    
-    \item \textbf{Documentació tècnica exhaustiva}: La memòria del projecte documenta totes les decisions de disseny, patrons de disseny aplicats i justificacions tècniques, facilitant la comprensió i el manteniment futur del sistema.
+    \item \textbf{Arquitectura desacoblada}: Separació ETL/frontend mitjançant JSON, sense servidors de backend ni bases de dades.
+    \item \textbf{Finestra lliscant}: Sistema que manté un fitxer principal amb 2 anys de dades i arxiva l'historial separat per anys.
+    \item \textbf{Detecció de tendències}: Regressió lineal sobre les últimes 6 mesures per detectar millora o deteriorament.
+    \item \textbf{CI/CD complet}: Dos workflows coordinats amb gestió de credencials i optimització de recursos.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Aprenentatge realitzat}
 
-La realització d'aquest projecte ha suposat un aprenentatge significatiu tant a nivell tècnic com de gestió:
-
 \subsection{Aprenentatge tècnic}
 
 \begin{itemize}
-    \item \textbf{Node.js i ETL}: S'ha après a dissenyar i implementar un pipeline ETL robust amb Node.js, gestionant peticions HTTP asíncrones, transformació de dades complexes, emmagatzematge en JSON i mecanismes de fusió incremental.
-    
-    \item \textbf{React avançat}: S'ha profunditzat en l'ús de React amb funcionalitats modernes com \texttt{React.lazy}, \texttt{Suspense}, hooks personalitzats i gestió d'estat global amb Zustand.
-    
-    \item \textbf{Visualització de dades}: S'ha adquirit experiència pràctica amb biblioteques de visualització com Recharts per a gràfics estadístics i Leaflet per a mapes interactius, aprenent a optimitzar el rendiment amb grans conjunts de dades.
-    
-    \item \textbf{CI/CD amb GitHub Actions}: S'ha après a configurar workflows complexos amb programació \texttt{cron}, gestió de permisos, desplegament automàtic a GitHub Pages i coordinació entre múltiples workflows.
-    
-    \item \textbf{Gestió de dades geoespacials}: S'ha après a treballar amb coordenades geogràfiques, markers interactius i capes de mapes, integrant-les amb dades dinàmiques.
+    \item \textbf{Node.js i ETL}: Disseny i implementació de pipelines robusts amb gestió d'errors i reintents.
+    \item \textbf{React avançat}: \texttt{React.lazy}, \texttt{Suspense}, hooks personalitzats i Zustand.
+    \item \textbf{Visualització de dades}: Recharts i Leaflet amb optimització per a grans conjunts de dades.
+    \item \textbf{CI/CD}: Workflows complexos amb cron, permisos i desplegament automàtic.
 \end{itemize}
 
-\subsection{Aprenentatge en gestió de projectes}
+\subsection{Aprenentatge en gestió}
 
 \begin{itemize}
-    \item \textbf{Planificació realista}: S'ha après a estimar l'esforç necessari per a tasques tècniques complexes, amb un error de només un 3,2\% respecte a l'estimació inicial.
-    
-    \item \textbf{Gestió de desviacions}: S'ha après a gestionar desviacions de forma proactiva, reavaluant prioritats i redistribuint recursos sense perdre la visió global del projecte.
-    
-    \item \textbf{Importància de les proves d'usabilitat}: S'ha comprès que les proves automatitzades no substitueixen la validació amb usuaris reals, especialment en projectes amb component visual important.
-    
-    \item \textbf{Documentació com a eina de treball}: S'ha après que la documentació no és només un requisit acadèmic, sinó una eina que facilita el desenvolupament i el manteniment del codi.
+    \item \textbf{Estimació precisa}: Error de només 3,2\% respecte a les 250 hores reals.
+    \item \textbf{Gestió de desviacions}: Reavaluació proactiva de prioritats sense perdre la visió global.
+    \item \textbf{Proves d'usabilitat}: Les proves automatitzades no substitueixen la validació amb usuaris reals.
+    \item \textbf{Documentació}: Eina de treball que facilita desenvolupament i manteniment.
 \end{itemize}
 
-En conjunt, aquest projecte ha representat una oportunitat valuosa per aplicar coneixements adquirits durant el grau en un context real, desenvolupant competències tècniques i professionals que seran útils en la carrera professional futura.
+En conjunt, aquest projecte ha representat una oportunitat valuosa per aplicar coneixements del grau en un context real, desenvolupant competències tècniques i professionals per a la carrera futura.
 
 %----------------------------------------------------------------------------------------

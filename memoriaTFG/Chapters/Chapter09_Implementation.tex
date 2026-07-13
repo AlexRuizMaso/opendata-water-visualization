@@ -9,208 +9,65 @@
 
 %----------------------------------------------------------------------------------------
 
-\section{Entorn de desenvolupament}
-
-L'entorn de desenvolupament del projecte s'ha configurat sobre un ordinador portàtil amb processador Intel Core i7-11800H, 16~GB de memòria RAM i disc SSD de 512~GB, executant Windows 11 Home 22H2. Com a editor de codi principal s'ha utilitzat Visual Studio Code v1.78, estès amb les extensions ESLint, Prettier i GitLens per a la qualitat del codi i la gestió de versions.
-
-El control de versions s'ha gestionat amb Git 2.39, seguint un model de branques adaptat de GitFlow amb les branques \texttt{main}, \texttt{develop} i branques de característica de vida curta. El repositori remot s'ha allotjat a GitHub, facilitant la còpia de seguretat, la col·laboració i la integració contínua amb GitHub Actions.
-
-Per al backend i l'ETL s'ha utilitzat Node.js v18.16.0 com a runtime de JavaScript, amb npm v9.5.1 com a gestor de paquets. Per al frontend, s'ha emprat React v18.2.0 amb Vite v5.4.21 com a bundler, Chrome v112 amb DevTools per a depuració, i Sass v1.99.0 com a preprocessador CSS.
-
-%----------------------------------------------------------------------------------------
-
 \section{Implementació del pipeline ETL}
 
-El pipeline ETL constitueix el nucli del processament de dades del sistema. S'ha implementat com un conjunt de mòduls Node.js estructurats segons el patró de pipeline modular, amb tres fases clarament diferenciades: extracció, transformació i càrrega.
+El pipeline ETL s'ha implementat com un conjunt de mòduls Node.js estructurats segons el patró de pipeline modular:
 
-\subsection{Fase d'extracció (Extract)}
+\subsection{Extracció}
+Dos extractors independents (\texttt{EmbassamentExtractor} i \texttt{PrecipitationExtractor}) utilitzen \texttt{axios} per obtenir dades de les APIs Socrata de la Generalitat \cite{gencat_dades, socrata}. Suporten mode incremental (diari) i sincronització completa (\texttt{--full-sync}). La configuració es gestiona amb \texttt{dotenv}.
 
-La fase d'extracció es compon de dos extractors independents: \texttt{EmbassamentExtractor} i \texttt{PrecipitationExtractor}. Ambdós utilitzen la biblioteca \texttt{axios} per realitzar peticions HTTP GET als endpoints de l'API Socrata de la Generalitat de Catalunya:
+\subsection{Transformació}
+Els transformadors normalitzen dates a ISO 8601, eliminen duplicats, calculen percentatges d'ocupació i classifiquen alertes de sequera (crític $<$20\%, avís 20-50\%, normal 50-75\%, òptim $>$75\%). Per a precipitació, s'implementa una finestra lliscant de 2 anys.
 
-\begin{itemize}
-    \item \textbf{Embassaments}: Endpoint \texttt{https://analisi.transparenciacatalunya.cat/resource/gn9e-3qhr.json}, que retorna les dades actualitzades cada 15 minuts dels 9 embassaments de Catalunya.
-    \item \textbf{Precipitació}: Endpoint \texttt{https://analisi.transparenciacatalunya.cat/resource/7bvh-jvq2.json}, que retorna les mesures de les 214 estacions meteorològiques actives, actualitzades cada hora.
-\end{itemize}
-
-Els extractors suporten dos modes d'operació: el mode incremental (diari), que obté només les dades més recents, i el mode de sincronització completa (\texttt{--full-sync}), que utilitza la paginació de Socrata per descarregar tot l'historial disponible. La configuració es gestiona mitjançant variables d'entorn carregades amb \texttt{dotenv}, permetent modificar els endpoints i paràmetres sense alterar el codi font.
-
-Abans de l'extracció, es pot executar una comprovació de salut de les APIs (\texttt{APIHealthCheck}) que verifica la disponibilitat dels endpoints i evita execucions innecessàries quan les APIs no responen.
-
-\subsection{Fase de transformació (Transform)}
-
-La fase de transformació aplica neteja i normalització a les dades extretes. Els transformadors \texttt{EmbassamentTransformer} i \texttt{PrecipitationTransformer} realitzen les següents operacions:
-
-\begin{itemize}
-    \item Normalització de dates a format ISO 8601.
-    \item Eliminació de registres duplicats i inconsistents.
-    \item Conversió d'unitats quan és necessari.
-    \item Càlcul de mètriques derivades com percentatges d'ocupació i tendències.
-    \item Classificació d'alertes de sequera segons llindars predefinits: crític ($<$20\%), avís (20-50\%), normal (50-75\%) i òptim ($>$75\%).
-\end{itemize}
-
-Per a les dades de precipitació, s'implementa un mecanisme de finestra lliscant de 2 anys per al fitxer principal, mentre que l'historial complet es desa separat per anys en fitxers individuals per facilitar consultes històriques.
-
-\subsection{Fase de càrrega (Load)}
-
-La fase de càrrega desa les dades transformades en fitxers JSON estructurats dins del directori \texttt{/etl/data/}. El carregador \texttt{DataLoader} implementa les següents funcionalitats:
-
-\begin{itemize}
-    \item Escriptura de fitxers JSON amb metadades incloent timestamp i estadístiques.
-    \item Fusió incremental de dades noves amb existents mitjançant \texttt{Map} per evitar duplicats.
-    \item Generació de fitxers d'arxiu per anys per a dades de precipitació.
-    \item Neteja automàtica de còpies de seguretat antigues (més de 30 dies).
-\end{itemize}
+\subsection{Càrrega}
+\texttt{DataLoader} desa les dades en fitxers JSON amb metadades, fusió incremental per evitar duplicats, i neteja automàtica de còpies antigues (més de 30 dies).
 
 %----------------------------------------------------------------------------------------
 
 \section{Implementació del frontend}
 
-El frontend s'ha implementat com una aplicació de pàgina única (SPA) amb React 18, estructurada amb una arquitectura basada en components i gestió d'estat global amb Zustand.
-
-\subsection{Estructura i navegació}
-
-L'aplicació utilitza \texttt{React Router 6} amb \texttt{HashRouter} per a la navegació entre vuit rutes principals:
-
-\begin{itemize}
-    \item \texttt{/}: Panell principal de resum (\texttt{Dashboard})
-    \item \texttt{/dashboard/map}: Mapa interactiu amb ubicacions d'embassaments i estacions
-    \item \texttt{/dashboard/temporal}: Evolució temporal dels nivells d'embassaments
-    \item \texttt{/dashboard/correlation}: Anàlisi de correlació precipitació-nivells
-    \item \texttt{/dashboard/alerts}: Matriu d'alertes de sequera amb indicadors semàfor
-    \item \texttt{/embassaments}: Pàgina dedicada als embassaments
-    \item \texttt{/meteorologia}: Pàgina dedicada a la meteorologia
-    \item \texttt{/about}: Informació sobre el projecte
-\end{itemize}
-
-Els components dels quatre dashboards es carreguen de forma asíncrona amb \texttt{React.lazy()} i \texttt{Suspense}, optimitzant el temps de càrrega inicial mitjançant \textit{code splitting}.
+\subsection{Estructura}
+Aplicació SPA amb React 18 \cite{react}, React Router 6 i gestió d'estat amb Zustand \cite{zustand}. Els components es carreguen asíncronament amb \texttt{React.lazy()} i \texttt{Suspense} per a code splitting.
 
 \subsection{Gestió de dades}
-
-El servei \texttt{waterDataService.js} encapsula tota la lògica d'accés a les dades. Utilitza \texttt{axios} per carregar els fitxers JSON generats per l'ETL des del directori \texttt{/public/data/}, i proporciona mètodes per:
-
-\begin{itemize}
-    \item Obtenir dades d'embassaments, precipitació i metadades.
-    \item Filtrar per rang de dates i per estació meteorològica.
-    \item Agrupar embassaments per nom i obtenir els registres més recents.
-    \item Calcular colors d'estat segons el percentatge d'ocupació.
-\end{itemize}
+\texttt{waterDataService.js} encapsula l'accés a dades mitjançant \texttt{axios}, proporcionant filtres per data i estació, agrupació per nom, i càlcul de colors d'estat.
 
 \subsection{Visualitzacions}
-
-Les visualitzacions s'implementen amb dues biblioteques principals:
-
 \begin{itemize}
-    \item \textbf{Recharts 2}: Per a gràfics de línies (evolució temporal), gràfics de dispersió (correlació) i indicadors KPI. S'aprofita la seva integració nativa amb React per a una gestió d'estat coherent.
-    \item \textbf{Leaflet 1} amb \texttt{react-leaflet}: Per al mapa interactiu del Panell 1, mostrant markers per a cada embassament i estació meteorològica amb popups informatius.
+    \item \textbf{Recharts 2} \cite{recharts}: Gràfics de línies, dispersió i KPIs amb integració nativa amb React.
+    \item \textbf{Leaflet 1} \cite{leaflet}: Mapa interactiu amb markers i popups informatius.
 \end{itemize}
 
-L'estil s'ha implementat amb Sass seguint la metodologia BEM (Block-Element-Modifier), amb variables centralitzades a \texttt{\_variables.scss} per garantir consistència visual. El disseny és responsiu amb enfocament \textit{mobile-first}, utilitzant CSS Grid per als layouts principals i Flexbox per a l'alineació de components interns.
-
-%----------------------------------------------------------------------------------------
-
-\section{Integració de components}
-
-La integració entre l'ETL i el frontend es realitza mitjançant fitxers JSON compartits, eliminant la necessitat d'un servidor de backend en producció. El flux de dades és unidireccional:
-
-\begin{enumerate}
-    \item Les APIs de la Generalitat publiquen dades actualitzades.
-    \item GitHub Actions executa l'ETL diàriament a les 02:00 UTC.
-    \item L'ETL extreu, transforma i desa les dades en fitxers JSON.
-    \item Els fitxers JSON es copien al directori \texttt{frontend/public/data/}.
-    \item El frontend carrega els fitxers JSON en temps d'execució.
-    \item L'usuari visualitza les dades actualitzades a la interfície.
-\end{enumerate}
-
-Els tres fitxers principals generats són:
-
-\begin{itemize}
-    \item \texttt{embassaments.json}: Historial complet de mesures d'embassaments amb estadístiques i metadades.
-    \item \texttt{precipitation.json}: Finestra lliscant de 2 anys de mesures de precipitació.
-    \item \texttt{metadata.json}: Informació sobre l'última execució de l'ETL, durada i fonts de dades.
-\end{itemize}
-
-Aquesta arquitectura desacoblada permet que el frontend sigui completament estàtic i es pugui servir des de qualsevol CDN o servidor web estàtic, mentre que l'ETL s'executa de forma independent a l'entorn de GitHub Actions.
+L'estil utilitza Sass \cite{sass} amb metodologia BEM i CSS Grid/Flexbox per a disseny responsiu mobile-first.
 
 %----------------------------------------------------------------------------------------
 
 \section{Automatització amb GitHub Actions}
 
-L'automatització del projecte es gestiona mitjançant dos workflows de GitHub Actions:
+Dos workflows coordinats \cite{github_actions}:
 
-\subsection{Workflow ETL Pipeline (\texttt{etl-pipeline.yml})}
+\textbf{ETL Pipeline (\texttt{etl-pipeline.yml})}: S'executa diàriament a les 02:00 UTC (cron) o manualment. Fa checkout, instal·la dependències, executa l'ETL, copia fitxers JSON a \texttt{frontend/public/data/}, i fa commit/push amb \texttt{[skip ci]} per evitar bucles.
 
-Aquest workflow s'executa diàriament a les 02:00 UTC mitjançant programació \texttt{cron}, i també es pot disparar manualment amb \texttt{workflow\_dispatch}. Les seves tasques principals són:
-
-\begin{enumerate}
-    \item \textbf{Checkout del repositori}: Obté el codi més recent amb \texttt{fetch-depth: 0} per accés a l'historial complet.
-    \item \textbf{Configuració de Node.js 18}: Prepara l'entorn d'execució.
-    \item \textbf{Instal·lació de dependències}: Executa \texttt{npm install} al directori \texttt{./etl}.
-    \item \textbf{Execució de l'ETL}: Executa \texttt{npm run full-pipeline} per processar les dades.
-    \item \textbf{Còpia de fitxers}: Copia els fitxers JSON generats a \texttt{frontend/public/data/}.
-    \item \textbf{Commit i push}: Desa els canvis amb el missatge \texttt{"chore: update water data [skip ci]"}, on el flag \texttt{[skip ci]} evita un bucle infinit de workflows.
-    \item \textbf{Build del frontend}: Construeix l'aplicació React i puja els artefactes per al seu posterior desplegament.
-\end{enumerate}
-
-El workflow té permís d'escriptura sobre el contingut del repositori (\texttt{permissions: contents: write}) per poder fer push dels fitxers JSON actualitzats.
-
-\subsection{Workflow de desplegament (\texttt{deploy-frontend-pages.yml})}
-
-Aquest workflow s'activa automàticament quan es fa push a la branca \texttt{main} o manualment amb \texttt{workflow\_dispatch}. Les seves tasques són:
-
-\begin{enumerate}
-    \item \textbf{Checkout i configuració}: Obté el codi i configura Node.js 18.
-    \item \textbf{Instal·lació i build}: Instal·la dependències del frontend i construeix l'aplicació amb Vite.
-    \item \textbf{Desplegament}: Puja el directori \texttt{dist} a GitHub Pages mitjançant \texttt{actions/deploy-pages@v4}.
-\end{enumerate}
-
-El workflow utilitza concurrència (\texttt{concurrency}) per cancel·lar desplegaments en curs quan es detecta un nou push, optimitzant l'ús de recursos.
+\textbf{Desplegament (\texttt{deploy-frontend-pages.yml})}: S'activa a push a \texttt{main}. Construeix el frontend amb Vite \cite{vite} i desplega a GitHub Pages \cite{github_pages}.
 
 %----------------------------------------------------------------------------------------
 
 \section{Proves realitzades}
 
-Per verificar el correcte funcionament del sistema, s'han implementat proves unitàries tant per al pipeline ETL com per al frontend.
+\textbf{Proves ETL}: Validació de cada fase (extractors, transformadors, carregadors) amb Jest, verificant estructures de dades, normalització, fusió i neteja.
 
-\subsection{Proves del pipeline ETL}
+\textbf{Proves frontend}: Verificació de \texttt{waterDataService}, components de visualització (Recharts, Leaflet) i navegació React Router.
 
-Les proves unitàries de l'ETL validen cada fase del pipeline de forma aïllada:
-
-\begin{itemize}
-    \item \textbf{Extractors}: Verifiquen que les peticions a les APIs retornen dades amb l'estructura esperada, gestionant correctament els errors de xarxa i les respostes buides.
-    \item \textbf{Transformadors}: Validen que les dades es normalitzen correctament, que els càlculs de percentatges i tendències són precisos, i que la classificació d'alertes segueix els llindars definits.
-    \item \textbf{Carregadors}: Comproven que els fitxers JSON es generen amb el format correcte, que la fusió incremental no duplica registres, i que la neteja de còpies de seguretat funciona segons el període configurat.
-\end{itemize}
-
-\subsection{Proves del frontend}
-
-Les proves del frontend es centren en els components React i la gestió de dades:
-
-\begin{itemize}
-    \item \textbf{Servei de dades}: Verifica que \texttt{waterDataService} carrega i processa correctament els fitxers JSON, que els filtres per data i estació retornen els resultats esperats, i que la agrupació per nom funciona correctament.
-    \item \textbf{Components de visualització}: Validen que els gràfics de Recharts es renderitzen amb les dades correctes, que els markers de Leaflet mostren la informació adequada, i que els indicadors semàfor reflecteixen els colors corresponents segons el percentatge d'ocupació.
-    \item \textbf{Navegació}: Comprova que les rutes de React Router responen correctament i que els components es carreguen de forma asíncrona sense errors.
-\end{itemize}
-
-\subsection{Proves d'integració}
-
-A més de les proves unitàries, s'han realitzat proves d'integració per verificar el flux complet de dades:
-
-\begin{itemize}
-    \item Execució completa de l'ETL amb dades reals de les APIs, verificant que els fitxers JSON resultants contenen dades vàlides i actualitzades.
-    \item Càrrega del frontend amb les dades generades, verificant que tots els panells mostren informació coherent.
-    \item Simulació d'errors d'API per validar que el sistema gestiona correctament les situacions de fallada.
-\end{itemize}
+\textbf{Proves d'integració}: Execució completa amb dades reals, simulació d'errors d'API i validació del flux complet.
 
 %----------------------------------------------------------------------------------------
 
 \section{Codi font i vídeo demostratiu}
 
-El codi font complet del projecte està disponible en un repositori públic de GitHub, permetent la revisió, reproducció i contribució per part de qualsevol persona interessada.
+\textbf{Repositori:} \url{https://github.com/AlexRuizMaso/opendata-water-visualization}
 
-\textbf{Repositori del projecte:} \url{https://github.com/AlexRuizMaso/opendata-water-visualization}
+\textbf{Aplicació:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
 
-\textbf{Aplicació desplegada:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
-
-\textbf{Vídeo del codi (3' màx):} \url{[enllaç al vídeo]}
+\textbf{Vídeo del codi (3' màx):} Inclòs al vídeo demostratiu de l'apartat 9.3.
 
 %----------------------------------------------------------------------------------------

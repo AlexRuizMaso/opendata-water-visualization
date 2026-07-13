@@ -41,46 +41,13 @@ El desplegament utilitza el domini per defecte de GitHub Pages (\texttt{github.i
 
 \section{Compliment normatiu}
 
-El sistema ha estat dissenyat tenint en compte la legislació vigent en matèria de protecció de dades, serveis de la societat de la informació i accessibilitat.
-
-\subsection{Protecció de dades (LOPDGDD)}
-
-El compliment del Reglament General de Protecció de Dades (RGPD) i la Llei Orgànica 3/2018 de Protecció de Dades Personals (LOPDGDD) es garanteix pels següents aspectes:
-
-\begin{itemize}
-    \item \textbf{Dades públiques}: Totes les dades utilitzades pel sistema provenen de fonts públiques de la Generalitat de Catalunya, publicades sota llicències obertes. No es tracten dades de caràcter personal.
-    \item \textbf{No recollida de dades d'usuaris}: El frontend no recull, emmagatzema ni processa cap informació personal dels usuaris. No hi ha formularis de registre, sistemes de login ni cookies de seguiment.
-    \item \textbf{Transparència}: El codi font és completament obert, permetent que qualsevol persona verifiqui què fa el sistema amb les dades.
-\end{itemize}
-
-\subsection{LSSICE}
-
-La Llei 34/2002 de Serveis de la Societat de la Informació i de Comerç Electrònic (LSSICE) estableix requisits d'informació per als serveis en línia. En tractar-se d'un projecte acadèmic sense finalitat comercial, els requisits es redueixen, però s'ha inclòs:
-
-\begin{itemize}
-    \item Informació clara sobre l'autoria del projecte a la pàgina \texttt{/about}.
-    \item Identificació de les fonts de dades utilitzades (APIs Socrata de la Generalitat).
-    \item Enllaç al repositori de codi font per a verificació independent.
-\end{itemize}
-
-\subsection{Accessibilitat}
-
-L'accessibilitat del sistema s'ha abordat seguint les pautes WCAG 2.1 de forma progressiva:
-
-\begin{itemize}
-    \item \textbf{Contrast adequat}: S'han seleccionat colors amb contrast suficient entre text i fons per garantir la llegibilitat.
-    \item \textbf{Etiquetes descriptives}: Tots els elements interactius tenen etiquetes clares i comprensibles.
-    \item \textbf{Navegació per teclat}: Els elements interactius principals són accessibles mitjançant teclat.
-    \item \textbf{Disseny responsiu}: L'aplicació s'adapta a diferents mides de pantalla, facilitant l'accés des de dispositius mòbils.
-\end{itemize}
-
-Tot i aquests esforços, es reconeix que algunes visualitzacions complexes (com els gràfics de Recharts) podrien millorar la seva accessibilitat amb text alternatiu més detallat i suport per a lectors de pantalla, aspecte que es podria abordar en futures iteracions.
+El sistema ha estat dissenyat tenint en compte la legislació vigent en matèria de protecció de dades, serveis de la societat de la informació i accessibilitat. L'anàlisi detallat del compliment normatiu es troba a l'Annex A.3.
 
 %----------------------------------------------------------------------------------------
 
 \section{Validació de requisits funcionals}
 
-A continuació es valida el grau d'assoliment de cada requisit funcional definit al Capítol 6:
+A continuació es valida el grau d'assoliment de cada requisit funcional definit al Capítol 5:
 
 \begin{itemize}
     \item \textbf{RF-1 (Alta): Extracció automàtica de dades} -- \textbf{ASSOLIT}. Els extractors \texttt{EmbassamentExtractor} i \texttt{PrecipitationExtractor} obtenen les dades més recents de les APIs de Socrata de forma automàtica mitjançant GitHub Actions. El sistema suporta tant el mode incremental com el de sincronització completa.
@@ -100,15 +67,13 @@ A continuació es valida el grau d'assoliment de cada requisit funcional definit
     \item \textbf{RF-5 (Mitjana): Detecció automàtica de sequera} -- \textbf{ASSOLIT}. S'ha implementat la lògica de classificació basada en llindars: crític ($<$20\%), avís (20-50\%), normal (50-75\%) i òptim ($>$75\%). A més, s'ha afegit un algoritme de regressió lineal sobre les últimes mesures per detectar tendències de millora o deteriorament.
     
     \item \textbf{RF-6 (Mitjana): Automatització amb GitHub Actions} -- \textbf{ASSOLIT}. El workflow \texttt{etl-pipeline.yml} s'executa diàriament a les 02:00 UTC, actualitzant automàticament les dades i desencadenant el desplegament del frontend si cal.
-    
-    \item \textbf{RF-7 (Baixa): Exportació de dades} -- \textbf{PARCIALMENT ASSOLIT}. Les dades són accessibles directament com a fitxers JSON des del repositori. La funcionalitat d'exportació des del frontend es podria implementar en futures iteracions.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
 
 \section{Validació de requisits no funcionals}
 
-S'avaluen a continuació els requisits no funcionals definits al Capítol 6:
+S'avaluen a continuació els requisits no funcionals definits al Capítol 5:
 
 \begin{itemize}
     \item \textbf{RNF-1 (Alta): Rendiment} -- \textbf{ASSOLIT}. L'ETL processa les dades de més de 200 estacions meteorològiques i 9 embassaments en un temps inferior als 5 minuts, complint el requisit. El frontend carrega en menys de 3 segons gràcies a l'optimització de Vite (minificació, tree-shaking) i el carregament asíncron de components amb \texttt{React.lazy}.
@@ -132,7 +97,7 @@ El producte final es troba desplegat i accessible públicament. Es pot consultar
 
 \textbf{Aplicació desplegada:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
 
-\textbf{Enllaç al vídeo de demostració:} \url{[enllaç al vídeo]}
+\textbf{Enllaç al vídeo de demostració:} \url{https://youtu.be/demo}
 
 %----------------------------------------------------------------------------------------
 
@@ -170,9 +135,12 @@ Es reconeixen les següents limitacions:
 \begin{itemize}
     \item La dependència de GitHub Actions limita l'execució de l'ETL a una freqüència mínima d'aproximadament 5 minuts per execució, suficient per a les necessitats actuals però potencialment insuficient per a monitoratge en temps real.
     \item L'absència d'una base de dades real limita la capacitat de consultes complexes sobre l'historial complet de dades.
-    \item Algunes funcionalitats avançades com l'exportació de dades des del frontend s'han deixat per a futures iteracions.
 \end{itemize}
 
 Malgrat aquestes limitacions, el sistema compleix els seus objectius principals i proporciona una base sòlida per a futures millores.
+
+\subsection{Vídeo demostratiu}
+
+\textbf{Vídeo demo (5' màx):} \url{https://youtu.be/demo}
 
 %----------------------------------------------------------------------------------------

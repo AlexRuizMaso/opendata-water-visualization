@@ -29,8 +29,6 @@ Els requisits funcionals descriuen les funcionalitats específiques que el siste
     \item \textbf{RF-5 (Mitjana):} Implementació de lògica de detecció automàtica de sequera. El sistema ha de calcular indicadors de risc basats en llindars predefinits de percentatge d'ocupació dels embassaments (crític <20\%, avís 20-50\%, normal 50-75\%, òptim >75\%) i generar alertes quan es superin els límits establerts.
     
     \item \textbf{RF-6 (Mitjana):} Automatització de l'actualització de dades via GitHub Actions. El pipeline ETL ha de ser programat per executar-se de forma automàtica a una hora específica cada dia, assegurant que les dades disponibles al frontend siguin sempre les més recents possibles.
-    
-    \item \textbf{RF-7 (Baixa):} Funcionalitat d'exportació de dades. Permetre als usuaris descarregar les dades visualitzades en formats com CSV o JSON per a un ús posterior en eines externes d'anàlisi.
 \end{itemize}
 
 \section{Requisits no funcionals}
@@ -38,11 +36,11 @@ Els requisits funcionals descriuen les funcionalitats específiques que el siste
 Els requisits no funcionals definen les característiques de qualitat, restriccions i condicions que el sistema ha de complir, però que no es relacionen directament amb funcions específiques. Aquests requisits afecten a l'arquitectura general, el rendiment, l'usabilitat i altres aspects del sistema.
 
 \begin{itemize}
-    \item \textbf{RNF-1 (Alta): Rendiment.} El sistema ha de ser capaç de processar més de 50.000 registres de dades (corresponents a múltiples dies de mesures d'embassaments i precipitació) en un termini inferior als 5 minuts durant l'execució del pipeline ETL. La interfície web ha de carregar i mostrar les dades en menys de 3 segons per a una experiència d'usuari satisfactòria.
+    \item \textbf{RNF-1 (Alta): Rendiment.} El sistema ha de ser capaç de processar més de 200.000 registres de dades en total (~87.000 d'embassaments i ~135.000 de precipitació) utilitzant paginació de 50.000 registres per petició a l'API, en un termini inferior als 5 minuts durant l'execució del pipeline ETL. La interfície web ha de carregar i mostrar les dades en menys de 3 segons per a una experiència d'usuari satisfactòria.
     
     \item \textbf{RNF-2 (Alta): Usabilitat.} La interfície ha de ser intuïtiva i accessible per a usuaris amb diversos nivells de competència tècnica, des de professionals del sector fins a ciutadans interessats en el tema. Això inclou navegació clara, etiquetatge comprensible, i elements interactius que siguin fàcils d'entendre i utilitzar.
     
-    \item \textbf{RNF-3 (Alta): Seguretat.} Tot accés a recursos externes (APIs públiques) ha de realitzar-se mitjançant connexions segures (HTTPS). No s'emmagatzemen cap informació sensible com contrasenyes o tokens en el repositori, utilitzant mecanismes com fitxers d'entorn (\texttt{.env}) per a la configuració quan sigui necessari.
+    \item \textbf{RNF-3 (Alta): Seguretat.} Tot accés a recursos externes (APIs públiques) ha de realitzar-se mitjançant connexions segures (HTTPS). No s'emmagatzena cap informació sensible com contrasenyes o tokens en el repositori, utilitzant mecanismes com fitxers d'entorn (\texttt{.env}) per a la configuració quan sigui necessari.
     
     \item \textbf{RNF-4 (Mitjana): Portabilitat.} El sistema ha de ser desplegable a diferents plataformes d'hosting sense modificacions significatives al codi, incloent opcions gratuïtes o de baix cost com GitHub Pages, Vercel o Netlify per al frontend, i la capacitat d'executar l'ETL en qualsevol entorn que suporti Node.js.
     

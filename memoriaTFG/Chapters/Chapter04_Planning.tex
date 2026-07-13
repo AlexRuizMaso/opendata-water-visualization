@@ -9,7 +9,7 @@
 
 \section{Pla de treball}
 
-El pla de treball s'ha estructurat en cinc fases principals, basant-se en una metodologia àgil iterativa que permet rebre feedback continuat i adaptar-se a canvis de requisits o limitacions tècniques descobertes durant el desenvolupament. Cada fase inclou objectius clars, deliverables tangibles i criteris d'acceptació verificables.
+El pla de treball s'ha estructurat en cinc fases principals, basant-se en una metodologia àgil iterativa que permet rebre feedback continuat i adaptar-se a canvis de requisits o limitacions tècniques descobertes durant el desenvolupament. Cada fase inclou objectius clars, lliurables tangibles i criteris d'acceptació verificables.
 
 Les cinc fases identificades són:
 \begin{enumerate}
@@ -53,7 +53,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \begin{itemize}
     \item Configuració del projecte React amb Vite 5, React 18 i React Router 6 - 4 hores
     \item Implementació del servei de consum de dades: wrapper amb axios per a carregar fitxers JSON locals amb maneig d'estats de càrrega i error - 6 hores
-    \item Creació de hooks personalitzats per a gestió d'estat global (zustand) - 5 hores
+    \item Creació de hooks personalitzats per a gestió d'estat global (Zustand) - 5 hores
     \item Desenvolupament del Dashboard 1 - Mapa interactiu:
           - Integració de Leaflet 1.9 amb capes de base OpenStreetMap
           - Visualització de markers per a cada embassament amb popup informatiu
@@ -133,7 +133,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \label{tab:time-estimation}
 \end{table}
 
-L'estimació total de 258 hores s'acosta molt a l'investiment real de 250 hores documentat durant el desenvolupament, indicant una bona capacitat de predicció de l'esforç necessari.
+L'estimació total de 258 hores s'acosta molt a la inversió real de 250 hores documentada durant el desenvolupament, indicant una bona capacitat de predicció de l'esforç necessari.
 
 \section{Cronograma}
 
@@ -155,12 +155,12 @@ Els elements destacables del cronograma són:
     \item La Fase 2 (ETL) i Fase 3 (Frontend base) van executar-se en paral·lel durant les setmanes 4-5, aprofitant la independència tècnica dels dos subsistemes.
     \item La Fase 4 (Frontend avançat) va beneficiar-se dels components i serveis creats en la Fase 3, reduint el temps necessari per a la implementació del Dashboard 3 i 4.
     \item Les setmanes 11-12 van dedicar-se predominantement a tasques de qualitat (proves, documentació) en lloc de desenvolupament de noves funcionalitats, assegurant l'estabilitat del lliurament final.
-    \item S'hi van assignar 12 hores de col·loqui (10\%) per a revisions de progrés i ajusts del pla de treball, essencials en una metodologia àgil.
+    \item S'hi van assignar 12 hores de tutories (10\%) per a revisions de progrés i ajusts del pla de treball, essencials en una metodologia àgil.
 \end{itemize}
 
 \section{Paquets de treball}
 
-El desenvolupament s'ha dividit en tres paquets de treball (PT) principals, cadascun corresponent a un subsystem funcional del projecte:
+El desenvolupament s'ha dividit en tres paquets de treball (PT) principals, cadascun corresponent a un subsistema funcional del projecte:
 
 \textbf{PT1: Canonada de Processament de Dades (ETL)}
 \begin{itemize}
@@ -190,11 +190,9 @@ Aquesta descomposició en paquets de treball va facilitar la distribució de les
 Durant l'execució del projecte, es van produir diverses desviacions respecte al pla inicial, la major part de les quals van resultar en una millora del resultat final:
 
 \begin{enumerate}
-    \item \textbf{Ampliació del scope de fonts de dades}: El pla original preveia d'utilitzar únicament dades de l'embassament de Raimat per a la prova de concepte. Tot i això, durant la Fase 1 es va comprovar la facilitat d'accés a les dades de tots els embassaments principals de Catalunya a través de les APIs de Socrata. Es va decidir ampliar el scope a 9 embassaments (Sau, Susqueda, La Baells, Cambrils, Riudecanyes, Foix, Castelló de Farfanya, Sant Ponç i Raimat) per a proporcionar una visió més completa i representativa del territori català. Aquesta decisió va incrementar l'esforç de la Fase 2 en aproximadament 8 hores però va augmentar significativament el valor del projecte per a usuaris professionals i acadèmics.
+    \item \textbf{Canvi d'enfocament en la visualització de correlació}: Inicialment es va planificar utilitzar mapes de calor per a mostrar la correlació entre precipitació i nivells d'embassament. Tot i això, durant les proves inicials de la Fase 3 es va observar que aquesta representació enfosquia les tendències temporals i podia conduir a interpretacions errònies. Es va canviar per a un gràfic de dispersió amb línies de tendència i càlcul del coeficient de correlació, proporcionant una mesura quantitativa més rigorosa i una visibilitat més accessible per a l'usuari. Aquest canvi va requerir 4 hores addicionals de desenvolupament en la Fase 4 però va millorar notablement la qualitat analítica del Dashboard 3.
     
-    \item \textbf{Canvi d'enfocament en la visualització de correlació}: Inicialment es va planificar utilitzar mapes de calor per a mostrar la correlació entre precipitació i nivells d'embassament. Tot i això, durant les proves inicials de la Fase 3 es va observar que aquesta representació obscudia les tendències temporals i podia conduir a interpretacions errònies. Es va canviar per a un gràfic de dispersió amb línies de tendència i càlcul del coeficient de correlació, proporcionant una mesura quantitativa més rigorosa i una visibilitat més accessible per a l'usuari. Aquest canvi va requerir 4 hores addicionals de desenvolupament en la Fase 4 però va millorar notablement la qualitat analítica del Dashboard 3.
-    
-    \item \textbf{Incorporació de mecanisme de predicció tendencial}: El pla original no incloïa cap funcionalitat predictiva dins del Dashboard 4 d'alertes. Tot i això, durant la implementació de les regles d'alerta basades en llindars estàtics es va detectar que els usuaris beneficiarien d'una indicació de la tendència recent (millora o deteriorament). Es va implementar un algoritme senzill de regressió lineal sobre les últimes 6 mesures per a detectar canvis significatius, afegint una fletxa de tendència al costat de cada indicador. Aquesta millora va requerir 3 hores de desenvolupament addicional i va ser ben rebuda durant les proves d'usabilitat.
+    \item \textbf{Incorporació de mecanisme de predicció tendencial}: El pla original no incloïa cap funcionalitat predictiva dins del Dashboard 4 d'alertes. Tot i això, durant la implementació de les regles d'alerta basades en llindars estàtics es va detectar que els usuaris beneficiarien d'una indicació de la tendència recent (millora o deteriorament). Es va implementar un algorisme senzill de regressió lineal sobre les últimes 6 mesures per a detectar canvis significatius, afegint una fletxa de tendència al costat de cada indicador. Aquesta millora va requerir 3 hores de desenvolupament addicional i va ser ben rebuda durant les proves d'usabilitat.
 \end{enumerate}
 
 Les desviacions van gestionar-se mitjançant el mecanisme de revisió quinzenal del pla de treball, permetent reavaluar prioritats i redistribuir recursos sense perdre la visió general del projecte. Cap desviació va comprometre el lliurament dels objectius essencials, i diverses van contribuir a superar les expectatives inicials.

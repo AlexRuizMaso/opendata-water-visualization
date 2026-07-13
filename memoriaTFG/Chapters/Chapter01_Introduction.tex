@@ -9,13 +9,19 @@
 
 %----------------------------------------------------------------------------------------
 
+\section{Resum}
+
+Aquest projecte presenta una plataforma web de visualització de dades hídriques de Catalunya que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya (Socrata). El sistema combina una canonada ETL automatitzada amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React que ofereix quatre panells de visualització: mapa geogràfic amb Leaflet, evolució temporal amb Recharts, correlació precipitació-nivells amb coeficient de Pearson, i matriu d'alertes de sequera amb indicadors semàfor i tendències. L'arquitectura desacoblada ETL/frontend permet un funcionament de cost zero aprofitant GitHub Pages i GitHub Actions. El projecte és completament de codi obert i documentat.
+
+%----------------------------------------------------------------------------------------
+
 \section{Introducció}
 
-La gestió dels recursos hídrics és un dels reptes més importants que afronta el planeta en l'era del canvi climàtic. A Catalunya, les sequeres repetides i els períodes de precipitació irregular han demostrat la necessitat urgent de disposar de sistemes avançats de monitoratge i visualització de dades hídriques. Els embassaments són elements crítics de la infraestructura hídrica, emmagatzemant l'aigua per a consum humà, agrícola i industrial.
+La gestió dels recursos hídrics és un dels reptes més importants que afronta el planeta en l'era del canvi climàtic \cite{cambio_climatico}. A Catalunya, les sequeres repetides i els períodes de precipitació irregular han demostrat la necessitat urgent de disposar de sistemes avançats de monitoratge i visualització de dades hídriques \cite{sequera_catalunya}. Els embassaments són elements crítics de la infraestructura hídrica, emmagatzemant l'aigua per a consum humà, agrícola i industrial.
 
-En l'actualitat, les autoritats hídriques catalanes disposen de dades sobre nivells d'embassaments i precipitacions, però aquestes dades sovint es troben distribuïdes en múltiples fonts i no són fàcilment accessibles per al públic general ni per als responsables polítics en temps real. Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualització de dades hídriques que consolida informació de les APIs públiques de dades de la Generalitat de Catalunya (Socrata).
+En l'actualitat, les autoritats hídriques catalanes disposen de dades sobre nivells d'embassaments i precipitacions \cite{aca}, però aquestes dades sovint es troben distribuïdes en múltiples fonts i no són fàcilment accessibles per al públic general ni per als responsables polítics en temps real. Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualització de dades hídriques que consolida informació de les APIs públiques de dades de la Generalitat de Catalunya \cite{gencat_dades}.
 
-El visualitzador permet als usuaris monitoritzar els nivells dels embassaments més importants de Catalunya, correlacionar aquesta informació amb dades de precipitació de més de 200 estacions meteorològiques, i generar alertes de sequera basades en llindars de perill. La plataforma utilitza una arquitectura moderna que combina una canonada ETL robusta per a l'extracció i processament de dades amb un frontend interactiu basat en React i Recharts.
+El visualitzador permet als usuaris monitoritzar els nivells dels embassaments més importants de Catalunya, correlacionar aquesta informació amb dades de precipitació de més de 200 estacions meteorològiques, i generar alertes de sequera basades en llindars de perill. La plataforma utilitza una arquitectura moderna que combina una canonada ETL robusta per a l'extracció i processament de dades amb un frontend interactiu basat en React \cite{react} i Recharts \cite{recharts}.
 
 %----------------------------------------------------------------------------------------
 
@@ -58,12 +64,12 @@ Els principals objectius específics d'aquest projecte són:
     \item \textbf{Crear un frontend interactiu amb quatre panells de visualització}:
     \begin{itemize}
         \item Panell 1: Mapa interactiu amb KPIs dels embassaments
-        \item Panell 2: Evolució temporal dels nivells amb filters de data
+        \item Panell 2: Evolució temporal dels nivells amb filtres de data
         \item Panell 3: Correlació entre precipitació i nivells d'embassaments
         \item Panell 4: Matriu d'alertes de sequera amb indicadors semàfor
     \end{itemize}
     
-    \item \textbf{Assegurar l'automatització}: Configurar GitHub Actions per executar l'ETL diàriament a les 02:00 UTC, processant més de 100.000 registres de dades.
+    \item \textbf{Assegurar l'automatització}: Configurar GitHub Actions per executar l'ETL diàriament a les 02:00 UTC, processant més de 200.000 registres de dades en total.
     
     \item \textbf{Implementar lògica de detecció de sequera}: Definir llindars de perill basats en percentatge d'ocupació (crític <20\%, avís 20-50\%, normal 50-75\%, òptim >75\%).
     
