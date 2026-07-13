@@ -127,4 +127,4 @@ MIT License - veure fitxer LICENSE per a més detalls.
 
 ---
 
-**Última actualització**: 26 de Maig de 2026
+**Última actualització**: 8 de Juliol de 2026

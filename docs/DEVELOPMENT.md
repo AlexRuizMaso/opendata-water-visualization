@@ -25,7 +25,7 @@ npm run etl
 
 Accedeix a: http://localhost:3000
 
-### 3. Estructura del Projecte Creada
+### 3. Estructura del Projecte
 
 ```
 opendata-water-visualization/
@@ -33,11 +33,13 @@ opendata-water-visualization/
 ├── frontend/                    # 🎨 Aplicació React
 │   ├── src/
 │   │   ├── components/         # Components React reutilitzables
+│   │   │   ├── Navigation.jsx
+│   │   │   └── dashboards/     # Dashboards interactius (1-4)
 │   │   ├── pages/              # Pàgines principals (Dashboard, Reservoirs, Weather, About)
-│   │   ├── services/           # Serveis API (waterDataService)
+│   │   ├── services/           # Servei de dades (waterDataService)
 │   │   ├── styles/             # SCSS modularitzat
-│   │   ├── utils/              # Funcions utilitàries
-│   │   ├── hooks/              # Custom React hooks
+│   │   ├── utils/              # Utilitats (chartFormatters, stationNameMap, timeRangeFilter)
+│   │   ├── hooks/              # Custom React hooks (useWaterData)
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   ├── vite.config.js
@@ -47,11 +49,12 @@ opendata-water-visualization/
 │
 ├── etl/                         # 🔄 Pipeline ETL (Node.js)
 │   ├── src/
-│   │   ├── extractors/         # Extracció de dades d'APIs
-│   │   ├── transformers/       # Transformació de dades
-│   │   ├── loaders/            # Càrrega de dades en JSON
-│   │   ├── utils/              # Utilitats
-│   │   ├── index.js
+│   │   ├── extractors/         # Extracció de dades (embassaments, precipitation)
+│   │   ├── transformers/       # Transformació de dades (embassaments, precipitation)
+│   │   ├── loaders/            # Càrrega de dades en JSON (fileLoader)
+│   │   ├── utils/              # Utilitats (healthCheck, stationNameMap)
+│   │   ├── config.js           # Configuració central
+│   │   ├── index.js            # Punt d'entrada
 │   │   └── pipeline.js         # Orquestrador del ETL
 │   ├── data/                   # 📊 Dades JSON processades (versionades)
 │   ├── logs/                   # 📝 Logs del ETL
@@ -59,13 +62,16 @@ opendata-water-visualization/
 │   └── .env.example
 │
 ├── .github/workflows/
-│   └── etl-pipeline.yml         # 🤖 Automatització GitHub Actions
+│   ├── etl-pipeline.yml        # 🤖 Automatització ETL (diària a les 2:00 AM UTC)
+│   └── deploy-frontend-pages.yml # Desplegament a GitHub Pages
 │
 ├── docs/
-│   ├── ARCHITECTURE.md          # 📐 Arquitectura del projecte
-│   └── (més documentació per afegir)
+│   ├── ARCHITECTURE.md         # 📐 Arquitectura del projecte
+│   ├── DEVELOPMENT.md          # Aquesta guia
+│   └── API_REFERENCE.md        # Referència de l'API de dades
 │
 ├── .gitignore
+├── LICENSE
 ├── README.md
 ├── package.json                 # Root package.json amb workspaces
 
@@ -105,39 +111,27 @@ LOAD (Guardat en JSON)
 GitHub Actions (Automatització diària)
 ```
 
-## Pròxims Passos Suggerits
+## Estat Actual del Projecte
 
-### 1. Implementar Serveis API
+El projecte té les següents funcionalitats implementades:
 
-Afegir a `frontend/src/services/api.js`:
-```javascript
-// Funcions per carregar dades JSON del repositori
-export async function fetchXEMAData() { }
-export async function fetchReservoirData() { }
-```
+### Frontend
+- **Servei de dades**: `waterDataService.js` amb funcions per carregar dades JSON (`getEmbassaments`, `getPrecipitation`, `getMetadata`)
+- **Hook de dades**: `useWaterData.js` per gestionar l'estat de càrrega de dades
+- **4 dashboards interactius**: Mapa d'embassaments, evolució temporal, correlació precipitació-nivells, alertes de sequera
+- **Navegació responsiva**: amb menú hamburguesa per a mòbil
+- **Estils SCSS modularitzats**: amb variables i mixins
 
-### 2. Crear Components de Visualització
+### ETL Pipeline
+- **Extractors**: `embassaments.js` i `precipitation.js` amb paginació i maneig d'errors
+- **Transformadors**: neteja i estructuració de dades
+- **Loader**: guardat en JSON amb backups diaris i división per anys
+- **Health check**: verificació de disponibilitat de les APIs abans d'executar
+- **Automatització**: GitHub Actions executa l'ETL diàriament a les 2:00 AM UTC
 
-- `ReservoirChart.jsx`: Gràfic d'evolució de capacitat
-- `PrecipitationMap.jsx`: Mapa de precipitacions
-- `DataTable.jsx`: Taula de dades
-
-### 3. Integrar APIs Reals
-
-Actualitzar `etl/src/extractors/`:
-- Substituir els placeholders amb crides reals a les APIs de la Generalitat
-- Afegir validació de dades
-
-### 4. Afegir Tests
-
-```bash
-npm install --save-dev @testing-library/react @testing-library/jest-dom
-```
-
-### 5. Configurar Desplegament
-
-- Vercel/Netlify per al frontend
-- GitHub Pages per als JSON de dades
+### Desplegament
+- Frontend desplegat a GitHub Pages
+- ETL automatitzat amb GitHub Actions
 
 ## Configuració per a Desenvolupar
 
@@ -162,10 +156,10 @@ cp etl/.env.example etl/.env
 npm run dev           # Desenvolupament
 npm run build         # Build per producció
 npm run preview       # Preview del build
+npm run type-check    # Verificació TypeScript
 
 # ETL
 npm run etl           # Executa ETL manualment
-npm run full-pipeline # ETL complet (extract + transform + load)
 
 # Linting i format
 npm run lint          # Lint de tots els projectes
@@ -213,4 +207,4 @@ npm install
 ---
 
 **Data de creació**: 13 de Maig de 2026
-**Última actualització**: 13 de Maig de 2026
+**Última actualització**: 8 de Juliol de 2026

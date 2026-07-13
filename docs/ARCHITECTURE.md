@@ -16,7 +16,7 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
                        │
 ┌──────────────────────▼──────────────────────────────────────┐
 │                     ETL Pipeline                            │
-│          - Extrae de APIs públiques                         │
+│          - Extreu de APIs públiques                         │
 │          - Transforma dades                                 │
 │          - Guarda en JSON (versionat a Git)                 │
 └──────────────────────┬──────────────────────────────────────┘
@@ -37,31 +37,33 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 **Estructura de carpetes**:
 - `components/`: Components reutilitzables
   - `Navigation.jsx`: Navegació principal
-  - `ChartComponent.jsx`: Gràfics (futur)
-  - `MapComponent.jsx`: Mapa interactiu (futur)
-  - Altres components
+  - `dashboards/`: Dashboards interactius
+    - `Dashboard1.jsx`: Mapa d'embassaments i KPIs
+    - `Dashboard2.jsx`: Evolució temporal
+    - `Dashboard3.jsx`: Correlació precipitació-nivells
+    - `Dashboard4.jsx`: Alertes de sequera
 
 - `pages/`: Pàgines principals
-  - `Dashboard.jsx`: Panell de control
-  - `Reservoirs.jsx`: Visualització d'embassaments
-  - `Weather.jsx`: Dades meteorològiques
+  - `Dashboard.jsx`: Panell de control principal
+  - `Reservoirs.jsx`: Informació sobre embassaments
+  - `Weather.jsx`: Informació climàtica
   - `About.jsx`: Informació del projecte
 
-- `services/`: Servei d'API
-  - `api.js`: Funcions per fer peticions HTTP
+- `services/`: Servei de dades
+  - `waterDataService.js`: Funcions per carregar dades JSON del frontend
 
-- `styles/`: Estilos SCSS
+- `styles/`: Estils SCSS
   - `_variables.scss`: Variables de color, tipografia, etc.
-  - `index.scss`: Estilos globals
-  - `Navigation.scss`: Estilos del component Navigation
+  - `index.scss`: Estils globals
+  - `Navigation.scss`: Estils del component Navigation
 
 - `utils/`: Funcions utilitàries
-  - `formatters.js`: Format de dades
-  - `parsers.js`: Parsing de dades
+  - `chartFormatters.js`: Format de dades per a gràfics
+  - `stationNameMap.js`: Normalització de noms d'estacions
+  - `timeRangeFilter.js`: Filtratge per rang de temps
 
 - `hooks/`: Custom React hooks
-  - `useData.js`: Hook per cargar i gestionar dades
-  - `useMap.js`: Hook per al mapa interactiu
+  - `useWaterData.js`: Hook per carregar i gestionar dades d'aigua
 
 **Configuració**:
 - `vite.config.js`: Configuració de Vite
@@ -86,26 +88,31 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 
 **Estructura de carpetes**:
 - `src/extractors/`: Funcions d'extracció
-  - `index.js`: Lògica principal
-  - `xema.js`: Extracció de dades XEMA (futur)
-  - `reservoirs.js`: Extracció de dades d'embassaments (futur)
+  - `embassaments.js`: Extracció de dades d'embassaments (amb paginació)
+  - `precipitation.js`: Extracció de dades de precipitació
 
 - `src/transformers/`: Funcions de transformació
-  - `index.js`: Transformació de dades
+  - `embassaments.js`: Transformació i neteja de dades d'embassaments
+  - `precipitation.js`: Transformació i neteja de dades de precipitació
 
 - `src/loaders/`: Funcions de càrrega
-  - `index.js`: Guardat de dades en JSON
+  - `fileLoader.js`: Guardat de dades en JSON, backups i división per anys
 
 - `src/utils/`: Funcions utilitàries
-  - `logger.js`: Sistema de logging (futur)
-  - `validators.js`: Validació de dades (futur)
+  - `healthCheck.js`: Verificació de disponibilitat de les APIs
+  - `stationNameMap.js`: Normalització de noms d'estacions
 
 - `data/`: Dades processades (versionades a Git)
-  - `xema_YYYY-MM-DD.json`: Dades XEMA diàries
-  - `reservoirs_YYYY-MM-DD.json`: Dades d'embassaments diàries
-  - `latest.json`: Índex de les dades més recents
+  - `embassaments.json`: Dades d'embassaments
+  - `precipitation.json`: Dades de precipitació global
+  - `precipitation_YYYY.json`: Dades de precipitació dividides per any
+  - `metadata.json`: Metadades del pipeline
+  - `embassaments.backup.YYYY-MM-DD.json`: Backups diaris d'embassaments
+  - `precipitation.backup.YYYY-MM-DD.json`: Backups diaris de precipitació
 
-- `pipeline.js`: Orquestrador del ETL
+- `src/config.js`: Configuració central (URLs d'API, paths, etc.)
+- `src/pipeline.js`: Orquestrador del ETL
+- `src/index.js`: Punt d'entrada
 
 **Configuració**:
 - `.env.example`: Template de variables d'entorn
@@ -116,7 +123,7 @@ L'aplicació segueix una arquitectura descentralitzada on el frontend i l'ETL s�
 **Ubicació**: `.github/workflows/`
 
 **Workflow principal**: `etl-pipeline.yml`
-- Executa el ETL diàriament a les 6:00 AM UTC
+- Executa el ETL diàriament a les 2:00 AM UTC
 - Permet execució manual des de GitHub
 - Automàticament fa commit i push de les dades actualitzades
 
@@ -172,7 +179,7 @@ npm run etl            # ETL final
 
 ### Automatització en Producció
 - GitHub Actions executa el ETL automàticament
-- Frontend es despliega a plataforma de hosting (vercel, netlify, etc.)
+- Frontend es despliega a GitHub Pages
 
 ## Futures Millores
 
