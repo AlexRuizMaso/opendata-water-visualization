@@ -11,7 +11,7 @@
 
 \section{Resum}
 
-Aquest projecte presenta una plataforma web de visualització de dades hídriques de Catalunya que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya (Socrata). El sistema combina una canonada ETL automatitzada amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React que ofereix quatre panells de visualització: mapa geogràfic amb Leaflet, evolució temporal amb Recharts, correlació precipitació-nivells amb coeficient de Pearson, i matriu d'alertes de sequera amb indicadors semàfor i tendències. L'arquitectura desacoblada ETL/frontend permet un funcionament de cost zero aprofitant GitHub Pages i GitHub Actions. El projecte és completament de codi obert i documentat.
+Aquest projecte presenta una plataforma web de visualització de dades hídriques de Catalunya que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya (Socrata). El sistema combina una canonada ETL automatitzada amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React que ofereix quatre panells de visualització: mapa geogràfic amb Leaflet, evolució temporal amb Recharts, correlació precipitació-nivells, i matriu d'alertes de sequera amb indicadors semàfor i tendències. L'arquitectura desacoblada ETL/frontend permet un funcionament de cost zero aprofitant GitHub Pages i GitHub Actions. El projecte és completament de codi obert i documentat.
 
 %----------------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ El propòsit general d'aquest projecte és desenvolupar una \textbf{plataforma w
     \item \textbf{Accessible}: El visualitzador hauria de ser fàcil d'usar per a usuaris amb diversos nivells de competència tècnica.
     \item \textbf{Automàtic}: Les dades s'actualitzen diàriament de forma automàtica a través d'una canonada ETL.
     \item \textbf{Informativa}: Els panells proporcionen múltiples perspectives sobre les dades (mapa, sèries temporals, correlacions, alertes).
-    \item \textbf{Open-source}: El codi és públic, permetent contribucions de la comunitat.
+    \item \textbf{Open-source}: El codi és públic sota llicència MIT.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 
 \section{Estructura del document}
 
-Aquest annex conté els documents complementaris al projecte: pressupostos, compliment normatiu i manual d'usuari.
+Aquest annex conté els documents complementaris al projecte: pressupostos i compliment normatiu.
 
 %----------------------------------------------------------------------------------------
 
@@ -109,5 +109,67 @@ L'accessibilitat del sistema s'ha abordat seguint les pautes WCAG 2.1 de forma p
 \end{itemize}
 
 Tot i aquests esforços, es reconeix que algunes visualitzacions complexes (com els gràfics de Recharts) podrien millorar la seva accessibilitat amb text alternatiu més detallat i suport per a lectors de pantalla, aspecte que es podria abordar en futures iteracions.
+
+%----------------------------------------------------------------------------------------
+
+\section{Manual d'instal·lació ràpida}
+
+Aquesta secció descriu com instal·lar i executar el projecte en un entorn local.
+
+\subsection{Requisits previs}
+
+\begin{itemize}
+    \item \textbf{Node.js} 18 o superior (\url{https://nodejs.org/})
+    \item \textbf{npm} 9 o superior (inclòs amb Node.js)
+    \item \textbf{Git} (\url{https://git-scm.com/})
+\end{itemize}
+
+\subsection{Clonar el repositori}
+
+\begin{verbatim}
+git clone https://github.com/AlexRuizMaso/opendata-water-visualization.git
+cd opendata-water-visualization
+\end{verbatim}
+
+\subsection{Instal·lar dependències}
+
+\begin{verbatim}
+# Dependències de l'ETL
+cd etl
+npm install
+
+# Dependències del frontend
+cd ../frontend
+npm install
+\end{verbatim}
+
+\subsection{Executar l'ETL en local}
+
+L'ETL requereix accés a les APIs públiques de la Generalitat. Per executar-lo:
+
+\begin{verbatim}
+cd etl
+npm start
+\end{verbatim}
+
+Les dades processades es desaran a \texttt{frontend/public/data/} en format JSON.
+
+\subsection{Arrencar el frontend en mode desenvolupament}
+
+\begin{verbatim}
+cd frontend
+npm run dev
+\end{verbatim}
+
+L'aplicació estarà disponible a \texttt{http://localhost:5173}.
+
+\subsection{Build de producció}
+
+\begin{verbatim}
+cd frontend
+npm run build
+\end{verbatim}
+
+Els fitxers optimitzats es desaran al directori \texttt{dist/}, llests per a desplegar en qualsevol servidor web estàtic.
 
 %----------------------------------------------------------------------------------------

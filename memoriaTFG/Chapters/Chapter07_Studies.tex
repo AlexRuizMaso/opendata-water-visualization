@@ -28,7 +28,7 @@ Visualització & Recharts 2 & Chart.js, D3.js & Integració nativa amb React, co
 \hline
 Mapes & Leaflet 1 & Mapbox GL, OpenLayers & Lleugeresa (38KB), simplicitat, llicència BSD \\
 \hline
-Backend ETL & Node.js 18 & Python 3, Deno & I/O asíncrona, ecosistema npm, coherència amb frontend \\
+ETL & Node.js 18 & Python 3, Deno & I/O asíncrona, ecosistema npm, coherència amb frontend \\
 \hline
 CI/CD & GitHub Actions & GitLab CI, Jenkins & Integració nativa, allotjament gratuït, YAML declaratiu \\
 \hline
@@ -88,8 +88,8 @@ CI/CD & GitHub Actions & GitLab CI, Jenkins & Integració nativa, allotjament gr
 \subsection{Arquitectura basada en components}
 Es va decidir organitzar el frontend amb components React independents per a reutilització, mantenibilitat i proves aïllades.
 
-\subsection{Gestió d'estat amb Zustand}
-Sobre alternatives com Redux o Context API, Zustand ofereix simplicitat, adaptació natural a hooks, i mida reduïda sense complexitat innecessària.
+\subsection{Gestió d'estat amb hooks de React}
+Sobre alternatives com Redux o Context API, els hooks de React (useState, useEffect) ofereixen simplicitat, adaptació natural a components funcionals, i complexitat reduïda sense necessitat de dependències externes.
 
 \subsection{Estilització SCSS amb BEM}
 La metodologia BEM amb variables centralitzades a \texttt{\_variables.scss} millora la mantenibilitat i evita col·lissions de classes.

@@ -16,16 +16,16 @@ Els objectius del projecte, definits al Capítol 1, s'han assolit en la seva tot
 \begin{enumerate}
     \item \textbf{Implementar una canonada ETL robusta} -- \textbf{ASSOLIT}. Pipeline complet amb Node.js que extreu, transforma i desa dades de les APIs de Socrata en JSON versionat.
     
-    \item \textbf{Crear un frontend interactiu amb quatre panells} -- \textbf{ASSOLIT}. Quatre dashboards amb React: mapa (Leaflet), evolució temporal (Recharts), correlació (scatter plot + Pearson), i alertes (semàfor + tendències).
+    \item \textbf{Crear un frontend interactiu amb quatre panells} -- \textbf{ASSOLIT}. Quatre dashboards amb React: mapa (Leaflet), evolució temporal (Recharts), correlació (gràfics de dispersió), i alertes (semàfor + tendències).
     
     \item \textbf{Assegurar l'automatització} -- \textbf{ASSOLIT}. Dos workflows de GitHub Actions: ETL diari a les 02:00 UTC i desplegament automàtic a GitHub Pages.
     
-    \item \textbf{Implementar lògica de detecció de sequera} -- \textbf{ASSOLIT}. Sistema de classificació per llindars i algoritme de regressió lineal per detectar tendències.
+    \item \textbf{Implementar lògica de detecció de sequera} -- \textbf{ASSOLIT}. Sistema de classificació per llindars i algoritme de comparació temporal per detectar tendències.
     
     \item \textbf{Documentar adequadament} -- \textbf{ASSOLIT}. Memòria completa amb decisions d'arquitectura, implementació i guies d'ús.
 \end{enumerate}
 
-Pel que fa als requisits (Capítol 5), tots els funcionals (RF-1 a RF-6) s'han assolit completament.
+Pel que fa als requisits (Capítol 5), tots els funcionals (RF-1 a RF-6) s'han assolit completament. A més, s'han implementat proves automatitzades amb Vitest per als mòduls ETL i components frontend.
 
 %----------------------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ Pel que fa als requisits (Capítol 5), tots els funcionals (RF-1 a RF-6) s'han a
 \begin{itemize}
     \item \textbf{Arquitectura desacoblada}: Separació ETL/frontend mitjançant JSON, sense servidors de backend ni bases de dades.
     \item \textbf{Finestra lliscant}: Sistema que manté un fitxer principal amb 2 anys de dades i arxiva l'historial separat per anys.
-    \item \textbf{Detecció de tendències}: Regressió lineal sobre les últimes 6 mesures per detectar millora o deteriorament.
+    \item \textbf{Detecció de tendències}: Comparació del valor actual amb el valor de fa 7 dies per detectar millora o deteriorament.
     \item \textbf{CI/CD complet}: Dos workflows coordinats amb gestió de credencials i optimització de recursos.
 \end{itemize}
 
@@ -57,7 +57,7 @@ Pel que fa als requisits (Capítol 5), tots els funcionals (RF-1 a RF-6) s'han a
 
 \begin{itemize}
     \item \textbf{Node.js i ETL}: Disseny i implementació de pipelines robusts amb gestió d'errors i reintents.
-    \item \textbf{React avançat}: \texttt{React.lazy}, \texttt{Suspense}, hooks personalitzats i Zustand.
+    \item \textbf{React avançat}: \texttt{React.lazy}, \texttt{Suspense}, hooks personalitzats i gestió d'estat.
     \item \textbf{Visualització de dades}: Recharts i Leaflet amb optimització per a grans conjunts de dades.
     \item \textbf{CI/CD}: Workflows complexos amb cron, permisos i desplegament automàtic.
 \end{itemize}

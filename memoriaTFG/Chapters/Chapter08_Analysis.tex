@@ -16,7 +16,7 @@ El sistema de visualització de dades hídriques de Catalunya neix de la necessi
 \begin{itemize}
     \item \textbf{Accessibilitat de les dades}: Les dades hídriques estan disponibles però disperses en múltiples endpoints. Els usuaris han de navegar per diferents portals i formats per obtenir una visió completa. El sistema ha de consolidar aquesta informació en una única interfície coherent.
     
-    \item \textbf{Actualització contínua}: Els nivells dels embassaments s'actualitzen cada 15 minuts i les dades de precipitació cada hora. El sistema ha de garantir que la informació visualitzada sigui sempre la més recent possible sense requerir intervenció manual.
+    \item \textbf{Actualització diària}: Els nivells dels embassaments s'actualitzen a les APIs cada 15 minuts i les dades de precipitació cada hora. L'ETL del sistema s'executa un cop al dia (02:00 UTC) per processar i publicar les dades més recents.
     
     \item \textbf{Correlació de dades}: Per entendre l'evolució dels recursos hídrics és essencial poder correlacionar els nivells d'embassaments amb les dades de precipitació de les estacions meteorològiques més properes.
     
@@ -26,6 +26,29 @@ El sistema de visualització de dades hídriques de Catalunya neix de la necessi
 \end{itemize}
 
 Aquestes necessitats han portat al disseny d'un sistema amb quatre panells de visualització diferenciats, una canonada ETL automatitzada i una arquitectura que separa clarament el processament de dades de la seva presentació.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, fill=blue!15, text width=3.5cm, text centered, rounded corners, minimum height=1cm, font=\small},
+    arrow/.style={-Stealth, thick},
+    label/.style={font=\footnotesize, text=gray}
+]
+    \node[block] (api) at (0,0) {APIs Socrata\\(Generalitat)};
+    \node[block, right=1.5cm of api] (etl) {ETL\\(Node.js)};
+    \node[block, right=1.5cm of etl] (json) {Fitxers JSON\\(Git)};
+    \node[block, below=1.2cm of json] (frontend) {React Frontend\\(GitHub Pages)};
+    \node[block, below=1.2cm of api] (actions) {GitHub Actions\\(cron 02:00 UTC)};
+
+    \draw[arrow] (api) -- node[above, label] {HTTP GET} (etl);
+    \draw[arrow] (etl) -- node[above, label] {Transformació} (json);
+    \draw[arrow] (json) -- node[right, label] {Dades públiques} (frontend);
+    \draw[arrow] (actions) -- node[left, label] {Executa} (etl);
+    \draw[arrow] (json) -- node[right, label] {Commit/Push} (actions);
+\end{tikzpicture}
+\caption{Diagrama d'arquitectura de blocs del sistema. Les dades flueixen des de les APIs públiques de la Generalitat, passen pel pipeline ETL, s'emmagatzemen com a JSON al repositori Git, i es serveixen al frontend estàtic.}
+\label{fig:architecture}
+\end{figure}
 
 %----------------------------------------------------------------------------------------
 
@@ -53,6 +76,43 @@ A partir dels requisits definits al Capítol 5, s'ha realitzat una anàlisi deta
 
 \textbf{RF-1 (Extracció automàtica de dades)}: Implica la implementació de clients HTTP que realitzin peticions GET als endpoints de Socrata per als datasets d'embassaments i precipitació. Cal gestionar la paginació de resultats, els límits de taxa (1.000 peticions/hora), i els possibles errors de xarxa. Les dades obtingudes inclouen per a cada embassament: nom, percentatge d'ocupació, volum embassat (hm³), cota (msnm), i data d'actualització. Per a les estacions meteorològiques: codi, nom, precipitació (mm), i data de mesura.
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+    entity/.style={rectangle, draw, fill=green!10, text width=5.5cm, minimum height=0.8cm, font=\small, align=left},
+    field/.style={font=\footnotesize, text=black}
+]
+    \node[entity] (emb) at (0,0) {\textbf{Embassaments}\\
+        \begin{tabular}{@{}l@{}}
+        id, nom, percentatge\_ocupacio,\\
+        volum\_embassat\_hm3, cota\_msnm,\\
+        latitud, longitud, data\_actualitzacio
+        \end{tabular}
+    };
+    \node[entity, right=2cm of emb] (prec) {\textbf{Precipitació}\\
+        \begin{tabular}{@{}l@{}}
+        codi\_estacio, nom\_estacio,\\
+        precipitacio\_mm, data\_mesura,\\
+        latitud, longitud
+        \end{tabular}
+    };
+    \node[entity, below=1.5cm of emb] (alert) {\textbf{Alertes Sequera}\\
+        \begin{tabular}{@{}l@{}}
+        embassament, estat (crític/avís/\\
+        normal/òptim), tendència
+        \end{tabular}
+    };
+    \node[entity, below=1.5cm of prec] (meta) {\textbf{Metadades}\\
+        \begin{tabular}{@{}l@{}}
+        font\_dades, data\_extraccio,\\
+        versio, estat\_pipeline
+        \end{tabular}
+    };
+\end{tikzpicture}
+\caption{Model de dades del sistema. Les entitats principals són els embassaments i les estacions de precipitació, complementades amb alertes de sequera calculades i metadades del pipeline.}
+\label{fig:data_model}
+\end{figure}
+
 \textbf{RF-2 (Transformació i neteja)}: Les dades brutes de Socrata contenen inconsistències com valors nuls, formats de data heterogenis, i unitats que poden requerir conversió. El transformador ha de normalitzar totes les dates a format ISO 8601, eliminar registres duplicats, gestionar valors que falten (marcant-los explícitament), i estructurar les dades en un format JSON estàndard que el frontend pugui consumir directament.
 
 \textbf{RF-3 (Emmagatzematge en JSON versionat)}: Les dades processades es desen en fitxers JSON dins del repositori Git, amb timestamps que permeten mantenir l'historial. Això implica una estructura de carpetes clara (\texttt{/public/data/}) i noms de fitxers que indiquin el tipus de dada i la data. El versionat amb Git proporciona automàticament traçabilitat de canvis.
@@ -61,11 +121,11 @@ A partir dels requisits definits al Capítol 5, s'ha realitzat una anàlisi deta
 \begin{itemize}
     \item Panell 1 (Mapa): Integració de Leaflet amb markers per a cada embassament i estació, popups informatius, i KPIs dinàmics.
     \item Panell 2 (Evolució temporal): Gràfics de línies amb Recharts, selectors de data, i funcionalitat de comparació múltiple.
-    \item Panell 3 (Correlació): Gràfics de dispersió amb càlcul del coeficient de Pearson i selecció d'estacions.
+    \item Panell 3 (Correlació): Gràfics de dispersió amb comparació temporal i selecció d'estacions.
     \item Panell 4 (Alertes): Taula amb indicadors semàfor basats en thresholds predefinits i fletxes de tendència.
 \end{itemize}
 
-\textbf{RF-5 (Detecció de sequera)}: Requereix implementar la lògica de classificació basada en percentatge d'ocupació: crític (<20\%), avís (20-50\%), normal (50-75\%), òptim (>75\%). A més, s'ha afegit un algoritme de regressió lineal sobre les últimes 6 mesures per detectar tendències de millora o deteriorament.
+\textbf{RF-5 (Detecció de sequera)}: Requereix implementar la lògica de classificació basada en percentatge d'ocupació: crític (<20\%), avís (20-50\%), normal (50-75\%), òptim (>75\%). A més, s'ha afegit un algoritme de comparació del valor actual amb el valor de fa 7 dies per detectar tendències de millora o deteriorament.
 
 \textbf{RF-6 (Automatització amb GitHub Actions)}: Implica la configuració d'un workflow YAML amb programació cron (0 2 * * *) que executi l'script ETL diàriament. Cal gestionar el checkout del repositori, la instal·lació de dependències, l'execució de l'script, i el commit/push dels nous fitxers JSON.
 
@@ -100,11 +160,11 @@ CU-1 & Ciutadà, Professional & Visualitzar l'estat actual dels embassaments al 
 \hline
 CU-2 & Ciutadà, Professional & Consultar l'evolució temporal del nivell d'un embassament amb gràfic de línies, selector de dates i comparació múltiple. \\
 \hline
-CU-3 & Professional, Investigador & Analitzar la correlació entre precipitació i nivells mitjançant gràfics de dispersió i coeficient de Pearson, amb selecció d'estacions i períodes. \\
+CU-3 & Professional, Investigador & Analitzar la correlació entre precipitació i nivells mitjançant gràfics de dispersió i comparació temporal, amb selecció d'estacions i períodes. \\
 \hline
 CU-4 & Ciutadà, Professional & Consultar l'estat d'alerta de sequera amb indicadors semàfor (crític, avís, normal, òptim) i fletxes de tendència. \\
 \hline
-CU-5 & Sistema (GitHub Actions & Executar l'actualització automàtica diària: extreure dades de Socrata, transformar, desa-les en JSON i fer push al repositori. \\
+CU-5 & Sistema (GitHub Actions) & Executar l'actualització automàtica diària: extreure dades de Socrata, transformar, desa-les en JSON i fer push al repositori. \\
 \hline
 \end{tabular}
 \end{table}
@@ -118,38 +178,37 @@ El sistema gestiona principalment tres entitats interrelacionades: embassaments,
 \begin{itemize}
     \item \textbf{Embassament} (\texttt{Reservoir}):
     \begin{itemize}
-        \item \texttt{id} (identificador únic)
-        \item \texttt{nom} (nom de l'embassament)
-        \item \texttt{percentatge\_ocupacio} (\%)
-        \item \texttt{volum\_embassat} (hm³)
-        \item \texttt{cota} (msnm)
-        \item \texttt{capacitat\_total} (hm³)
-        \item \texttt{latitud}, \texttt{longitud} (coordenades geogràfiques)
-        \item \texttt{ultima\_actualitzacio} (timestamp)
+        \item \texttt{id} (identificador únic: nom + data)
+        \item \texttt{name} (nom de l'embassament)
+        \item \texttt{date} (data de la mesura)
+        \item \texttt{absoluteLevel} (nivell absolut en msnm)
+        \item \texttt{volumePercentage} (percentatge de volum embassat)
+        \item \texttt{volumeHm3} (volum embassat en hm³)
+        \item \texttt{location.lat}, \texttt{location.lng} (coordenades geogràfiques)
+        \item \texttt{status} (estat calculat: crític, avís, normal, òptim)
     \end{itemize}
     
     \item \textbf{Estació meteorològica} (\texttt{WeatherStation}):
     \begin{itemize}
-        \item \texttt{codi} (identificador únic)
-        \item \texttt{nom} (nom de l'estació)
-        \item \texttt{latitud}, \texttt{longitud} (coordenades geogràfiques)
-        \item \texttt{ultima\_actualitzacio} (timestamp)
+        \item \texttt{stationCode} (codi de l'estació)
+        \item \texttt{stationName} (nom de l'estació)
+        \item \texttt{variableCode} (codi de la variable mesurada)
+        \item \texttt{value} (valor mesurat)
+        \item \texttt{unit} (unitat de mesura)
     \end{itemize}
     
     \item \textbf{Mesura de precipitació} (\texttt{PrecipitationMeasurement}):
     \begin{itemize}
-        \item \texttt{estacio\_codi} (referència a Estació)
-        \item \texttt{data\_mesura} (timestamp)
-        \item \texttt{precipitacio\_mm} (mm)
+        \item \texttt{stationCode} (referència a Estació)
+        \item \texttt{date} (data de la mesura)
+        \item \texttt{value} (precipitació en mm)
     \end{itemize}
     
     \item \textbf{Alerta de sequera} (\texttt{DroughtAlert}):
     \begin{itemize}
-        \item \texttt{embassament\_id} (referència a Embassament)
-        \item \texttt{data} (timestamp)
-        \item \texttt{percentatge\_ocupacio} (\%)
-        \item \texttt{nivell\_alerta} (crític, avís, normal, òptim)
-        \item \texttt{tendencia} (millora, estable, deteriorament)
+        \item Calculada al vol pel Dashboard4 a partir de les dades d'embassaments
+        \item \texttt{status} (crític $<$20\%, avís 20-50\%, normal 50-75\%, òptim $>$75\%)
+        \item \texttt{tendencia} (fletxa: augment, estable, disminució)
     \end{itemize}
 \end{itemize}
 
@@ -160,7 +219,7 @@ Les relacions són:
     \item Les \textbf{Mesures} i els \textbf{Embassaments} es relacionen indirectament a través de la proximitat geogràfica per a l'anàlisi de correlació
 \end{itemize}
 
-Aquest model es materialitza en fitxers JSON estructurats que el frontend consumeix directament, sense necessitat d'una base de dades relacional.
+Aquest model es materialitza en fitxers JSON estructurats que el frontend consumeix directament, sense necessitat d'una base de dades relacional. Les alertes de sequera no s'emmagatzemen com a entitat independent, sinó que es calculen dinàmicament a partir del percentatge d'ocupació de cada embassament.
 
 %----------------------------------------------------------------------------------------
 
@@ -214,7 +273,7 @@ L'arquitectura general del sistema segueix un patró de pipeline de dades amb se
     \begin{itemize}
         \item Servei de dades (\texttt{waterDataService}): Wrapper amb axios per carregar fitxers JSON
         \item Hooks personalitzats (\texttt{useWaterData}): Gestió d'estat de càrrega, error i dades
-        \item Store global (Zustand): Estat compartit entre components
+        \item Store global (React hooks): Estat compartit entre components
         \item Components de dashboards: Quatre panells amb visualitzacions específiques
         \item Sistema de navegació: React Router per a transicions entre panells
     \end{itemize}
@@ -263,7 +322,7 @@ Servei (Service Layer) & Frontend & Centralització de l'accés a dades en \text
 \hline
 Basat en components & Frontend & Reutilització de components React, proves aïllades i mantenibilitat millorada. \\
 \hline
-Observador (Zustand) & Frontend & Desacoblement entre components i actualització automàtica de l'interfície. \\
+Observador (React hooks) & Frontend & Desacoblement entre components i actualització automàtica de l'interfície. \\
 \hline
 Decorador (Middleware) & ETL & Afegir logging i gestió d'errors sense modificar la lògica de negoci. \\
 \hline

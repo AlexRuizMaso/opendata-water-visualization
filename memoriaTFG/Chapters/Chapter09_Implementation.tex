@@ -27,7 +27,7 @@ Els transformadors normalitzen dates a ISO 8601, eliminen duplicats, calculen pe
 \section{Implementació del frontend}
 
 \subsection{Estructura}
-Aplicació SPA amb React 18 \cite{react}, React Router 6 i gestió d'estat amb Zustand \cite{zustand}. Els components es carreguen asíncronament amb \texttt{React.lazy()} i \texttt{Suspense} per a code splitting.
+Aplicació SPA amb React 18 \cite{react}, React Router 6 i gestió d'estat amb hooks de React. Els components es carreguen asíncronament amb \texttt{React.lazy()} i \texttt{Suspense} per a code splitting.
 
 \subsection{Gestió de dades}
 \texttt{waterDataService.js} encapsula l'accés a dades mitjançant \texttt{axios}, proporcionant filtres per data i estació, agrupació per nom, i càlcul de colors d'estat.
@@ -54,7 +54,7 @@ Dos workflows coordinats \cite{github_actions}:
 
 \section{Proves realitzades}
 
-\textbf{Proves ETL}: Validació de cada fase (extractors, transformadors, carregadors) amb Jest, verificant estructures de dades, normalització, fusió i neteja.
+\textbf{Proves ETL}: Validació de cada fase (extractors, transformadors, carregadors) amb Vitest, verificant estructures de dades, normalització, fusió i neteja.
 
 \textbf{Proves frontend}: Verificació de \texttt{waterDataService}, components de visualització (Recharts, Leaflet) i navegació React Router.
 
@@ -68,6 +68,6 @@ Dos workflows coordinats \cite{github_actions}:
 
 \textbf{Aplicació:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
 
-\textbf{Vídeo del codi (3' màx):} Inclòs al vídeo demostratiu de l'apartat 9.3.
+\textbf{Vídeo del codi (3' màx):} \url{https://bit.ly/demo-codi}
 
 %----------------------------------------------------------------------------------------

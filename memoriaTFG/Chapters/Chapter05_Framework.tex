@@ -20,17 +20,17 @@ document.
 \begin{itemize}
     \item \textbf{Desenvolupador únic}: Àlex Ruiz Masó (autor del present document), responsable de totes les fases del projecte, des de la investigació inicial fins al desplegament final i documentació.
     \item \textbf{Tutor acadèmic}: Antoni Bardera Reig, professor del Departament d'Informàtica i Matemàtica Aplicada de la Universitat de Girona, qui ha ofert orientació metodològica, revisió de progrés i feedback tècnic durant totes les etapes del projecte.
-    \item \textbf{Consultes informals}: Interaccions esporàdiques amb companys del grau i professionals del sector de l'aigua per a validació de supòsits i obtenció de perspectives d'usuari, totalitzant aproximadament 10 hores de consultes no formals.
+    \item \textbf{Consultes informals}: Interaccions esporàdiques amb companys del grau per a validació de supòsits i obtenció de perspectives d'usuari, totalitzant aproximadament 10 hores de consultes no formals.
 \end{itemize}
 
 \subsection{Punt de partida}
 El punt de partida del projecte es va definir durant les primeres tres dies de desenvolupament i va consistir en:
 \begin{itemize}
-    \item Un ordinador portàtil personal amb processador Intel Core i7-11800H, 16GB RAM, i SSD de 512GB, executant Windows 11 Home 22H2.
-    \item Accés a Internet amb mitjana de 100Mbps de descàrrega i 20Mbps de pujada, suficient per a les proves inicials d'API.
+    \item Un ordinador portàtil personal amb processador Intel Core i7-7500U, 20GB RAM, i emmagatzematge mixt (1TB HDD + 256GB SSD), executant Windows.
+    \item Accés a Internet simètric de 1 Gbps de descàrrega i pujada, suficient per a les proves inicials d'API.
     \item Coneixements previs en:
           \begin{itemize}
-              \item Programació web full-stack (HTML/CSS/JS, React, Node.js)
+              \item Programació web (HTML/CSS/JS, Node.js)
                \item Bases de dades relacionals i no relacionals
               \item Metodologies de desenvolupament de programari (cascada i àgil)
               \item Principis de disseny d'interfície d'usuari i experiència d'usuari
@@ -56,7 +56,7 @@ Les característiques clau de les APIs Socrata rellevants per a aquest projecte 
     \item \textbf{Format estandarditzat}: Les respostes JSON segueixen l'esquema Socrata, amb camps com \texttt{:id}, \texttt{:created\_at}, \texttt{:updated\_at}, i camps de dades específics a cada dataset.
     \item \textbf{Límits de taxa}: Permet fins a 1.000 peticions per hora per IP d'origen, suficient per a les necessitats d'actualització diària del projecte.
     \item \textbf{Consultes filtrades}: Suporta paràmetres de consulta com \texttt{\$select}, \texttt{\$where}, \texttt{\$limit}, i \texttt{\$order} per a optimitzar la transferència de dades.
-    \item \textbf{Actualitat}: Els conjunts de dades d'embassaments s'actualitzen cada 15 minuts, mentre que els de precipitació s'actualitzen cada hora, assegurant que les dades disponibles siguin raonablement actuals.
+    \item \textbf{Actualitat}: Les APIs dels conjunts de dades d'embassaments s'actualitzen cada 15 minuts i les de precipitació cada hora. Tanmateix, l'ETL del projecte s'executa un cop al dia (a les 02:00 UTC), processant les dades disponibles en cada execució.
 \end{itemize}
 
 Durant la Fase 1 d'investigació es va verificar que les fonts necessàries estan disponibles i estables:
@@ -70,11 +70,11 @@ Aquest accés directe i gratuït a dades d'alta freqüència i bona cobertura ge
 \subsection{Tecnologies del projecte}
 Les tecnologies seleccionades per a la implementació del projecte van ser escollides seguint criteris de maduresa, suport comunitari, adaptabilitat al problema, i llicències obertes compatibles amb l'objectiu de divulgació del codi font. L'estudi comparatiu detallat de les alternatives avaluades es presenta al Capítol 5.
 
-\subsubsection{Backend i processament de dades}
+\subsubsection{Processament de dades (ETL)}
 \begin{itemize}
     \item \textbf{Node.js 18.x}: Runtime de JavaScript escollit per la seva eficient I/O asíncrona, ideal per a operacions d'extracció de dades que impliquen esperes de xarxa.
-    \item \textbf{axios 1.4.0}: Biblioteca HTTP amb API basada en promeses, maneig centralitzat d'encapçalaments i reintents automàtics.
-    \item \textbf{dotenv 16.0.3}: Gestió segura de variables d'entorn per a separar configuració del codi font.
+    \item \textbf{axios 1.6.0}: Biblioteca HTTP amb API basada en promeses, maneig centralitzat d'encapçalaments i reintents automàtics.
+    \item \textbf{dotenv 16.3.0}: Gestió segura de variables d'entorn per a separar configuració del codi font.
 \end{itemize}
 
 \subsubsection{Frontend i visualització}
@@ -84,7 +84,7 @@ Les tecnologies seleccionades per a la implementació del projecte van ser escol
     \item \textbf{React Router 6.x}: Gestió de navegació entre dashboards amb suport per a càrrega diferida de components.
     \item \textbf{Recharts 2.x}: Biblioteca de gràfics construïda sobre components React i D3.js per als càlculs d'escala.
     \item \textbf{Leaflet 1.x}: Biblioteca de mapes lleugera (38KB gzipped) amb llicència BSD.
-    \item \textbf{Sass 1.99}: Preprocessador CSS amb metodologia BEM per a mantenibilitat.
+    \item \textbf{Sass 1.77}: Preprocessador CSS amb metodologia BEM per a mantenibilitat.
 \end{itemize}
 
 \subsubsection{Infraestructura i automatització}
