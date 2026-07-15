@@ -1,0 +1,270 @@
+% ===========================================================================
+% RESUM DEL TREBALL DE FI DE GRAU
+% Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya
+% ===========================================================================
+
+\documentclass[a4paper, 12pt]{article}
+
+% ===========================================================================
+% PAQUETS
+% ===========================================================================
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[catalan]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{xcolor}
+
+% ===========================================================================
+% CONFIGURACIÓ
+% ===========================================================================
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\setstretch{1.5}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+% ===========================================================================
+% DOCUMENT
+% ===========================================================================
+
+\begin{document}
+
+% ===========================================================================
+% TÍTOL
+% ===========================================================================
+
+\begin{center}
+    {\LARGE\textbf{Resum del Treball de Fi de Grau}}\\[0.5cm]
+    {\Large Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya}\\[1cm]
+    {\large \textbf{Autor:} Àlex Ruiz Masó}\\[0.3cm]
+    {\large \textbf{Tutor:} Antoni Bardera Reig}\\[0.3cm]
+    {\large \textbf{Grau en Enginyeria Informàtica}}\\[0.2cm]
+    {\large Universitat de Girona}\\[0.3cm]
+    {\large Curs 2025/2026}
+\end{center}
+
+\vspace{1cm}
+
+% ===========================================================================
+% 1. INTRODUCCIÓ
+% ===========================================================================
+
+\section{Introducció}
+
+La gestió dels recursos hídrics és un dels reptes més importants que afronta el planeta en l'era del canvi climàtic. A Catalunya, les sequeres repetides i els períodes de precipitació irregular han demostrat la necessitat urgent de disposar de sistemes avançats de monitoratge i visualització de dades hídriques.
+
+En l'actualitat, les autoritats hídriques catalanes disposen de dades sobre nivells d'embassaments i precipitacions a través de les APIs públiques de la Generalitat de Catalunya (Socrata), però aquestes dades sovint es troben distribuïdes en múltiples fonts i no són fàcilment accessibles per al públic general.
+
+Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualització de dades hídriques que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya. El sistema combina una canonada ETL automatitzada amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React.
+
+% ===========================================================================
+% 2. OBJECTIUS
+% ===========================================================================
+
+\section{Objectius}
+
+Els principals objectius d'aquest projecte són:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Implementar una canonada ETL robusta} que extregui dades de les APIs de Socrata (Generalitat de Catalunya), les transformi en un format estàndard, i les distribueixi de forma automàtica.
+    
+    \item \textbf{Crear un frontend interactiu amb quatre panells de visualització}:
+    \begin{itemize}
+        \item Panell 1: Mapa interactiu amb KPIs dels embassaments
+        \item Panell 2: Evolució temporal dels nivells amb filtres de data
+        \item Panell 3: Correlació entre precipitació i nivells d'embassaments
+        \item Panell 4: Matriu d'alertes de sequera amb indicadors semàfor
+    \end{itemize}
+    
+    \item \textbf{Assegurar l'automatització}: Configurar GitHub Actions per executar l'ETL diàriament a les 02:00 UTC, processant més de 200.000 registres de dades en total.
+    
+    \item \textbf{Implementar lògica de detecció de sequera}: Definir llindars de perill basats en percentatge d'ocupació (crític $<$20\%, avís 20-50\%, normal 50-75\%, òptim $>$75\%).
+    
+    \item \textbf{Documentar adequadament}: Generar una memòria completa amb les decisions de disseny, arquitectura del sistema, i guies d'ús.
+\end{enumerate}
+
+% ===========================================================================
+% 3. REQUISITS DEL SISTEMA
+% ===========================================================================
+
+\section{Requisits del Sistema}
+
+\subsection{Requisits Funcionals}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{RF-1 (Alta):} Extracció automàtica de dades des de les APIs públiques de la Generalitat de Catalunya.
+    \item \textbf{RF-2 (Alta):} Transformació i neteja de les dades extretes.
+    \item \textbf{RF-3 (Alta):} Emmagatzematge de dades processades en format JSON versionat.
+    \item \textbf{RF-4 (Alta):} Desenvolupament d'una interfície web interactiva amb quatre panells de visualització diferenciats.
+    \item \textbf{RF-5 (Mitjana):} Implementació de lògica de detecció automàtica de sequera.
+    \item \textbf{RF-6 (Mitjana):} Automatització de l'actualització de dades via GitHub Actions.
+\end{itemize}
+
+\subsection{Requisits No Funcionals}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{RNF-1 (Alta): Rendiment.} L'ETL ha de processar més de 200.000 registres en menys de 5 minuts. El frontend ha de carregar en menys de 3 segons.
+    \item \textbf{RNF-2 (Alta): Usabilitat.} La interfície ha de ser intuïtiva i accessible per a usuaris amb diversos nivells de competència tècnica.
+    \item \textbf{RNF-3 (Alta): Seguretat.} Totes les connexions a APIs han de realitzar-se mitjançant HTTPS.
+    \item \textbf{RNF-4 (Mitjana): Portabilitat.} El sistema ha de ser desplegable a diferents plataformes sense modificacions significatives.
+    \item \textbf{RNF-5 (Mitjana): Mantenibilitat.} El codi ha de seguir convencions establertes i estar ben documentat.
+    \item \textbf{RNF-6 (Baixa): Escalabilitat.} L'arquitectura ha de permetre un augment futur del volum de dades.
+\end{itemize}
+
+% ===========================================================================
+% 4. PROCÉS DE DESENVOLUPAMENT
+% ===========================================================================
+
+\section{Procés de Desenvolupament}
+
+\subsection{Pipeline ETL}
+
+El pipeline ETL s'ha implementat com un conjunt de mòduls Node.js estructurats segons el patró de pipeline modular:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Extracció}: Dos extractors independents (\texttt{EmbassamentExtractor} i \texttt{PrecipitationExtractor}) utilitzen \texttt{axios} per obtenir dades de les APIs Socrata de la Generalitat. Suporten mode incremental (diari) i sincronització completa.
+    \item \textbf{Transformació}: Els transformadors normalitzen dates a ISO 8601, eliminen duplicats, calculen percentatges d'ocupació i classifiquen alertes de sequera.
+    \item \textbf{Càrrega}: \texttt{DataLoader} desa les dades en fitxers JSON amb metadades, fusió incremental per evitar duplicats, i neteja automàtica de còpies antigues (més de 30 dies).
+\end{itemize}
+
+\subsection{Frontend}
+
+L'aplicació frontend és una SPA (Single Page Application) construïda amb React 18, React Router 6 i gestió d'estat amb hooks de React. Els components es carreguen asíncronament amb \texttt{React.lazy()} i \texttt{Suspense} per a code splitting.
+
+Les visualitzacions utilitzen:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Recharts 2}: Gràfics de línies, dispersió i KPIs amb integració nativa amb React.
+    \item \textbf{Leaflet 1}: Mapa interactiu amb markers i popups informatius.
+\end{itemize}
+
+L'estil utilitza Sass amb metodologia BEM i CSS Grid/Flexbox per a disseny responsiu mobile-first.
+
+\subsection{Automatització amb GitHub Actions}
+
+Dos workflows coordinats:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{ETL Pipeline (\texttt{etl-pipeline.yml})}: S'executa diàriament a les 02:00 UTC (cron) o manualment. Fa checkout, instal·la dependències, executa l'ETL, copia fitxers JSON a \texttt{frontend/public/data/}, i fa commit/push amb \texttt{[skip ci]} per evitar bucles.
+    \item \textbf{Desplegament (\texttt{deploy-frontend-pages.yml})}: S'activa a push a \texttt{main}. Construeix el frontend amb Vite i desplega a GitHub Pages.
+\end{itemize}
+
+% ===========================================================================
+% 5. ENTORNS UTILITZATS
+% ===========================================================================
+
+\section{Entorns Utilitzats}
+
+\subsection{Desplegament}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Frontend: GitHub Pages} - Servei d'allotjament gratuït de llocs web estàtics. L'aplicació és completament estàtica, no requereix servidor de backend.
+    \item \textbf{ETL: GitHub Actions} - Infraestructura de CI/CD gratuïta per a repositoris públics (2.000 minuts mensuals).
+    \item \textbf{Domini}: Domini per defecte de GitHub Pages (\texttt{github.io}) amb HTTPS automàtic.
+\end{itemize}
+
+\subsection{Tecnologies}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Component} & \textbf{Tecnologies} \\
+\midrule
+Frontend & React 18, Vite, Recharts, Leaflet, SCSS \\
+ETL & Node.js, Axios \\
+DevOps & GitHub Actions, GitHub Pages \\
+\bottomrule
+\end{tabular}
+\caption{Tecnologies utilitzades}
+\end{table}
+
+% ===========================================================================
+% 6. RESULTATS OBTINGUTS
+% ===========================================================================
+
+\section{Resultats Obtinguts}
+
+\subsection{Grau d'Assoliment}
+
+Tots els objectius i requisits s'han assolit completament:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Sistema complet}: Plataforma web funcional amb dades de 9 embassaments i 200+ estacions meteorològiques de Catalunya.
+    \item \textbf{Cost zero}: GitHub Actions per a l'ETL i GitHub Pages per al frontend permeten funcionament sense costos d'infraestructura.
+    \item \textbf{Codi obert}: Tot el projecte és públic a GitHub sota llicència MIT, reutilitzable per a altres regions o tipus de dades.
+    \item \textbf{Més enllà del portal oficial}: Ofereix correlacions automàtiques i alertes de sequera integrades que no estan disponibles al portal d'ACA.
+\end{itemize}
+
+\subsection{Validació de Requisits}
+
+\begin{itemize}[leftmargin=*]
+    \item Tots els requisits funcionals (RF-1 a RF-6) s'han assolit completament.
+    \item Tots els requisits no funcionals (RNF-1 a RNF-6) s'han assolit.
+    \item S'han implementat proves automatitzades amb Vitest per als mòduls ETL i components frontend.
+\end{itemize}
+
+\subsection{Limitacions}
+
+Es reconeixen les següents limitacions:
+\begin{itemize}[leftmargin=*]
+    \item La dependència de GitHub Actions limita l'execució de l'ETL a una freqüència mínima d'aproximadament 5 minuts per execució.
+    \item L'absència d'una base de dades real limita la capacitat de consultes complexes sobre l'historial complet de dades.
+\end{itemize}
+
+% ===========================================================================
+% 7. CONCLUSIÓNES
+% ===========================================================================
+
+\section{Conclusións}
+
+Els objectius del projecte s'han assolit en la seva totalitat. Els principals resultats són:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Visualització accessible}: S'ha aconseguit transformar dades tècniques complexes en visualitzacions intuïtives que qualsevol ciutadà pot entendre.
+    \item \textbf{Automatització completa}: El sistema funciona de forma autònoma, actualitzant les dades diàriament sense intervenció manual.
+    \item \textbf{Arquitectura robusta}: La separació ETL/frontend mitjançant fitxers JSON ha resultat en un sistema senzill, mantenible i econòmic.
+    \item \textbf{Codi obert}: Tot el codi font és públic i reutilitzable, facilitant la contribució comunitària.
+\end{itemize}
+
+Pel que fa a l'aprenentatge, el projecte ha representat una oportunitat valuosa per aplicar coneixements del grau en un context real, desenvolupant competències tècniques (Node.js, React, CI/CD) i de gestió (estimació precisa amb error de només 3,2\% respecte a les 250 hores reals).
+
+L'impacte potencial del projecte és significatiu en un context de creixent preocupació per la sequera a Catalunya, proporcionant una eina accessible per a ciutadans, professionals i administracions.
+
+% ===========================================================================
+% 8. ENLLAÇOS
+% ===========================================================================
+
+\section{Enllaços}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Repositori de codi:} \url{https://github.com/AlexRuizMaso/opendata-water-visualization}
+    
+    \item \textbf{Aplicació desplegada:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
+    
+    \item \textbf{Vídeo de demostració:} \url{https://bit.ly/demo-web-opendata-water-visualization}
+    
+    \item \textbf{Vídeo d'explicació del codi:} \url{https://bit.ly/demo-codi}
+\end{itemize}
+
+\vfill
+
+\begin{center}
+\textit{Document elaborat com a resum del Treball de Fi de Grau.}\\
+\textit{Universitat de Girona - Curs 2025/2026}
+\end{center}
+
+\end{document}
