@@ -20,7 +20,7 @@ El desenvolupament s'ha estructurat en iteracions que van incrementant funcional
 \begin{enumerate}
     \item \textbf{Fase 1 - Investigació i configuració}: Investigació de les APIs de Socrata, verificació de disponibilitat de dades, configuració de l'entorn de desenvolupament.
     
-    \item \textbf{Fase 2 - Canonada ETL base}: Implementació dels extractors de dades, transformadors de dades i loaders de fitxers.
+    \item \textbf{Fase 2 - Pipeline ETL base}: Implementació dels extractors de dades, transformadors de dades i loaders de fitxers.
     
     \item \textbf{Fase 3 - Frontend - Dashboard 1 \& 2}: Creació del servei de dades, hooks personalitzats, i els primers dos panells de visualització (mapa i evolució temporal).
     
@@ -29,12 +29,25 @@ El desenvolupament s'ha estructurat en iteracions que van incrementant funcional
     \item \textbf{Fase 5 - Automatització i desplegament}: Configuració de GitHub Actions per a execució diària de l'ETL i construcció del frontend.
 \end{enumerate}
 
-\subsection{Justificació de l'enfocament àgil}
+\subsection{Treball en equip i comunicació}
+
+Tot i ser un projecte desenvolupat per un únic autor, s'han mantingut reunions periòdiques amb el tutor acadèmic (Antoni Bardera Reig) per a revisió de progrés, discussió de decisions tècniques i ajust del pla de treball. Concretament:
 
 \begin{itemize}
-    \item \textbf{Flexibilitat}: Permet adaptar-se si les APIs canvien o si sorgeixen nous requisits.
-    \item \textbf{Entrega contínua}: Cada iteració proporciona valor incrementat (una canonada ETL funcional, un panell de visualització, etc.).
-    \item \textbf{Feedback ràpid}: Es pot provar cada component de forma independent.
+    \item \textbf{Reunions de seguiment}: S'han realitzat reunions quinzenals amb el tutor (aproximadament 12 hores en total) per a presentar avanços, discutir problemes tècnics i rebre feedback sobre l'arquitectura del sistema.
+    \item \textbf{Consultes informals}: S'han mantingut interaccions esporàdiques amb companys del grau per a validació de supòsits d'usabilitat i obtenció de perspectives d'usuari no tècnic (aproximadament 10 hores).
+    \item \textbf{Documentació de decisions}: Totes les decisions tècniques significatives es van documentar al repositori Git mitjançant missatges de commit descriptius, permetent la traçabilitat de l'evolució del codi.
+\end{itemize}
+
+\subsection{Testos unitaris i validació}
+
+S'han implementat testos unitaris per a cada bloc funcional del sistema, assegurant la qualitat del codi i facilitant la detecció precoç d'errors:
+
+\begin{itemize}
+    \item \textbf{Pipeline ETL}: Testos unitaris per a cada mòdul (extractors, transformadors, carregadors) amb llibreria Vitest, verificant estructures de dades, normalització de dates, fusió de registres i neteja de duplicats. Cobertura de codi objectiu: 90\%.
+    \item \textbf{Frontend}: Testos de components React per a validar el correcte funcionament dels dashboards, la navegació entre panells, i la integració amb les biblioteques de visualització (Recharts, Leaflet).
+    \item \textbf{Integració}: Proves d'integració que validen el flux complet des de l'extracció de dades fins a la seva visualització al frontend, incloent la simulació d'errors de xarxa i condicions adverses.
+    \item \textbf{Usabilitat}: Proves d'usabilitat amb 5 usuaris externs (tècnics i no tècnics) per a validar la intuïtitivitat de la interfície i detectar problemes d'experiència d'usuari.
 \end{itemize}
 
 %----------------------------------------------------------------------------------------
@@ -45,7 +58,7 @@ El pla de treball s'ha estructurat en cinc fases principals, basant-se en una me
 
 \begin{itemize}
     \item \textbf{Setmanes 1-2}: Investigació de dades, configuració del repositori, estudi de les APIs.
-    \item \textbf{Setmanes 3-5}: Desenvolupament de la canonada ETL (extractors, transformadors, loaders).
+    \item \textbf{Setmanes 3-5}: Desenvolupament del pipeline ETL (extractors, transformadors, loaders).
     \item \textbf{Setmanes 6-8}: Desenvolupament del frontend (dashboards 1-2, hooks, serveis).
     \item \textbf{Setmanes 9-10}: Desenvolupament dels dashboards 3-4, integració de navegació.
     \item \textbf{Setmanes 11-12}: Configuració de GitHub Actions, documentació, testing.
@@ -76,7 +89,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
     \item \textbf{Total Fase 1:} 30 hores
 \end{itemize}
 
-\subsection{Fase 2: Desenvolupament de la canonada ETL}
+\subsection{Fase 2: Desenvolupament del pipeline ETL}
 \begin{itemize}
     \item Implementació del mòdul d'extracció: funcions per a fer peticions HTTP asincròniques a les APIs de Socrata amb maneig d'errors i reintents - 12 hores
     \item Desenvolupament del mòdul de transformació: normalització de dades (conversió d'unitats, format de dates, maneig de valors nul·ls) - 15 hores
@@ -84,7 +97,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
     \item Creació de l'orquestrador ETL que coordina l'execució seqüencial dels tres mòduls - 5 hores
     \item Implementació del sistema de logging detallat per a monitorització i depuració - 4 hores
     \item Proves unitàries de cada mòdul ETL amb Vitest (90\% de cobertura de codi) - 8 hores
-    \item Integració i proves de tota la canonada ETL amb simulació de condicions de xarxa adverses - 6 hores
+    \item Integració i proves de tota el pipeline ETL amb simulació de condicions de xarxa adverses - 6 hores
     \item \textbf{Total Fase 2:} 60 hores
 \end{itemize}
 
@@ -131,7 +144,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \hline
 1 & Investigació i configuració inicial & 30 \\
 \hline
-2 & Desenvolupament de la canonada ETL & 60 \\
+2 & Desenvolupament del pipeline ETL & 60 \\
 \hline
 3 & Frontend - Dashboards 1 i 2 & 67 \\
 \hline
@@ -139,13 +152,19 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \hline
 5 & Automatització, desplegament i documentació & 52 \\
 \hline
-\textbf{TOTAL} & & \textbf{258} \\
+6 & Testing i validació & 42 \\
+\hline
+Tutories i revisions & Reunions amb el tutor & 12 \\
+\hline
+Reserva d'imprevistos & Flexibilitat & 18 \\
+\hline
+\textbf{TOTAL} & & \textbf{330} \\
 \hline
 \end{tabular}
 \label{tab:time-estimation}
 \end{table}
 
-L'estimació total de 258 hores s'acosta molt a la inversió real de 250 hores documentada durant el desenvolupament, indicant una bona capacitat de predicció de l'esforç necessari.
+L'estimació total de 330 hores inclou les 258 hores de desenvolupament funcional, 42 hores de testing i validació, 12 hores de tutories i revisions periòdiques amb el tutor acadèmic, i 18 hores de reserva per a imprevistos i tasques de coordinació. Aquesta estimació es basa en la inversió real documentada durant el desenvolupament, indicant una bona capacitat de predicció de l'esforç necessari.
 
 %----------------------------------------------------------------------------------------
 
@@ -153,7 +172,7 @@ L'estimació total de 258 hores s'acosta molt a la inversió real de 250 hores d
 
 El desenvolupament s'ha dividit en tres paquets de treball (PT) principals, cadascun corresponent a un subsistema funcional del projecte:
 
-\textbf{PT1: Canonada de Processament de Dades (ETL)}
+\textbf{PT1: Pipeline de Processament de Dades (ETL)}
 \begin{itemize}
     \item \textbf{Objectiu}: Construir un pipeline fiable i escalable per a l'extracció, transformació i càrrega de dades hidrològiques des de les fonts públiques de la Generalitat de Catalunya.
     \item \textbf{Lliurables}: Scripts d'extracció parametritzats, funcions de transformació verificades, mòdul d'emmagatzematge optimitzat, orquestrador ETL amb maneig d'errors robust.

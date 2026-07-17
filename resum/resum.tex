@@ -3,40 +3,59 @@
 % Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya
 % ===========================================================================
 
-\documentclass[a4paper, 12pt]{article}
+\documentclass[11pt, a4paper]{article}
 
 % ===========================================================================
-% PAQUETS
+% PAQUETS (mateixos que la memòria)
 % ===========================================================================
 
-\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[catalan]{babel}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage{mathpazo}
+\usepackage{beramono}
+\usepackage[margin=2.5cm, top=1.5cm, bottom=1.5cm, inner=2.5cm, outer=3.8cm, bindingoffset=.5cm]{geometry}
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{enumitem}
-\usepackage{titlesec}
 \usepackage{setspace}
 \usepackage{xcolor}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
 
 % ===========================================================================
-% CONFIGURACIÓ
+% CONFIGURACIÓ D'ESTIL (mateixa que la memòria)
 % ===========================================================================
 
 \hypersetup{
     colorlinks=true,
-    linkcolor=black,
-    urlcolor=blue,
-    citecolor=black
+    citecolor=[rgb]{0.286, 0.427, 0.537},
+    linkcolor=[rgb]{0.161, 0.31, 0.427},
+    urlcolor=[rgb]{0.071, 0.212, 0.322},
+    bookmarks=true,
+    bookmarksnumbered=true
 }
 
-\setstretch{1.5}
-\setlength{\parskip}{6pt}
+\singlespacing
+\setlength{\parskip}{1em}
 \setlength{\parindent}{0pt}
 
-\titleformat{\section}{\large\bfseries}{}{0em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+% Capçaleres i peus (mateix estil que la memòria)
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{\leftmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Formatació de títols
+\titleformat{\section}{\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\large\bfseries}{}{0em}{}
+
+% Logo UdG
+\graphicspath{{Figures/}{../memoriaTFG/Front/Figures/}{../memoriaTFG/Figures/}}
 
 % ===========================================================================
 % DOCUMENT
@@ -45,20 +64,70 @@
 \begin{document}
 
 % ===========================================================================
-% TÍTOL
+% PORTADA (mateix estil que la memòria)
 % ===========================================================================
 
+\thispagestyle{empty}
+\newgeometry{margin=1in}
+
 \begin{center}
-    {\LARGE\textbf{Resum del Treball de Fi de Grau}}\\[0.5cm]
-    {\Large Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya}\\[1cm]
-    {\large \textbf{Autor:} Àlex Ruiz Masó}\\[0.3cm]
-    {\large \textbf{Tutor:} Antoni Bardera Reig}\\[0.3cm]
-    {\large \textbf{Grau en Enginyeria Informàtica}}\\[0.2cm]
-    {\large Universitat de Girona}\\[0.3cm]
-    {\large Curs 2025/2026}
+\includegraphics[width=0.65\textwidth]{EPS_centrat.png}
+
+\vspace{2cm}
+
+{\Large\textbf{Grau en Enginyeria Informàtica}\par}
+\vspace{0.2cm}
+\vspace{3.5cm}
+\textsc{\Large Treball de Fi de Grau}
+\vspace{0.2cm}
+
+\rule{.9\linewidth}{.6pt}
+\vspace{0.4cm}
+{\huge\bfseries Visualitzador de Dades Obertes sobre Recursos Hídrics de Catalunya\par}
+\vspace{0.4cm}
+\rule{.9\linewidth}{.6pt}
+\vspace{1cm}
+
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft}
+    \large
+    \emph{Autor/a:}\\
+    Àlex Ruiz Masó
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright}
+    \large
+    \emph{Tutor/a:} \\
+    Antoni Bardera Reig
+\end{flushright}
+\end{minipage}
+
+\vspace{2.5cm}
+\textsc{\Large Resum del Treball de Fi de Grau}
+\vspace{0.2cm}
+
+\vfill
+
+{\large
+Convocatòria:\\
+2025/2026\\
+\vspace{1.5cm}
+Departament:\\
+Escola Politècnica Superior\\
+}
+\vfill
 \end{center}
 
-\vspace{1cm}
+\restoregeometry
+\newpage
+
+% ===========================================================================
+% CONTINGUT
+% ===========================================================================
+
+\setcounter{page}{1}
+\pagestyle{fancy}
 
 % ===========================================================================
 % 1. INTRODUCCIÓ
@@ -70,7 +139,7 @@ La gestió dels recursos hídrics és un dels reptes més importants que afronta
 
 En l'actualitat, les autoritats hídriques catalanes disposen de dades sobre nivells d'embassaments i precipitacions a través de les APIs públiques de la Generalitat de Catalunya (Socrata), però aquestes dades sovint es troben distribuïdes en múltiples fonts i no són fàcilment accessibles per al públic general.
 
-Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualització de dades hídriques que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya. El sistema combina una canonada ETL automatitzada amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React.
+Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualització de dades hídriques que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya. El sistema combina un pipeline ETL automatitzat amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React.
 
 % ===========================================================================
 % 2. OBJECTIUS
@@ -81,8 +150,8 @@ Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualitzaci
 Els principals objectius d'aquest projecte són:
 
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Implementar una canonada ETL robusta} que extregui dades de les APIs de Socrata (Generalitat de Catalunya), les transformi en un format estàndard, i les distribueixi de forma automàtica.
-    
+    \item \textbf{Implementar un pipeline ETL robust} que extregui dades de les APIs de Socrata (Generalitat de Catalunya), les transformi en un format estàndard, i les distribueixi de forma automàtica.
+
     \item \textbf{Crear un frontend interactiu amb quatre panells de visualització}:
     \begin{itemize}
         \item Panell 1: Mapa interactiu amb KPIs dels embassaments
@@ -90,11 +159,11 @@ Els principals objectius d'aquest projecte són:
         \item Panell 3: Correlació entre precipitació i nivells d'embassaments
         \item Panell 4: Matriu d'alertes de sequera amb indicadors semàfor
     \end{itemize}
-    
+
     \item \textbf{Assegurar l'automatització}: Configurar GitHub Actions per executar l'ETL diàriament a les 02:00 UTC, processant més de 200.000 registres de dades en total.
-    
+
     \item \textbf{Implementar lògica de detecció de sequera}: Definir llindars de perill basats en percentatge d'ocupació (crític $<$20\%, avís 20-50\%, normal 50-75\%, òptim $>$75\%).
-    
+
     \item \textbf{Documentar adequadament}: Generar una memòria completa amb les decisions de disseny, arquitectura del sistema, i guies d'ús.
 \end{enumerate}
 
@@ -171,8 +240,8 @@ Dos workflows coordinats:
 \subsection{Desplegament}
 
 \begin{itemize}[leftmargin=*]
-    \item \textbf{Frontend: GitHub Pages} - Servei d'allotjament gratuït de llocs web estàtics. L'aplicació és completament estàtica, no requereix servidor de backend.
-    \item \textbf{ETL: GitHub Actions} - Infraestructura de CI/CD gratuïta per a repositoris públics (2.000 minuts mensuals).
+    \item \textbf{Frontend: GitHub Pages} -- Servei d'allotjament gratuït de llocs web estàtics. L'aplicació és completament estàtica, no requereix servidor de backend.
+    \item \textbf{ETL: GitHub Actions} -- Infraestructura de CI/CD gratuïta per a repositoris públics (2.000 minuts mensuals).
     \item \textbf{Domini}: Domini per defecte de GitHub Pages (\texttt{github.io}) amb HTTPS automàtic.
 \end{itemize}
 
@@ -240,7 +309,7 @@ Els objectius del projecte s'han assolit en la seva totalitat. Els principals re
     \item \textbf{Codi obert}: Tot el codi font és públic i reutilitzable, facilitant la contribució comunitària.
 \end{itemize}
 
-Pel que fa a l'aprenentatge, el projecte ha representat una oportunitat valuosa per aplicar coneixements del grau en un context real, desenvolupant competències tècniques (Node.js, React, CI/CD) i de gestió (estimació precisa amb error de només 3,2\% respecte a les 250 hores reals).
+Pel que fa a l'aprenentatge, el projecte ha representat una oportunitat valuosa per aplicar coneixements del grau en un context real, desenvolupant competències tècniques (Node.js, React, CI/CD) i de gestió (estimació precisa amb error de només 3,2\% respecte a les 330 hores estimades).
 
 L'impacte potencial del projecte és significatiu en un context de creixent preocupació per la sequera a Catalunya, proporcionant una eina accessible per a ciutadans, professionals i administracions.
 
@@ -252,11 +321,11 @@ L'impacte potencial del projecte és significatiu en un context de creixent preo
 
 \begin{itemize}[leftmargin=*]
     \item \textbf{Repositori de codi:} \url{https://github.com/AlexRuizMaso/opendata-water-visualization}
-    
+
     \item \textbf{Aplicació desplegada:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
-    
+
     \item \textbf{Vídeo de demostració:} \url{https://bit.ly/demo-web-opendata-water-visualization}
-    
+
     \item \textbf{Vídeo d'explicació del codi:} \url{https://bit.ly/demo-codi}
 \end{itemize}
 
@@ -264,7 +333,7 @@ L'impacte potencial del projecte és significatiu en un context de creixent preo
 
 \begin{center}
 \textit{Document elaborat com a resum del Treball de Fi de Grau.}\\
-\textit{Universitat de Girona - Curs 2025/2026}
+\textit{Universitat de Girona -- Curs 2025/2026}
 \end{center}
 
 \end{document}

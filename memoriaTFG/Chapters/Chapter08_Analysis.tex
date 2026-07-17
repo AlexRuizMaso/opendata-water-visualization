@@ -11,7 +11,37 @@
 
 \section{Anàlisi del sistema}
 
-El sistema de visualització de dades hídriques de Catalunya neix de la necessitat de proporcionar accés públic, intuïtiu i actualitzat a les dades d'embassaments i precipitació que la Generalitat de Catalunya publica a través de les seves APIs Socrata. L'anàlisi detallada de les necessitats del sistema revela diversos aspectes crítics:
+El sistema de visualització de dades hídriques de Catalunya neix de la necessitat de proporcionar accés públic, intuïtiu i actualitzat a les dades d'embassaments i precipitació que la Generalitat de Catalunya publica a través de les seves APIs Socrata.
+
+\subsection{Estructura del codi font}
+
+El projecte s'estructura en dos directoris principals que reflecteixen la separació arquitectònica entre processament de dades i presentació:
+
+\begin{itemize}
+    \item \texttt{etl/}: Conté el pipeline de processament de dades, organitzat en:
+    \begin{itemize}
+        \item \texttt{extractors/}: Mòduls d'extracció de dades (\texttt{embassaments.js}, \texttt{precipitation.js})
+        \item \texttt{transformers/}: Mòduls de transformació i normalització (\texttt{embassaments.js}, \texttt{precipitation.js})
+        \item \texttt{loaders/}: Mòdul d'emmagatzematge en fitxers JSON (\texttt{dataLoader.js})
+        \item \texttt{utils/}: Funcions auxiliars de logging i configuració
+        \item \texttt{pipeline.js}: Orquestrador que coordina l'execució dels tres mòduls
+        \item \texttt{config.js}: Configuració centralitzada de paràmetres
+    \end{itemize}
+    
+    \item \texttt{frontend/}: Conté l'aplicació React, organitzada en:
+    \begin{itemize}
+        \item \texttt{components/dashboards/}: Quatre components de panells (\texttt{Dashboard1.jsx} a \texttt{Dashboard4.jsx}) amb els seus estils SCSS modulars
+        \item \texttt{pages/}: Pàgines de l'aplicació (\texttt{Dashboard.jsx}, \texttt{Reservoirs.jsx}, \texttt{Weather.jsx}, \texttt{About.jsx})
+        \item \texttt{services/}: Servei de consum de dades (\texttt{waterDataService.js})
+        \item \texttt{hooks/}: Hooks personalitzats per a gestió d'estat
+        \item \texttt{styles/}: Estils globals i variables SCSS
+        \item \texttt{utils/}: Funcions auxiliars de processament de dades
+    \end{itemize}
+\end{itemize}
+
+Aquesta estructura modular permet treballar de forma independent en cada component, facilitant la mantenibilitat i les proves aïllades. Cada mòdul té les seves pròpies proves unitàries en carpetes \texttt{\_\_tests\_\_/}.
+
+L'anàlisi detallada de les necessitats del sistema revela diversos aspectes crítics que han condicionat el disseny de l'arquitectura:
 
 \begin{itemize}
     \item \textbf{Accessibilitat de les dades}: Les dades hídriques estan disponibles però disperses en múltiples endpoints. Els usuaris han de navegar per diferents portals i formats per obtenir una visió completa. El sistema ha de consolidar aquesta informació en una única interfície coherent.
@@ -25,7 +55,7 @@ El sistema de visualització de dades hídriques de Catalunya neix de la necessi
     \item \textbf{Visualització geogràfica}: La ubicació geogràfica dels embassaments i estacions meteorològiques és rellevant per entendre la distribució territorial dels recursos hídrics i les precipitacions.
 \end{itemize}
 
-Aquestes necessitats han portat al disseny d'un sistema amb quatre panells de visualització diferenciats, una canonada ETL automatitzada i una arquitectura que separa clarament el processament de dades de la seva presentació.
+Aquestes necessitats han portat al disseny d'un sistema amb quatre panells de visualització diferenciats, un pipeline ETL automatitzat i una arquitectura que separa clarament el processament de dades de la seva presentació.
 
 \begin{figure}[ht]
 \centering
@@ -61,7 +91,7 @@ El sistema està dissenyat per atendre tres perfils d'usuari principals, cadascu
     
     \item \textbf{Professional o investigador}: Usuari amb coneixements tècnics que necessita accedir a dades detallades, correlacionar variables (precipitació vs nivells), analitzar tendències temporals i possiblement exportar dades per a anàlisis externes. Valorarà la precisió de les dades, la possibilitat de filtrar per períodes i estacions, i la qualitat de les visualitzacions.
     
-    \item \textbf{Administrador del sistema}: Responsable de mantenir la canonada ETL, verificar que les actualitzacions automàtiques funcionen correctament, i assegurar la disponibilitat del servei. Necessita logs detallats, mecanismes de monitorització i la capacitat de reexecutar processos en cas d'error.
+    \item \textbf{Administrador del sistema}: Responsable de mantenir el pipeline ETL, verificar que les actualitzacions automàtiques funcionen correctament, i assegurar la disponibilitat del servei. Necessita logs detallats, mecanismes de monitorització i la capacitat de reexecutar processos en cas d'error.
 \end{enumerate}
 
 El disseny del sistema prioritza l'experiència del ciutadà interessat, assegurant que totes les funcionalitats siguin accessibles sense coneixements tècnics previs, mentre que els perfils professionals troben eines d'anàlisi més avançades als panells de correlació i alertes.
@@ -230,7 +260,7 @@ La solució proposada per al sistema de visualització de dades hídriques es ba
 El sistema es compon de tres components principals:
 
 \begin{enumerate}
-    \item \textbf{Canonada ETL}: Scripts Node.js que s'executen periòdicament per extreure dades de les APIs de Socrata, transformar-les en un format estàndard, i desar-les com a fitxers JSON versionats al repositori Git.
+    \item \textbf{Pipeline ETL}: Scripts Node.js que s'executen periòdicament per extreure dades de les APIs de Socrata, transformar-les en un format estàndard, i desar-les com a fitxers JSON versionats al repositori Git.
     
     \item \textbf{Repositori de dades}: Fitxers JSON estructurats dins del repositori que actuen com a font de dades per al frontend. El versionat amb Git proporciona historial i traçabilitat automàtics.
     
@@ -280,6 +310,45 @@ L'arquitectura general del sistema segueix un patró de pipeline de dades amb se
 \end{enumerate}
 
 El flux de dades és unidireccional: les APIs $\rightarrow$ ETL $\rightarrow$ JSON $\rightarrow$ Frontend $\rightarrow$ Usuari. No hi ha comunicació bidireccional ni escriptura des del frontend, simplificant l'arquitectura i reduint els punts de fallada.
+
+\subsubsection{Detalls d'implementació del pipeline ETL}
+
+El pipeline ETL segueix un patró de pipeline modular on cada fase és independent i testeable:
+
+\begin{itemize}
+    \item \textbf{Extract}: Cada extractor realitza peticions GET paginades a les APIs de Socrata, gestionant automàticament els límits de taxa (1.000 peticions/hora) i els reintents en cas d'error de xarxa. Les dades brutes es passen al transformador en format JSON.
+    
+    \item \textbf{Transform}: Els transformadors normalitzen les dates a ISO 8601, eliminen duplicats basant-se en l'identificador únic, calculen percentatges d'ocupació i classifiquen les alertes de sequera segons llindars predefinits. Per a les dades de precipitació, s'implementa una finestra lliscant de 2 anys per assegurar la disponibilitat de dades històriques.
+    
+    \item \textbf{Load}: El mòdul de càrrega desa les dades en fitxers JSON amb metadades (data d'extracció, versió, estat del pipeline), implementant fusió incremental per evitar duplicats i neteja automàtica de còpies antigues (més de 30 dies).
+\end{itemize}
+
+\subsubsection{Detalls d'implementació del frontend}
+
+L'aplicació React utilitza un patró de component basat en hooks per a la gestió d'estat:
+
+\begin{itemize}
+    \item \textbf{waterDataService.js}: Servei centralitzat que encapsula l'accés a les dades JSON, proporcionant filtres per data i estació, agrupació per nom d'embassament, i càlcul de colors d'estat basat en llindars de sequera.
+    
+    \item \textbf{Dashboards}: Cada panell és un component React autònom que utilitza hooks personalitzats (\texttt{useWaterData}) per a obtenir i processar les dades. Els components es carreguen asíncronament amb \texttt{React.lazy()} i \texttt{Suspense} per a optimitzar el mida del bundle inicial.
+    
+    \item \textbf{Navegació}: React Router 6 gestiona la navegació entre panells amb manteniment d'estat dels filtres aplicats, permetent a l'usuari moure's entre dashboards sense perdre el context de la seva anàlisi.
+    
+    \item \textbf{Estils}: Sass amb metodologia BEM (Block-Element-Modifier) per a mantenibilitat, CSS Grid per a layouts principals i Flexbox per a alineació de components interns. Variables SCSS centralitzades (\texttt{\_variables.scss}) garanteixen consistència visual.
+\end{itemize}
+
+\subsubsection{Flux de dades complet}
+
+El flux de dades del sistema és unidireccional i es pot resumir en els següents passos:
+
+\begin{enumerate}
+    \item \textbf{Extracció}: GitHub Actions executa l'ETL diàriament a les 02:00 UTC
+    \item \textbf{Transformació}: Les dades brutes es netejen, normalitzen i estructuren
+    \item \textbf{Càrrega}: Les dades processades es desen com a fitxers JSON al repositori Git
+    \item \textbf{Commit/Push}: Els nous fitxers es pushen automàticament al repositori
+    \item \textbf{Desplegament}: GitHub Pages detecta els canvis i reconstrueix el frontend
+    \item \textbf{Visualització}: L'usuari accedeix al dashboard i explora les dades actualitzades
+\end{enumerate}
 
 %----------------------------------------------------------------------------------------
 

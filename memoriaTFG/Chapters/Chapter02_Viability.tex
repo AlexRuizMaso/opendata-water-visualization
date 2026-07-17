@@ -17,7 +17,7 @@ El projecte ha estat desenvolupat amb recursos mínims:
     \item \textbf{Hardware}: Ordinador personal del desenvolupador (sense costos addicionals)
     \item \textbf{Software}: Tecnologies completament open-source i gratuïtes:
     \begin{itemize}
-        \item Node.js i npm per a la canonada ETL i frontend
+        \item Node.js i npm per a el pipeline ETL i frontend
         \item React per a la interfície web
         \item GitHub Actions per a l'automatització (gratuït per a repositoris públics)
     \end{itemize}
@@ -26,6 +26,59 @@ El projecte ha estat desenvolupat amb recursos mínims:
 \end{itemize}
 
 En conclusió, el cost econòmic del projecte és negligible, ja que utilitza exclusivament recursos gratuïts i infraestructura oberta.
+
+\subsection{Estimació de cost per hores de desenvolupament}
+
+Encara que el cost directe de tecnologies i infraestructura és nul (per l'ús exclusiu de recursos gratuïts i open-source), el projecte requereix una inversió significativa en temps de desenvolupament humà. A continuació es presenta una estimació hipotètica del cost del projecte basada en hores de treball real:
+
+\begin{table}[h]
+\centering
+\caption{Estimació de cost del projecte per fases (pla hipotètic)}
+\begin{tabular}{|l|c|r|r|}
+\hline
+\textbf{Fase} & \textbf{Hores} & \textbf{Cost/hora (€)} & \textbf{Total (€)} \\
+\hline
+Investigació i configuració & 30 & 25 & 750 \\
+\hline
+Desenvolupament pipeline ETL & 60 & 25 & 1.500 \\
+\hline
+Frontend - Dashboards 1 i 2 & 67 & 25 & 1.675 \\
+\hline
+Frontend - Dashboards 3 i 4 & 49 & 25 & 1.225 \\
+\hline
+Automatització i desplegament & 52 & 25 & 1.300 \\
+\hline
+Testing i validació & 42 & 25 & 1.050 \\
+\hline
+Tutories i revisions & 12 & 30 & 360 \\
+\hline
+Reserva d'imprevistos & 18 & 25 & 450 \\
+\hline
+\textbf{TOTAL} & \textbf{330} & & \textbf{8.310} \\
+\hline
+\end{tabular}
+\label{tab:cost-estimation}
+\end{table}
+
+L'estimació total de 330 hores inclou el desenvolupament funcional (258 hores), el testing i validació (42 hores), les reunions periòdiques amb el tutor acadèmic (12 hores), i una reserva de 18 hores per a imprevistos i tasques de coordinació. El cost per hora s'ha estimat en 25 €/h per a tasques de desenvolupament i 30 €/h per a tasques de coordinació i revisió, xifres coherents amb els costos mitjans del mercat laboral espanyol per a perfils de desenvolupador web júnior.
+
+Aquesta estimació demostra que, tot i utilitzar tecnologies gratuïtes, el cost real del projecte resideix principalment en la inversió de temps humà, representant un valor afegit significatiu que justifica la seva continuïtat i escalabilitat.
+
+\subsection{Model de negoci hipotètic}
+
+Per tal de finançar el manteniment i l'escalabilitat del projecte a llarg termini, es podrien plantejar diversos models de negoci hipotètics:
+
+\begin{itemize}
+    \item \textbf{Model de subscripció freemium}: L'accés bàsic al dashboard seria gratuït (finançat per publicitat contextual o patrocini d'entitats públiques), mentre que funcionalitats avançades com l'exportació de dades, l'API programàtica o les alertes personalitzades requeririen una subscripció mensual (5-15 €/mes per a professionals).
+    
+    \item \textbf{Contractació institucional}: Vendre llicències d'ús a ajuntaments, consells comarcals o agències de l'aigua que necessitin monitoritzar els recursos hídrics del seu territori. El model de preus es basaria en el nombre d'embassaments monitoritzats i la freqüència d'actualització (500-2.000 €/any per a administracions locals).
+    
+    \item \textbf{Patrocini i col·laboració amb ONG}: Entitats com Aigües de Catalunya o Greenpeace podrien patrocinar el projecte a canvi de visibilitat i dades exclusives per a campanyes de conscienciació ambiental.
+    
+    \item \textbf{Servei de consultoria de dades}: Ofereix anàlisis personalitzades i informes periòdics sobre l'estat dels recursos hídrics a empreses del sector agrícola, energètic o turístic que depenen de l'aigua (200-500 € per informe).
+\end{itemize}
+
+Tanmateix, cal destacar que l'objectiu primordial del projecte és la divulgació pública i l'accés obert a la informació hídrica, per la qual cosa el model més alineat amb aquests valors seria un servei gratuït suportat per patrocini institucional i col·laboracions amb entitats del sector públic i de la societat civil.
 
 %----------------------------------------------------------------------------------------
 
@@ -88,7 +141,7 @@ Les dades utilitzades en aquest projecte provenen de fonts públiques de la Gene
 \subsection{Seguretat}
 
 \begin{itemize}
-    \item La canonada ETL utilitza connexions HTTPS per a comunicar-se amb les APIs.
+    \item La pipeline ETL utilitza connexions HTTPS per a comunicar-se amb les APIs.
     \item No s'emmagatzemen credentials sensibles en el repositori (utilització de \texttt{.env}).
 \end{itemize}
 
@@ -100,7 +153,7 @@ Les dades utilitzades en aquest projecte provenen de fonts públiques de la Gene
 
 \begin{itemize}
     \item Un desenvolupador (autor del projecte) responsable del disseny, implementació i documentació.
-    \item Mínim 300 hores de desenvolupament (12 ECTS × 25h/ECTS), incloent investigació inicial, implementació, testing i documentació.
+    \item Aproximadament 330 hores de desenvolupament (incloent investigació, implementació, testing, documentació i tutories), distribuïdes en 5 fases al llarg de 12 setmanes.
 \end{itemize}
 
 \subsection{Recursos materials}

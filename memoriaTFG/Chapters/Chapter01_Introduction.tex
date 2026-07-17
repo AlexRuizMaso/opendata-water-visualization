@@ -11,7 +11,7 @@
 
 \section{Resum}
 
-Aquest projecte presenta una plataforma web de visualització de dades hídriques de Catalunya que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya (Socrata). El sistema combina una canonada ETL automatitzada amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React que ofereix quatre panells de visualització: mapa geogràfic amb Leaflet, evolució temporal amb Recharts, correlació precipitació-nivells, i matriu d'alertes de sequera amb indicadors semàfor i tendències. L'arquitectura desacoblada ETL/frontend permet un funcionament de cost zero aprofitant GitHub Pages i GitHub Actions. El projecte és completament de codi obert i documentat.
+Aquest projecte presenta una plataforma web de visualització de dades hídriques de Catalunya que consolida informació de 9 embassaments i més de 200 estacions meteorològiques provinent de les APIs públiques de la Generalitat de Catalunya (Socrata). El sistema combina un pipeline ETL automatitzat amb Node.js que s'executa diàriament mitjançant GitHub Actions amb un frontend interactiu basat en React que ofereix quatre panells de visualització: mapa geogràfic amb Leaflet, evolució temporal amb Recharts, correlació precipitació-nivells, i matriu d'alertes de sequera amb indicadors semàfor i tendències. L'arquitectura desacoblada ETL/frontend permet un funcionament de cost zero aprofitant GitHub Pages i GitHub Actions. El projecte és completament de codi obert i documentat.
 
 %----------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ La gestió dels recursos hídrics és un dels reptes més importants que afronta
 
 En l'actualitat, les autoritats hídriques catalanes disposen de dades sobre nivells d'embassaments i precipitacions \cite{aca}, però aquestes dades sovint es troben distribuïdes en múltiples fonts i no són fàcilment accessibles per al públic general ni per als responsables polítics en temps real. Aquest projecte aborda aquesta bretxa creant un sistema integrat de visualització de dades hídriques que consolida informació de les APIs públiques de dades de la Generalitat de Catalunya \cite{gencat_dades}.
 
-El visualitzador permet als usuaris monitoritzar els nivells dels embassaments més importants de Catalunya, correlacionar aquesta informació amb dades de precipitació de més de 200 estacions meteorològiques, i generar alertes de sequera basades en llindars de perill. La plataforma utilitza una arquitectura moderna que combina una canonada ETL robusta per a l'extracció i processament de dades amb un frontend interactiu basat en React \cite{react} i Recharts \cite{recharts}.
+El visualitzador permet als usuaris monitoritzar els nivells dels embassaments més importants de Catalunya, correlacionar aquesta informació amb dades de precipitació de més de 200 estacions meteorològiques, i generar alertes de sequera basades en llindars de perill. La plataforma utilitza una arquitectura moderna que combina un pipeline ETL robust per a l'extracció i processament de dades amb un frontend interactiu basat en React \cite{react} i Recharts \cite{recharts}.
 
 %----------------------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ El propòsit general d'aquest projecte és desenvolupar una \textbf{plataforma w
 
 \begin{itemize}
     \item \textbf{Accessible}: El visualitzador hauria de ser fàcil d'usar per a usuaris amb diversos nivells de competència tècnica.
-    \item \textbf{Automàtic}: Les dades s'actualitzen diàriament de forma automàtica a través d'una canonada ETL.
+    \item \textbf{Automàtic}: Les dades s'actualitzen diàriament de forma automàtica a través d'un pipeline ETL.
     \item \textbf{Informativa}: Els panells proporcionen múltiples perspectives sobre les dades (mapa, sèries temporals, correlacions, alertes).
     \item \textbf{Open-source}: El codi és públic sota llicència MIT.
 \end{itemize}
@@ -59,7 +59,7 @@ El propòsit general d'aquest projecte és desenvolupar una \textbf{plataforma w
 Els principals objectius específics d'aquest projecte són:
 
 \begin{enumerate}
-    \item \textbf{Implementar una canonada ETL robusta} que extregui dades de les APIs de Socrata (Generalitat de Catalunya), les transformi en un format estàndard, i les distribueixi de forma automàtica.
+    \item \textbf{Implementar un pipeline ETL robust} que extregui dades de les APIs de Socrata (Generalitat de Catalunya), les transformi en un format estàndard, i les distribueixi de forma automàtica.
     
     \item \textbf{Crear un frontend interactiu amb quatre panells de visualització}:
     \begin{itemize}

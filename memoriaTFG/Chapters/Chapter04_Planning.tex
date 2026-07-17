@@ -14,7 +14,7 @@ El pla de treball s'ha estructurat en cinc fases principals, basant-se en una me
 Les cinc fases identificades són:
 \begin{enumerate}
     \item \textbf{Fase 1: Investigació i configuració inicial} (Setmanes 1-2)
-    \item \textbf{Fase 2: Desenvolupament de la canonada ETL} (Setmanes 3-5)
+    \item \textbf{Fase 2: Desenvolupament del pipeline ETL} (Setmanes 3-5)
     \item \textbf{Fase 3: Desenvolupament del frontend - Dashboards 1 i 2} (Setmanes 6-8)
     \item \textbf{Fase 4: Desenvolupament del frontend - Dashboards 3 i 4} (Setmanes 9-10)
     \item \textbf{Fase 5: Automatització, desplegament i documentació} (Setmanes 11-12)
@@ -37,7 +37,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
     \item \textbf{Total Fase 1:} 30 hores
 \end{itemize}
 
-\subsection{Fase 2: Desenvolupament de la canonada ETL}
+\subsection{Fase 2: Desenvolupament del pipeline ETL}
 \begin{itemize}
     \item Implementació del mòdul d'extracció: funcions per a fer peticions HTTP asincròniques a les APIs de Socrata amb maneig d'errors i reintents - 12 hores
     \item Desenvolupament del mòdul de transformació: normalització de dades (conversió d'unitats, format de dates, maneig de valors nul·ls) - 15 hores
@@ -45,7 +45,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
     \item Creació de l'orquestrador ETL que coordina l'execució seqüencial dels tres mòduls - 5 hores
     \item Implementació del sistema de logging detallat per a monitorització i depuració - 4 hores
     \item Proves unitàries de cada mòdul ETL amb Jest (90\% de cobertura de codi) - 8 hores
-    \item Integració i proves de tota la canonada ETL amb simulació de condicions de xarxa adverses - 6 hores
+    \item Integració i proves de tota el pipeline ETL amb simulació de condicions de xarxa adverses - 6 hores
     \item \textbf{Total Fase 2:} 60 hores
 \end{itemize}
 
@@ -119,7 +119,7 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \hline
 1 & Investigació i configuració inicial & 30 \\
 \hline
-2 & Desenvolupament de la canonada ETL & 60 \\
+2 & Desenvolupament del pipeline ETL & 60 \\
 \hline
 3 & Frontend - Dashboards 1 i 2 & 67 \\
 \hline
@@ -127,28 +127,65 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \hline
 5 & Automatització, desplegament i documentació & 52 \\
 \hline
-\textbf{TOTAL} & & \textbf{258} \\
+6 & Testing i validació & 42 \\
+\hline
+Tutories i revisions & Reunions amb el tutor & 12 \\
+\hline
+Reserva d'imprevistos & Flexibilitat & 18 \\
+\hline
+\textbf{TOTAL} & & \textbf{330} \\
 \hline
 \end{tabular}
-\label{tab:time-estimation}
+\label{tab:time-estimation-planning}
 \end{table}
 
-L'estimació total de 258 hores s'acosta molt a la inversió real de 250 hores documentada durant el desenvolupament, indicant una bona capacitat de predicció de l'esforç necessari.
+L'estimació total de 330 hores inclou les 258 hores de desenvolupament funcional, 42 hores de testing i validació, 12 hores de tutories i revisions periòdiques amb el tutor acadèmic, i 18 hores de reserva per a imprevistos i tasques de coordinació.
 
 \section{Cronograma}
 
 El cronograma detallat de les tasques al llarg del projecte es presenta a la \textit{Figura \ref{fig:gantt}}. El diagrama de Gantt mostra les dependències entre fases, permetent identificar el camí crític i els marges de temps disponibles.
 
-% \begin{figure}[h]
-% \centering
-% \includegraphics[width=\textwidth]{Figures/Gantt_Chart.png}
-% \caption{Diagrama de Gantt del pla de treball del projecte}
-% \label{fig:gantt}
-% \end{figure}
-%
-% [FIGURA OMES: Diagrama de Gantt del pla de treball del projecte]
-% Aquesta figura mostrava el diagrama de Gantt amb el cronograma detallat del projecte.
-% Hauria de generar-se separatament i inserir-se en la versió final.
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    phase/.style={rectangle, draw, fill=#1, minimum height=0.6cm, font=\scriptsize, text=white, rounded corners=2pt},
+    week/.style={font=\scriptsize, anchor=south},
+    grid/.style={gray!20, thin}
+]
+    % Graella de setmanes
+    \foreach \x in {1,...,12} {
+        \draw[grid] (1.2*\x, 0) -- (1.2*\x, -4.5);
+        \node[week] at (1.2*\x + 0.6, 0.2) {S\textsubscript{\x}};
+    }
+    \draw[grid] (0, 0) -- (0, -4.5);
+    \draw[grid] (14.4, 0) -- (14.4, -4.5);
+    
+    % Fase 1: Investigació (S1-S2)
+    \draw[phase=blue!70, minimum width=2.4cm] (0, -0.8) rectangle (2.4, -0.2);
+    \node[font=\scriptsize, anchor=west] at (2.5, -0.5) {F1: Investigació};
+    
+    % Fase 2: Pipeline ETL (S3-S5)
+    \draw[phase=orange!70, minimum width=3.6cm] (2.4, -1.6) rectangle (6, -1.0);
+    \node[font=\scriptsize, anchor=west] at (6.1, -1.3) {F2: Pipeline ETL};
+    
+    % Fase 3: Frontend 1-2 (S4-S8)
+    \draw[phase=green!60!black, minimum width=6cm] (3.6, -2.4) rectangle (9.6, -1.8);
+    \node[font=\scriptsize, anchor=west] at (9.7, -2.1) {F3: Frontend 1-2};
+    
+    % Fase 4: Frontend 3-4 (S9-S10)
+    \draw[phase=red!60!black, minimum width=2.4cm] (9.6, -3.2) rectangle (12, -2.6);
+    \node[font=\scriptsize, anchor=west] at (12.1, -2.9) {F4: Frontend 3-4};
+    
+    % Fase 5: Auto. i doc. (S11-S12)
+    \draw[phase=violet!60!black, minimum width=2.4cm] (12, -4.0) rectangle (14.4, -3.4);
+    \node[font=\scriptsize, anchor=west] at (14.5, -3.7) {F5: Auto. i doc.};
+    
+    % Etiqueta eix
+    \node[font=\small, rotate=90, anchor=south] at (-0.8, -2.1) {Fases};
+\end{tikzpicture}
+\caption{Diagrama de Gantt del pla de treball del projecte, mostrant les cinc fases de desenvolupament al llarg de 12 setmanes. La superposició entre fases indica tasques executades en paral·lel.}
+\label{fig:gantt}
+\end{figure}
 
 Els elements destacables del cronograma són:
 \begin{itemize}
@@ -162,7 +199,7 @@ Els elements destacables del cronograma són:
 
 El desenvolupament s'ha dividit en tres paquets de treball (PT) principals, cadascun corresponent a un subsistema funcional del projecte:
 
-\textbf{PT1: Canonada de Processament de Dades (ETL)}
+\textbf{PT1: Pipeline de Processament de Dades (ETL)}
 \begin{itemize}
     \item \textbf{Objectiu}: Construir un pipeline fiable i escalable per a l'extracció, transformació i càrrega de dades hidrològiques des de les fonts públiques de la Generalitat de Catalunya.
     \item \textbf{Lliurables}: Scripts d'extracció parametritzats, funcions de transformació verificades, mòdul d'emmagatzematge optimitzat, orquestrador ETL amb maneig d'errors robust.
