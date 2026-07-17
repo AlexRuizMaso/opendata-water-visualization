@@ -1,0 +1,123 @@
+% !TEX root = main.tex
+
+%----------------------------
+%   Fonts and characters
+%----------------------------
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{mathpazo}
+\usepackage{beramono}
+
+\usepackage{ifxetex}
+\ifxetex
+    \usepackage{fontspec}
+    \newfontfamily\udgtitlefont{Georgia}
+\else
+    \newcommand{\zhawtitlefont}{\scshape}
+\fi
+
+%----------------------------
+%   Environments
+%----------------------------
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{makecell}
+\usepackage{pdfpages}
+\usepackage{float}
+
+\usepackage{todonotes}
+\setlength{\marginparwidth}{2.5cm}
+
+\usepackage{tcolorbox}
+\newtcolorbox{textbox}[2]{
+    arc=3pt,
+    boxrule=#2pt,
+    colback=#1!25!white,
+    width=\textwidth,
+    halign=left,
+    valign=center,
+    colframe=#1!75!black
+}
+
+%----------------------------
+%   Colors
+%----------------------------
+
+\usepackage[table]{xcolor}
+\definecolor{udgblue}{rgb}{0.00, 0.07, 0.54}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codebackground}{rgb}{0.93,0.94,0.95}
+
+%----------------------------
+%   Code listings
+%----------------------------
+
+\usepackage{listings}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{codebackground},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+%----------------------------
+%   References
+%----------------------------
+
+\usepackage[
+    backend=biber,
+    sorting=none,
+    style=numeric-comp
+]{biblatex}
+\addbibresource{example.bib}
+\usepackage[autostyle=false]{csquotes}
+
+%----------------------------
+%   Additional packages for this project
+%----------------------------
+
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning}
+\usepackage{enumitem}
+\usepackage[expansion=false]{microtype}
+\usepackage{needspace}
+\usepackage{appendix}
+\usepackage{titlesec}
+
+%----------------------------------------------------------------------------------------
+%   MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+    paper=a4paper,
+    inner=2.5cm,
+    outer=3.8cm,
+    top=1.5cm,
+    bottom=1.5cm,
+    bindingoffset=.5cm,
+}
+\setlength{\parskip}{1em}
+
+\newcommand{\keyword}[1]{\textbf{#1}}
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{\bfseries#1}}
+\newcommand{\option}[1]{\texttt{\itshape#1}}

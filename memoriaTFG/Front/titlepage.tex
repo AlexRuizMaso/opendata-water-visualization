@@ -1,7 +1,7 @@
 % !TEX root = ../main.tex
 
 %----------------------------------------------------------------------------------------
-% TITLE PAGE - PORTADA
+% TITLE PAGE
 %----------------------------------------------------------------------------------------
 
 \newgeometry{margin=1in}
@@ -10,63 +10,52 @@
 \setlength{\parskip}{0pt}
 
 \begin{center}
-
-% Universitat i departament
-{\Large \textbf{\univnamecat} \par}
-\vspace{0.3cm}
-{\large \deptname \par}
+\includegraphics[width=0.65\textwidth]{Front/Figures/EPS_centrat.png}
 
 \vspace{2cm}
 
-% Tipus de document
+{\Large \studyprog\par}
+\vspace{0.2cm}
+\vspace{3.5cm}
 \textsc{\Large \ttype}
 \vspace{0.2cm}
 
 \HRule
 \vspace{0.4cm}
-
-% Títol
-{\huge \bfseries \ttitle \par}
-
+{\huge \bfseries \ttitle\par}
 \vspace{0.4cm}
 \HRule
+\vspace{1cm}
 
-\vspace{1.5cm}
-
-% Dades de l'estudi
-{\large \studyprog \par}
-
-\vspace{1.5cm}
-
-% Autor i tutor
-\begin{minipage}[t]{0.45\textwidth}
-    \begin{flushleft}
-        \large
-        \textbf{Autor/a:} \\
-        \authorname
-    \end{flushleft}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft}
+    \large
+    \emph{Autor/a:}\\
+    \authorname
+\end{flushleft}
 \end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-    \begin{flushright}
-        \large
-        \textbf{Tutor/a:} \\
-        \supnameA
-    \end{flushright}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright}
+    \large
+    \emph{Tutor/a:} \\
+    \supnameA \\
+\end{flushright}
 \end{minipage}
 
-\vspace{2cm}
-
-% Curs
-{\large Curs: \tdate \par}
+\vspace{2.5cm}
+\textsc{\Large \tdocument}
+\vspace{0.2cm}
 
 \vfill
 
-% Data
-{\large \today \par}
-
+{\large
+Convocatòria:\\
+\tdate\\
+\vspace{1.5cm}
+Departament:\\
+\deptname\\
+}
+\vfill
 \end{center}
-
 \end{titlepage}
 \restoregeometry
-
