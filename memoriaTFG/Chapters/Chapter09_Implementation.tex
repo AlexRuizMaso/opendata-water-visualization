@@ -62,6 +62,65 @@ Dos workflows coordinats \cite{github_actions}:
 
 %----------------------------------------------------------------------------------------
 
+\section{Estructura del lloc web i captures de pantalla}
+
+El lloc web es composa de quatre panells de visualització interconnectats, accessibles mitjançant una barra de navegació superior. A continuació es descriu l'estructura i es mostren captures representatives de cada panell.
+
+\subsection{Estructura de navegació}
+
+\begin{itemize}
+    \item \textbf{Dashboard (pàgina principal)}: Vista general amb mapa interactiu i KPIs principals
+    \item \textbf{Reservoirs}: Evolució temporal dels nivells d'embassaments
+    \item \textbf{Weather}: Correlació entre precipitació i nivells d'embassament
+    \item \textbf{About}: Informació sobre el projecte i les seves fonts de dades
+\end{itemize}
+
+\subsection{Dashboard principal - Mapa interactiu}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/captura_dashboard1.png}
+\caption{Dashboard principal: mapa interactiu amb markers dels 9 embassaments de Catalunya i KPIs dinàmics.}
+\label{fig:dashboard1}
+\end{figure}
+
+El Dashboard principal presenta un mapa interactiu basat en Leaflet que mostra la ubicació geogràfica dels 9 embassaments de Catalunya. Cada marker inclou un popup informatiu amb el nom, percentatge d'ocupació i volum embassat. A la part superior es mostren KPIs dinàmics (capacitat total del sistema, percentatge mitjà d'ocupació) que s'actualitzen en funció dels filtres aplicats.
+
+\subsection{Evolució temporal}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/captura_dashboard2.png}
+\caption{Dashboard d'evolució temporal: gràfic de línies amb comparació múltiple d'embassaments i selector de dates.}
+\label{fig:dashboard2}
+\end{figure}
+
+El panell d'evolució temporal utilitza Recharts per mostrar la trajectòria del nivell d'ocupació dels embassaments al llarg del temps. L'usuari pot seleccionar rangs de dates, comparar múltiples embassaments simultàniament, i fer zoom en períodes específics per detectar tendències.
+
+\subsection{Correlació clima-aigua}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/captura_dashboard3.png}
+\caption{Dashboard de correlació clima-aigua: gràfic de dispersió amb línia de tendència i coeficient de Pearson.}
+\label{fig:dashboard3}
+\end{figure}
+
+El panell de correlació permet analitzar la relació entre les dades de precipitació de les estacions meteorològiques i els nivells dels embassaments més propers. Inclou un gràfic de dispersió amb línia de tendència i el càlcul del coeficient de correlació de Pearson, proporcionant una mesura quantitativa de la relació entre les dues variables.
+
+\subsection{Matriu d'alertes de sequera}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{Figures/captura_dashboard4.png}
+\caption{Dashboard d'alertes de sequera: taula amb indicadors semàfor i fletxes de tendència per a cada embassament.}
+\label{fig:dashboard4}
+\end{figure}
+
+El panell d'alertes presenta una taula amb tots els embassaments i el seu estat de sequera actual, utilitzant un sistema semàfor (crític <20%, avís 20-50%, normal 50-75%, òptim >75%). Cada indicador inclou una fletxa de tendència que mostra si la situació està millorant, empitjorant o estable respecte als últims 7 dies.
+
+%----------------------------------------------------------------------------------------
+
 \section{Codi font i vídeo demostratiu}
 
 \textbf{Repositori:} \url{https://github.com/AlexRuizMaso/opendata-water-visualization}
