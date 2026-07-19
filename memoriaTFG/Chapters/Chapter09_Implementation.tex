@@ -17,7 +17,7 @@ El pipeline ETL s'ha implementat com un conjunt de mòduls Node.js estructurats 
 Dos extractors independents (\texttt{EmbassamentExtractor} i \texttt{PrecipitationExtractor}) utilitzen \texttt{axios} per obtenir dades de les APIs Socrata de la Generalitat \cite{gencat_dades, socrata}. Suporten mode incremental (diari) i sincronització completa (\texttt{--full-sync}). La configuració es gestiona amb \texttt{dotenv}.
 
 \subsection{Transformació}
-Els transformadors normalitzen dates a ISO 8601, eliminen duplicats, calculen percentatges d'ocupació i classifiquen alertes de sequera (crític $<$20\%, avís 20-50\%, normal 50-75\%, òptim $>$75\%). Per a precipitació, s'implementa una finestra lliscant de 2 anys.
+Els transformadors normalitzen dates a ISO 8601, eliminen duplicats, calculen percentatges d'ocupació i classifiquen alertes de sequera (crític \textless20\%, avís 20-50\%, normal 50-75\%, òptim \textgreater75\%). Per a precipitació, s'implementa una finestra lliscant de 2 anys.
 
 \subsection{Càrrega}
 \texttt{DataLoader} desa les dades en fitxers JSON amb metadades, fusió incremental per evitar duplicats, i neteja automàtica de còpies antigues (més de 30 dies).
@@ -127,6 +127,6 @@ El panell d'alertes presenta una taula amb tots els embassaments i el seu estat 
 
 \textbf{Aplicació:} \url{https://alexruizmaso.github.io/opendata-water-visualization}
 
-\textbf{Vídeo del codi (3' màx):} \url{https://bit.ly/demo-codi}
+\textbf{Vídeo del codi (3' màx):} \url{https://ggl.link/demo-codi}
 
 %----------------------------------------------------------------------------------------
