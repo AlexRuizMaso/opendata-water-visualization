@@ -6,6 +6,9 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\newunicodechar{≥}{\ensuremath{\geq}}
+\newunicodechar{≤}{\ensuremath{\leq}}
 
 \usepackage{mathpazo}
 \usepackage{beramono}
@@ -121,3 +124,7 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\file}[1]{\texttt{\bfseries#1}}
 \newcommand{\option}[1]{\texttt{\itshape#1}}
+
+% URLs en mida petita i amb salt de línia
+\usepackage{xurl}
+\renewcommand{\UrlFont}{\small\ttfamily}
