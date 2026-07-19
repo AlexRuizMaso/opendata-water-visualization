@@ -7,46 +7,233 @@
 \chapter{Requisits del sistema}
 \label{Ch:Requirements}
 
+Els requisits del sistema defineixen les funcionalitats, restriccions i condicions de qualitat que el projecte ha de complir. Aquest capítol estableix el contracte formal entre les necessitats dels usuaris i el sistema resultant, proporcionant una base objectiva per al disseny, implementació i verificació del projecte. Els requisits s'han elaborat a partir de l'anàlisi de les fonts de dades públiques disponibles, les necessitats identificades dels perfils d'usuari potencials, i les restriccions tècniques derivades de l'entorn de desenvolupament.
+
+Cada requisit inclou un identificador únic, una descripció detallada, un nivell de prioritat (Alta, Mitjana o Baixa) i un criteri de verificació que permet determinar objectivament si el requisit ha estat satisfet. La prioritat reflecteix la importància relativa del requisit per a l'èxit del projecte: els requisits d'Alta prioritat són imprescindibles per al funcionament bàsic del sistema, els de Mitjana aporten valor significatiu però el sistema pot funcionar sense ells temporalment, i els de Baixa representen millores desitjables.
+
 \section{Requisits funcionals}
 
-Els requisits funcionals descriuen les funcionalitats específiques que el sistema ha de proporcionar per a satisfer les necessitats dels usuaris i els objectius del projecte. Aquests requisits es classifiquen per prioritat (Alta, Mitjana, Baixa) i es poden agrupar segons la seva naturalesa.
+Els requisits funcionals descriuen les funcionalitats específiques que el sistema ha de proporcionar per a satisfer les necessitats dels usuaris i els objectius del projecte. S'han classificat en quatre grups segons la seva naturalesa: processament de dades, visualització, anàlisi i automatització.
+
+\subsection{Processament de dades}
 
 \begin{itemize}
-    \item \textbf{RF-1 (Alta):} Extracció automàtica de dades des de les APIs públiques de la Generalitat de Catalunya. El sistema ha de poder obtenir les dades més recents dels embassaments (nivells, volums i cotes) i de les estacions meteorològiques (precipitació) de forma periòdica sense intervenció manual.
-    
-    \item \textbf{RF-2 (Alta):} Transformació i neteja de les dades extretes. Les dades obtingudes de les APIs han de ser processades per eliminar inconsistències, convertir unitats quan sigui necessari, i estructurar-les en un format adequat per a la seva posterior visualització i anàlisi.
-    
-    \item \textbf{RF-3 (Alta):} Emmagatzematge de dades processades en format JSON versionat. Les dades transformades han de ser desades a fitxers JSON amb timestamps per permetre l'historial de dades i facilitar el control de versions a través de Git.
-    
-    \item \textbf{RF-4 (Alta):} Desenvolupament d'una interfície web interactiva amb quatre panells de visualització diferenciats:
+    \item \textbf{RF-1 (Alta): Extracció automàtica de dades.} El sistema ha d'obtenir les dades més recents dels embassaments (nivells, volums i cotes) i de les estacions meteorològiques (precipitació) de les APIs públiques de la Generalitat de Catalunya de forma periòdica sense intervenció manual. L'extracció ha de suportar paginació de resultats per gestionar grans volums de dades, i ha de gestionar adequadament els límits de taxa de les APIs (1.000 peticions/hora) així com els possibles errors de xarxa mitjançant reintents automàtics.
     \begin{itemize}
-        \item Panell 1: Mapa interactiu que mostri la ubicació dels embassaments i estacions meteorològiques amb indicadors en temps real
-        \item Panell 2: Evolució temporal dels nivells d'embassaments amb controls de filtratge per període de temps
-        \item Panell 3: Anàlisi de correlació entre dades de precipitació i nivells d'embassaments
-        \item Panell 4: Matriu d'alertes de sequera amb indicadors semàfor basats en percentatge d'ocupació
+        \item \textit{Criteri de verificació}: Executar l'ETL i comprovar que s'obtenen dades de tots els endpoints configurats (embassaments i precipitació), amb una cobertura de registres ≥95\% respecte al total disponible a l'API.
     \end{itemize}
-    
-    \item \textbf{RF-5 (Mitjana):} Implementació de lògica de detecció automàtica de sequera. El sistema ha de calcular indicadors de risc basats en llindars predefinits de percentatge d'ocupació dels embassaments (crític <20\%, avís 20-50\%, normal 50-75\%, òptim >75\%) i generar alertes quan es superin els límits establerts.
-    
-    \item \textbf{RF-6 (Mitjana):} Automatització de l'actualització de dades via GitHub Actions. El pipeline ETL ha de ser programat per executar-se de forma automàtica a una hora específica cada dia, assegurant que les dades disponibles al frontend siguin sempre les més recents possibles.
+
+    \item \textbf{RF-2 (Alta): Transformació i neteja de dades.} Les dades obtingudes de les APIs han de ser processades per eliminar inconsistències (valors nuls, duplicats), normalitzar els formats de data a ISO 8601, convertir unitats quan sigui necessari, i estructurar-les en un format JSON estàndard adequat per a la seva consumició directa pel frontend. Els registres amb dades incompletes s'han de marcar explícitament en lloc d'eliminar-los, per tal de preservar la traçabilitat.
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Validar que les dates són en format ISO 8601, que no hi ha duplicats (basant-se en l'identificador únic), i que els valors numèrics són coherents (percentatges entre 0-100, volums no negatius).
+    \end{itemize}
+
+    \item \textbf{RF-3 (Alta): Emmagatzematge en format JSON versionat.} Les dades transformades han de ser desades a fitxers JSON amb metadades que inclouin la data d'extracció, la versió del processament i l'estat del pipeline. Els fitxers s'han de desar al repositori Git per permetre l'historial de dades i facilitar el control de versions. La fusió incremental ha d'evitar duplicats entre ejecucions, i s'ha de realitzar neteja automàtica de còpies antigues (més de 30 dies).
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Comprovar que els fitxers JSON generats contenen les metadades sol·licitades, que la fusió incremental no genera duplicats, i que els fitxers antics s'eliminen correctament.
+    \end{itemize}
 \end{itemize}
+
+\subsection{Visualització}
+
+\begin{itemize}
+    \item \textbf{RF-4 (Alta): Interfície web amb quatre panells de visualització.} El sistema ha de disposar d'una interfície web interactiva amb quatre panells diferenciats:
+    \begin{itemize}
+        \item \textbf{Panell 1 -- Mapa interactiu}: Mapa geogràfic que mostri la ubicació dels embassaments i estacions meteorològiques de Catalunya amb markers interactius. Cada marker ha de mostrar un popup informatiu amb el nom, el percentatge d'ocupació i el volum embassat. A més, ha de mostrar KPIs dinàmics (capacitat total del sistema, percentatge mitjà d'ocupació) que s'actualitzin en funció de les dades disponibles.
+        \item \textbf{Panell 2 -- Evolució temporal}: Gràfic de línies que mostri l'evolució dels nivells d'ocupació dels embassaments al llarg del temps, amb controls de filtratge per període i la possibilitat de comparar múltiples embassaments simultàniament.
+        \item \textbf{Panell 3 -- Correlació clima-aigua}: Gràfics de dispersió que permetin analitzar la relació entre les dades de precipitació de les estacions meteorològiques i els nivells dels embassaments més propers, amb selecció d'estacions i períodes.
+        \item \textbf{Panell 4 -- Alertes de sequera}: Taula amb indicadors semàfor basats en el percentatge d'ocupació (crític \textless20\%, avís 20--50\%, normal 50--75\%, \`{o}ptim \textgreater75\%) i fletxes de tendència que indiquin si la situació està millorant o empitjorant respecte a fa 7 dies.
+    \end{itemize}
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Cada panell és accessible des de la navegació, carrega correctament les dades, i presenta les visualitzacions descrites amb interactivitat bàsica (filtres, popups, selecció).
+    \end{itemize}
+
+    \item \textbf{RF-7 (Alta): Disseny responsiu mobile-first.} La interfície web ha de ser completament accessible i usable des de dispositius mòbils, tauletes i ordinadors d'escriptori. El disseny ha d'adaptar-se automàticament a diferents mides de pantalla mantenint tota la funcionalitat disponible, amb una experiència d'usuari satisfactòria en cadascun d'aquests contextos.
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Verificar la visualització correcta en almenys tres mides de pantalla representatives: mòbil (375px), tauleta (768px) i escriptori (1280px).
+    \end{itemize}
+
+    \item \textbf{RF-8 (Mitjana): Navegació fluida entre panells.} L'usuari ha de poder moure's entre els quatre panells de visualització mitjançant una barra de navegació persistent, sense pèrdua de contexte ni recàrrega completa de la pàgina. La navegació ha de ser intuïtiva, amb etiquetes descriptives i feedback visual de la pàgina activa.
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Comprovar que la transició entre panells es realitza sense recàrrega de pàgina i que la barra de navegació indica correctament la pàgina activa.
+    \end{itemize}
+
+    \item \textbf{RF-9 (Mitjana): Secció informativa del projecte.} El sistema ha de disposar d'una pàgina \"About\" que expliqui l'objectiu del projecte, les fonts de dades utilitzades (XEMA i portal de dades obertes de la Generalitat), la metodologia de processament, i les tecnologies emprades, proporcionant context als usuaris sobre l'origen i la fiabilitat de les dades presentades.
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Verificar que la pàgina About conté la informació sobre fonts de dades, objectiu del projecte i tecnologies, i que és accessible des de la navegació principal.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Anàlisi}
+
+\begin{itemize}
+    \item \textbf{RF-5 (Mitjana): Detecció automàtica de sequera.} El sistema ha de calcular indicadors de risc de sequera basats en llindars predefinits de percentatge d'ocupació dels embassaments: crític (\textless20\%), avís (20--50\%), normal (50--75\%) i \`{o}ptim (\textgreater75\%). A més del valor actual, el sistema ha de comparar amb el valor de fa 7 dies per determinar la tendència (millora, estable o deteriorament), permetent a l'usuari anticipar-se a possibles situacions crítiques.
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Alimentar el sistema amb dades de prova que incloguin embassaments en tots els rangs de percentatge i verificar que la classificació i les fletxes de tendència es generen correctament.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Automatització}
+
+\begin{itemize}
+    \item \textbf{RF-6 (Alta): Automatització via GitHub Actions.} El pipeline ETL ha d'executar-se de forma automàtica diàriament mitjançant un workflow de GitHub Actions programat (cron). El workflow ha de realitzar el checkout del repositori, instal·lar les dependències, executar l'ETL, copiar els fitxers JSON resultants al directori del frontend, i fer commit/push dels nous fitxers. L'execució manual també ha d'estar disponible per a proves o actualitzacions fora de l'horari programat.
+    \begin{itemize}
+        \item \textit{Criteri de verificació}: Verificar que el workflow s'activa correctament en horari programat i en execucions manuals, i que els fitxers JSON resultants són vàlids i accessibles pel frontend.
+    \end{itemize}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
 
 \section{Requisits no funcionals}
 
-Els requisits no funcionals definen les característiques de qualitat, restriccions i condicions que el sistema ha de complir, però que no es relacionen directament amb funcions específiques. Aquests requisits afecten a l'arquitectura general, el rendiment, l'usabilitat i altres aspects del sistema.
+Els requisits no funcionals defineixen les característiques de qualitat, restriccions i condicions que el sistema ha de complir. Aquests requisits afecten a l'arquitectura general, el rendiment, l'usabilitat i altres aspectes transversals del sistema.
+
+\subsection{Rendiment}
+
+\textbf{RNF-1 (Alta): Temps de processament.} El pipeline ETL ha de ser capaç de processar el volum total de dades del sistema (aproximadament 200.000 registres, distribuïts entre ~87.000 d'embassaments i ~135.000 de precipitació) en un termini inferior als 5 minuts. Això implica optimitzar les peticions HTTP utilitzant paginació de 50.000 registres per petició i minimitzar el processament redundant. La interfície web ha de carregar les dades en menys de 3 segons en condicions normals de xarxa, utilitzant optimitzacions com la minificació de bundles JavaScript, la compressió d'assets, i el carregament asíncron de components no crítics mitjançant \texttt{React.lazy()} i \texttt{Suspense}.
 
 \begin{itemize}
-    \item \textbf{RNF-1 (Alta): Rendiment.} El sistema ha de ser capaç de processar més de 200.000 registres de dades en total (~87.000 d'embassaments i ~135.000 de precipitació) utilitzant paginació de 50.000 registres per petició a l'API, en un termini inferior als 5 minuts durant l'execució del pipeline ETL. La interfície web ha de carregar i mostrar les dades en menys de 3 segons per a una experiència d'usuari satisfactòria. \textit{En termes tècnics, això implica optimitzar les peticions HTTP (la biblioteca axios permet gestió eficient de connexions), minimitzar el processament redundant al pipeline, i utilitzar tècniques de caché i minificació al frontend (Vite proporciona minificació automàtica del codi JavaScript).}
-    
-    \item \textbf{RNF-2 (Alta): Usabilitat.} La interfície ha de ser intuïtiva i accessible per a usuaris amb diversos nivells de competència tècnica, des de professionals del sector fins a ciutadans interessats en el tema. Això inclou navegació clara, etiquetatge comprensible, i elements interactius que siguin fàcils d'entendre i utilitzar. \textit{React (framework utilitzat) permet crear interfícies reactives que responen immediatament a les accions de l'usuari, mentre que React Router gestiona la navegació entre pàgines de forma fluida sense recarregar tot el contingut.}
-    
-    \item \textbf{RNF-3 (Alta): Seguretat.} Tot accés a recursos externs (APIs públiques) ha de realitzar-se mitjançant connexions segures (HTTPS). No s'emmagatzena cap informació sensible com contrasenyes o tokens en el repositori, utilitzant mecanismes com fitxers d'entorn (\texttt{.env}) per a la configuració quan sigui necessari. \textit{El protocol HTTPS xifra les comunicacions entre el servidor i el client, assegurant que les dades intercanviades no siguin interceptades. El fitxer .env permet separar la configuració sensible del codi font, evitant que informació privada es public accidentalment.}
-    
-    \item \textbf{RNF-4 (Mitjana): Portabilitat.} El sistema ha de ser desplegable a diferents plataformes d'hosting sense modificacions significatives al codi, incloent opcions gratuïtes o de baix cost com GitHub Pages, Vercel o Netlify per al frontend, i la capacitat d'executar l'ETL en qualsevol entorn que suporti Node.js. \textit{El frontend és una aplicació estàtica (HTML, CSS, JavaScript) que pot ser servida per qualsevol servidor web sense necessitat de backend. L'ETL és un script Node.js que pot executar-se en qualsevol ordinador o servidor amb Node.js instal·lat.}
-    
-    \item \textbf{RNF-5 (Mitjana): Mantenibilitat.} El codi font ha de seguir convencions establertes, estar ben documentat, i utilitzar una estructura modular que faciliti la comprensió, modificació i ampliació futura del sistema. Això inclou comentaris adequats, noms de variables i funcions significatius, i separació clara de responsabilitats entre components. \textit{Una estructura modular significa que cada funcionalitat està separada en fitxers independents que es poden modificar sense afectar la resta del sistema. Les convencions de nomenclatura fan que qualsevol desenvolupador pugui entendre ràpidament la funció de cada variable o funció.}
-    
-    \item \textbf{RNF-6 (Baixa): Escalabilitat.} Mentre que el volum inicial de dades és gestionable, l'arquitectura ha de permetre un augment futur del volum de dades o l'addició de nous tipus de dades sense requerir un redisseny complet del sistema. \textit{La separació clara entre el pipeline ETL (que processa les dades) i el frontend (que les mostra) permet augmentar el volum de dades sense modificar la interfície, o afegir nous panells de visualització sense canviar el pipeline.}
+    \item \textit{Mètrica de verificació}: Mesurar el temps total d'execució de l'ETL amb dades reals i comprovar que no excedeix els 5 minuts. Mesurar el temps de càrrega inicial del frontend amb les eines de desenvolupament del navegador i verificar que és inferior a 3 segons.
 \end{itemize}
 
+\subsection{Usabilitat}
 
+\textbf{RNF-2 (Alta): Interfície intuïtiva.} La interfície ha de ser comprensible i usable per a usuaris amb diversos nivells de competència tècnica, des de professionals del sector hidrològic fins a ciutadans interessats en el tema. Això inclou navegació clara amb etiquetes descriptives en català, elements interactius amb feedback visual immediat (spinners de càrrega, missatges d'error clars), i una disposició jeràrquica de la informació que faciliti la localització ràpida del contingut buscat. Els indicadors semàfor del panell d'alertes han de ser comprensibles sense necessitat de coneixements tècnics previs.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Realitzar una prova d'usabilitat amb almenys 3 usuaris no tècnics i verificar que són capaços de navegar entre panells i interpretar els indicadors principals sense assistència.
+\end{itemize}
+
+\subsection{Seguretat}
+
+\textbf{RNF-3 (Alta): Comunicacions segures.} Tot accés a recursos externs (APIs públiques de la Generalitat) s'ha de realitzar mitjançant connexions HTTPS per assegurar que les dades intercanviades no siguin interceptades. No s'ha d'emmagatzemar cap informació sensible (contrasenyes, tokens d'autenticació) en el codi font del repositori. Si fos necessari en el futur, la configuració sensible s'ha de gestionar mitjançant fitxers d'entorn (\texttt{.env}) exclosos del control de versions.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Revisar el codi font i verificar que cap URL utilitzada és HTTP (no HTTPS), i que no existeixen credencials hardcoded al repositori.
+\end{itemize}
+
+\subsection{Portabilitat}
+
+\textbf{RNF-4 (Mitjana): Desplegament flexible.} El sistema ha de ser desplegable a diferents plataformes d'hosting sense modificacions significatives al codi. El frontend, essent una aplicació estàtica (HTML, CSS, JavaScript), ha de poder ser servit per qualsevol servidor web estàtic o CDN (GitHub Pages, Vercel, Netlify). L'ETL, essent un script Node.js, ha de poder executar-se en qualsevol entorn que suporti Node.js 18 o superior. Aquesta portabilitat assegura que el sistema no depèn d'un proveïdor específic i pot migrar-se fàcilment si fos necessari.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Verificar que el frontend es construeix i funciona correctament amb les ordres estàndard de Node.js (\texttt{npm install} i \texttt{npm run build}), i que l'ETL s'executa correctament en un entorn net amb Node.js 18+.
+\end{itemize}
+
+\subsection{Mantenibilitat}
+
+\textbf{RNF-5 (Mitjana): Codi organitzat i documentat.} El codi font ha de seguir una estructura modular amb separació clara de responsabilitats (extracció, transformació, càrrega, visualització), utilitzant convencions de nomenclatura consistents i significatives. Els components React han de ser reutilitzables i autocontinguts. La documentació tècnica ha d'incloure instruccions d'instal·lació, estructura del projecte, i descripció dels components principals. Les variables i funcions han de tenir noms descriptius que facilitin la comprensió del codi per part de tercers desenvolupadors.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Revisar l'estructura de carpetes i verificar la separació modular, i comprovar que el README del projecte conté instruccions d'instal·lació i execució completes.
+\end{itemize}
+
+\subsection{Escalabilitat}
+
+\textbf{RNF-6 (Baixa): Arquitectura extensible.} L'arquitectura del sistema ha de permetre l'addició de nous tipus de dades (per exemple, cabals de rius, qualitat de l'aigua) o l'ampliació del volum de dades sense requerir un redisseny complet. La separació clara entre el pipeline ETL (processament) i el frontend (presentació), juntament amb l'ús de fitxers JSON com a intermediari, facilita que els canvis en una capa no afectin l'altra. A més, l'estructura modular del frontend permet afegir nous panells de visualització sense modificar els existents.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Verificar que l'afegiment d'un nou extractor al pipeline ETL i d'un nou component al frontend es pot realitzar modificant només els fitxers necessaris, sense alterar components existents.
+\end{itemize}
+
+\subsection{Compatibilitat}
+
+\textbf{RNF-7 (Mitjana): Compatibilitat de navegadors.} L'aplicació web ha de funcionar correctament en les versions recents dels principals navegadors de mercat: Google Chrome, Mozilla Firefox, Safari i Microsoft Edge. Donat que el projecte utilitza funcionalitats modernes d'ES6+ i React 18, no es requereix suport per a navegadors obsolets (Internet Explorer), però s'ha de garantir una experiència estable en els navegadors actualment actius.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Provar l'aplicació en Chrome, Firefox i Safari (versions recents) i verificar que les funcionalitats principals funcionen correctament en tots ells.
+\end{itemize}
+
+\subsection{Disponibilitat}
+
+\textbf{RNF-8 (Mitjana): Tol·lència a errors.} El sistema ha de funcionar de manera degradada però usable en cas d'errors parcials. Si una API externa no respon, el pipeline ETL ha de registrar l'error i continuar processant les dades disponibles. Si el frontend no pot carregar les dades, ha de mostrar un missatge d'error informatiu en lloc de deixar la pantalla en blanc. Els logs de l'ETL han de registrar les excepcions amb suficient detall per facilitar la diagnòstic.
+
+\begin{itemize}
+    \item \textit{Mètrica de verificació}: Simular una indisponibilitat temporal d'una API i verificar que l'ETL registra l'error i continua amb les dades disponibles, i que el frontend mostra un missatge d'error en lloc de petar.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+
+\section{Restriccions i supòsits}
+
+A més dels requisits funcionals i no funcionals, el sistema opera sota un conjunt de restriccions i supòsits que condicionen el seu disseny i implementació.
+
+\subsection{Restriccions}
+
+\begin{itemize}
+    \item \textbf{R-1: Programari obert.} El sistema ha d'utilitzar exclusivament tecnologies de codi obert amb llicències compatibles (MIT, Apache 2.0, BSD), evitant dependències de programari propietari o de pagament. Això inclou tant les biblioteques del frontend com les eines del pipeline ETL.
+
+    \item \textbf{R-2: Pressupost zero.} El desplegament i manteniment del sistema no pot implicar costos econòmics recurrents. Tant el hosting del frontend (GitHub Pages) com l'execució de l'ETL (GitHub Actions) han de ser dins dels límits gratuïts d'aquestes plataformes.
+
+    \item \textbf{R-3: Dependència de fonts públiques.} Les fonts de dades són exclusivament les APIs públiques de la Generalitat de Catalunya (Socrata). El sistema no pot dependre de cap font de dades privada o de pagament, i ha de ser tolerant a possibles canvis en l'estructura d'aquestes APIs.
+
+    \item \textbf{R-4: Desenvolupament individual.} El projecte és desenvolupat per una sola persona com a Treball de Fi de Grau, la qual cosa implica limitacions de temps i recursos que condicionen l'abast funcional i la profunditat de les proves.
+
+    \item \textbf{R-5: Emmagatzematge al repositori.} Les dades processades s'emmagatzemen com a fitxers JSON dins del mateix repositori Git. Aquesta decisió simplifica l'arquitectura però impose una limitació de mida del repositori que cal gestionar mitjançant neteja periòdica de dades antigues.
+\end{itemize}
+
+\subsection{Supòsits}
+
+\begin{itemize}
+    \item \textbf{S-1: Disponibilitat de les APIs.} Es assumeix que les APIs públiques de la Generalitat de Catalunya estan disponibles de manera continuada (99\% de disponibilitat anual) i que les dades s'actualitzen amb regularitat (nivells d'embassaments cada 15 minuts, precipitació cada hora).
+
+    \item \textbf{S-2: Accés a Internet.} Es assumeix que els usuaris del frontend disposen d'una connexió a Internet funcionant, i que l'entorn d'execució de GitHub Actions té accés a les APIs públiques.
+
+    \item \textbf{S-3: Volum de dades estable.} Es assumeix que el volum de dades de les APIs es mantindrà dins d'un rang similar a l'actual (~200.000 registres totals) durant la vida útil del projecte, sense augments dràstics que requereixin re dissenys arquitectònics.
+
+    \item \textbf{S-4: Usuaris amb navegador actualitzat.} Es assumeix que els usuaris del frontend utilitzen versions recents dels navegadors web, compatibles amb les funcionalitats d'ES6+ i React 18.
+
+    \item \textbf{S-5: Equip de desenvolupament únic.} Es assumeix que el projecte serà mantingut per una sola persona, la qual cosa condiciona la complexitat màxima del codi i la necessitat de documentació clara.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+
+\section{Matriu de traçabilitat}
+
+La matriu de traçabilitat estableix la relació entre cada requisit definit en aquest capítol, els components del sistema que l'implementen i les proves que en verifiquen el compliment. Aquesta eina facilita la gestió dels requisits al llarg del cicle de vida del projecte i assegura que cap requisit quedés sense implementar ni sense verificar.
+
+\begin{table}[ht]
+\centering
+\caption{Matriu de traçabilitat: requisits, components i proves}
+\label{tab:traceability}
+\small
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Requisit} & \textbf{Prioritat} & \textbf{Component(s)} & \textbf{Verificació} \\
+\hline
+RF-1 & Alta & ETL: \texttt{extractors/} & Proves d'extracció amb dades reals \\
+\hline
+RF-2 & Alta & ETL: \texttt{transformers/} & Proves de transformació i neteja \\
+\hline
+RF-3 & Alta & ETL: \texttt{loaders/} & Validació de fitxers JSON generats \\
+\hline
+RF-4 & Alta & Frontend: \texttt{dashboards/} & Proves visuals i funcionals dels panells \\
+\hline
+RF-5 & Mitjana & Frontend: \texttt{Dashboard4.jsx} & Proves amb dades de tots els rangs \\
+\hline
+RF-6 & Alta & GitHub Actions: \texttt{.yml} & Execució manual i revisió de logs \\
+\hline
+RF-7 & Alta & Frontend: \texttt{styles/} & Proves en mides de pantalla diverses \\
+\hline
+RF-8 & Mitjana & Frontend: React Router & Navegació i verificació d'estat \\
+\hline
+RF-9 & Mitjana & Frontend: \texttt{About.jsx} & Revisió de contingut informatiu \\
+\hline
+RNF-1 & Alta & ETL + Frontend & Mesura de temps d'execució i càrrega \\
+\hline
+RNF-2 & Alta & Frontend global & Prova d'usabilitat amb usuaris \\
+\hline
+RNF-3 & Alta & ETL: HTTP client & Revisió de URLs i credencials \\
+\hline
+RNF-4 & Mitjana & Tots & Build net en entorn nou \\
+\hline
+RNF-5 & Mitjana & Estructura del projecte & Revisió d'estructura i documentació \\
+\hline
+RNF-6 & Baixa & Arquitectura modular & Prova d'extensió controlada \\
+\hline
+RNF-7 & Mitjana & Frontend & Prova multinnavegador \\
+\hline
+RNF-8 & Mitjana & ETL + Frontend & Simulació d'errors de xarxa \\
+\hline
+\end{tabular}
+\end{table}
