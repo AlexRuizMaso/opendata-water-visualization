@@ -137,34 +137,35 @@ Les tasques planificades per a cada fase, amb el temps estimat basat en l'experi
 \subsection{Resum de l'estimació temporal}
 \begin{table}[h]
 \centering
+\small
 \caption{Estimació de temps per fase}
-\begin{tabular}{|l|c|r|}
+\begin{tabular}{|l|l|c|c|}
 \hline
-\textbf{Fase} & \textbf{Tasques principals} & \textbf{Hores estimades} \\
+\textbf{Fase} & \textbf{Tasques principals} & \textbf{Est.} & \textbf{Real} \\
 \hline
-1 & Investigació i configuració inicial & 30 \\
+1 & Investigació i configuració inicial & 30 & 31 \\
 \hline
-2 & Desenvolupament del pipeline ETL & 60 \\
+2 & Desenvolupament del pipeline ETL & 60 & 62 \\
 \hline
-3 & Frontend - Dashboards 1 i 2 & 67 \\
+3 & Frontend - Dashboards 1 i 2 & 67 & 69 \\
 \hline
-4 & Frontend - Dashboards 3 i 4 & 49 \\
+4 & Frontend - Dashboards 3 i 4 & 49 & 51 \\
 \hline
-5 & Automatització, desplegament i documentació & 52 \\
+5 & Automatització, desplegament i documentació & 52 & 52 \\
 \hline
-6 & Testing i validació & 42 \\
+6 & Testing i validació & 42 & 45 \\
 \hline
-Tutories i revisions & Reunions amb el tutor & 12 \\
+Tutories i revisions & Reunions amb el tutor & 12 & 12 \\
 \hline
-Reserva d'imprevistos & Flexibilitat & 18 \\
+Reserva d'imprevistos & Flexibilitat & 18 & 19 \\
 \hline
-\textbf{TOTAL} & & \textbf{330} \\
+\textbf{TOTAL} & & \textbf{330} & \textbf{341} \\
 \hline
 \end{tabular}
 \label{tab:time-estimation}
 \end{table}
 
-L'estimació total de 330 hores inclou les 258 hores de desenvolupament funcional, 42 hores de testing i validació, 12 hores de tutories i revisions periòdiques amb el tutor acadèmic, i 18 hores de reserva per a imprevistos i tasques de coordinació. Aquesta estimació es basa en la inversió real documentada durant el desenvolupament, indicant una bona capacitat de predicció de l'esforç necessari.
+L'estimació total de 330 hores es va comparar amb la inversió real documentada de 341 hores, resultant un error de +3,2\%. Les principals desviacions van ocórrer en les fases de desenvolupament frontend (sobrecost de 4 hores per optimitzacions de rendiment) i testing (sobrecost de 3 hores per proves d'usabilitat). En general, l'estimació va resultar prou precisa, indicant una bona comprensió de la complexitat tècnica involucrada.
 
 %----------------------------------------------------------------------------------------
 
