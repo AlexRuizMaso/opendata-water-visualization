@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-07-24T05:26:29.570Z",
+  "timestamp": "2026-07-25T05:19:56.302Z",
   "pipelineVersion": "1.0",
-  "duration": "-1784870771.53s",
+  "duration": "-1784956786.87s",
   "statistics": {
     "embassaments": {
       "averageVolumePercentage": "65.72",
@@ -9,11 +9,11 @@
       "maxVolumePercentage": "151.70",
       "criticalDams": 5412,
       "warningDams": 20915,
-      "normalDams": 21286,
-      "optimalDams": 39624,
+      "normalDams": 21288,
+      "optimalDams": 39630,
       "uniqueEmbassaments": 9,
       "dateRange": {
-        "latest": "2026-07-22T00:00:00.000Z",
+        "latest": "2026-07-23T00:00:00.000Z",
         "oldest": "1999-12-31T23:00:00.000Z"
       }
     },
@@ -23,11 +23,11 @@
       "maxPrecipitation": "276.00",
       "minPrecipitation": "0.00",
       "totalDaysCovered": 731,
-      "daysWithPrecipitation": 44894,
+      "daysWithPrecipitation": 44904,
       "drySituation": "66.84%",
       "dateRange": {
-        "latest": "2026-07-22T00:00:00.000Z",
-        "oldest": "2024-07-24T22:00:00.000Z"
+        "latest": "2026-07-23T00:00:00.000Z",
+        "oldest": "2024-07-25T22:00:00.000Z"
       }
     }
   },
