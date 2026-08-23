@@ -210,9 +210,12 @@ describe('DataLoader', () => {
 
   describe('cleanOldBackups', () => {
     it('deletes backups older than specified days', () => {
+      // Generate a date always within 30 days (today) and one always older than 30 days
+      const recentDate = new Date().toISOString().split('T')[0];
+      const recentBackup = `test.backup.${recentDate}.json`;
       fs.readdirSync.mockReturnValue([
         'test.backup.2020-01-01.json',
-        'test.backup.2026-07-10.json',
+        recentBackup,
       ]);
       fs.unlinkSync.mockImplementation(() => {});
 

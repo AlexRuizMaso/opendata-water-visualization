@@ -25,15 +25,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'npm'
       
       - name: Install dependencies
-        working-directory: ./etl
-        run: npm install
+        run: npm ci
       
       - name: Run ETL Pipeline
-        working-directory: ./etl
-        run: npm run full-pipeline
+        run: npm run full-pipeline --workspace=etl
       
       - name: Copy data files to frontend
         run: |
@@ -68,15 +67,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+          cache: 'npm'
       
       - name: Install dependencies
-        working-directory: ./frontend
-        run: npm install
+        run: npm ci
       
       - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
+        run: npm run build --workspace=frontend
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
