@@ -123,9 +123,13 @@ class ETLPipeline {
         mergedPrecipitationRecords = [...existingPrecipitation.records];
       }
       // Anti-regressió: si existeixen arxius yearly, carrega'ls per preservar històric fora finestra 2 anys
-      if (!fullSync) {
-        const yearly = this.loader.loadAllYearlyPrecipitation();
-        if (yearly.length) mergedPrecipitationRecords = [...mergedPrecipitationRecords, ...yearly];
+      if (!fullSync && typeof this.loader.loadAllYearlyPrecipitation === 'function') {
+        try {
+          const yearly = this.loader.loadAllYearlyPrecipitation();
+          if (Array.isArray(yearly) && yearly.length) mergedPrecipitationRecords = [...mergedPrecipitationRecords, ...yearly];
+        } catch (e) {
+          console.warn(`⚠️ Could not load yearly archives: ${e.message}`);
+        }
       }
       
       const newPrecipitationRecords = precipitationTransformed.records;
