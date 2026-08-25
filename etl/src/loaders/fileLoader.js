@@ -108,6 +108,30 @@ class DataLoader {
   }
 
   /**
+   * Load all yearly precipitation archives (for full-history merge)
+   * @returns {Array} All records from precipitation_YYYY.json
+   */
+  loadAllYearlyPrecipitation() {
+    try {
+      const files = fs.readdirSync(this.dataDir).filter(f => /^precipitation_\d{4}\.json$/.test(f));
+      let all = [];
+      files.forEach(f => {
+        try {
+          const data = JSON.parse(fs.readFileSync(path.join(this.dataDir, f), 'utf8'));
+          if (Array.isArray(data.records)) all.push(...data.records);
+        } catch (e) {
+          console.warn(`⚠️ Skip yearly ${f}: ${e.message}`);
+        }
+      });
+      if (all.length) console.log(`✅ Loaded ${all.length} records from ${files.length} yearly archives`);
+      return all;
+    } catch (e) {
+      console.warn(`⚠️ No yearly archives: ${e.message}`);
+      return [];
+    }
+  }
+
+  /**
    * Save embassaments data
    * @param {Object} data - Transformed embassaments data
    */

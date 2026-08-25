@@ -122,6 +122,11 @@ class ETLPipeline {
       if (existingPrecipitation && Array.isArray(existingPrecipitation.records)) {
         mergedPrecipitationRecords = [...existingPrecipitation.records];
       }
+      // Anti-regressió: si existeixen arxius yearly, carrega'ls per preservar històric fora finestra 2 anys
+      if (!fullSync) {
+        const yearly = this.loader.loadAllYearlyPrecipitation();
+        if (yearly.length) mergedPrecipitationRecords = [...mergedPrecipitationRecords, ...yearly];
+      }
       
       const newPrecipitationRecords = precipitationTransformed.records;
       const precipitationMap = new Map();

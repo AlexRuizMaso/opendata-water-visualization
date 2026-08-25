@@ -9,6 +9,11 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch:
     # Permet execució manual des de GitHub
+    inputs:
+      fullSync:
+        description: 'Full historical sync (paginat, restaura històric complet)'
+        type: boolean
+        default: false
 
 jobs:
   etl-pipeline:
@@ -32,7 +37,7 @@ jobs:
         run: npm ci
       
       - name: Run ETL Pipeline
-        run: npm run full-pipeline --workspace=etl
+        run: npm run full-pipeline --workspace=etl -- ${{ inputs.fullSync && '--full-sync' || '' }}
       
       - name: Copy data files to frontend
         run: |
@@ -40,12 +45,14 @@ jobs:
           cp etl/data/embassaments.json frontend/public/data/
           cp etl/data/precipitation.json frontend/public/data/
           cp etl/data/metadata.json frontend/public/data/
+          cp etl/data/precipitation_*.json frontend/public/data/ || echo "No yearly files to copy"
       
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          # Force-add generated data files which may be ignored by .gitignore
+          # Force-add generated data files which may be ignored by .gitignore (incloses yearly archives)
+          git add -f etl/data/precipitation_*.json frontend/public/data/precipitation_*.json || true
           git add -f etl/data/* || true
           git add -f frontend/public/data/* || true
           git add -A

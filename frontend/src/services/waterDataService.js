@@ -57,8 +57,16 @@ export const waterDataService = {
     for (let y = startYear; y <= endYear; y++) {
       promises.push(this.getPrecipitationByYear(y));
     }
-    const results = await Promise.all(promises);
-    const allRecords = results.flatMap(r => r.records || []);
+    const results = await Promise.allSettled(promises);
+    const fulfilled = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+    const rejected = results.filter(r => r.status === 'rejected');
+    if (rejected.length) {
+      console.warn(`⚠️ ${rejected.length} yearly files missing:`, rejected.map(r => r.reason?.message || r.reason));
+    }
+    if (!fulfilled.length) {
+      throw new Error('No precipitation data available for range');
+    }
+    const allRecords = fulfilled.flatMap(r => r.records || []);
     return {
       records: allRecords,
       statistics: {
