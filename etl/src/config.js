@@ -20,7 +20,7 @@ export const config = {
       apiUrl: process.env.PRECIPITATION_API_URL || 'https://analisi.transparenciacatalunya.cat/resource/7bvh-jvq2.json',
     },
     maxRecords: parseInt(process.env.API_MAX_RECORDS || '50000'),
-    timeout: 10000,
+    timeout: parseInt(process.env.API_TIMEOUT || '60000'),
   },
 
   healthCheck: {

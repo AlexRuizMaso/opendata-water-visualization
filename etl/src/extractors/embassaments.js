@@ -12,6 +12,30 @@ class EmbassamentExtractor {
     this.maxRecords = config.socrata.maxRecords;
   }
 
+  sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  isRetryable(error) {
+    if (error.response?.status === 404) return false;
+    if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT' || error.code === 'ECONNRESET') return true;
+    if (!error.response) return true;
+    return error.response.status >= 500;
+  }
+
+  async requestWithRetry(requestFn, label) {
+    const maxAttempts = 3;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        return await requestFn();
+      } catch (error) {
+        const retryable = this.isRetryable(error);
+        if (!retryable || attempt === maxAttempts) throw error;
+        const delay = process.env.NODE_ENV === 'test' ? 10 : attempt * 2000;
+        console.warn(`⚠️ ${label} failed (attempt ${attempt}/${maxAttempts}): ${error.message}. Retrying in ${delay}ms...`);
+        await this.sleep(delay);
+      }
+    }
+  }
+
   /**
    * Build Socrata Query Language (SoQL) query
    * @param {number} limit - Number of records to fetch
@@ -33,7 +57,7 @@ class EmbassamentExtractor {
       console.log('\n🔄 Extracting Embassaments Data (Standard Daily)...');
       console.log(`API URL: ${this.apiUrl}`);
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $order: 'dia DESC', // Most recent first
           $limit: this.maxRecords,
@@ -42,7 +66,7 @@ class EmbassamentExtractor {
         headers: {
           'User-Agent': 'Water-Visualization-ETL/1.0',
         },
-      });
+      }), 'extract embassaments');
 
       const records = response.data;
       console.log(`✅ Successfully extracted ${records.length} embassament records`);
@@ -87,7 +111,7 @@ class EmbassamentExtractor {
           await new Promise(resolve => setTimeout(resolve, 500)); // 500ms politeness delay
         }
 
-        const response = await axios.get(this.apiUrl, {
+        const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
           params: {
             $order: 'dia DESC',
             $limit: limit,
@@ -97,7 +121,7 @@ class EmbassamentExtractor {
           headers: {
             'User-Agent': 'Water-Visualization-ETL/1.0',
           },
-        });
+        }), `extractAll embassaments offset ${offset}`);
 
         const records = response.data;
         if (!Array.isArray(records) || records.length === 0) {
@@ -138,13 +162,13 @@ class EmbassamentExtractor {
     try {
       console.log('\n🔄 Extracting Latest Embassaments Data...');
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $order: 'dia DESC',
           $limit: 100, // Fetch more to ensure we get latest for each
         },
         timeout: this.timeout,
-      });
+      }), 'extractLatest');
 
       // Group by estaci (embassament name) and keep only latest
       const latestByEstaci = {};
@@ -177,14 +201,14 @@ class EmbassamentExtractor {
       const startISO = startDate.toISOString().split('T')[0];
       const endISO = endDate.toISOString().split('T')[0];
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $where: `dia >= '${startISO}T00:00:00' AND dia <= '${endISO}T23:59:59'`,
           $order: 'dia DESC',
           $limit: this.maxRecords,
         },
         timeout: this.timeout,
-      });
+      }), `extractDateRange embassaments ${startISO}`);
 
       console.log(`✅ Extracted ${response.data.length} records in date range`);
       return response.data;
@@ -200,13 +224,13 @@ class EmbassamentExtractor {
    */
   async getEmbassamentsList() {
     try {
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $select: 'DISTINCT estaci',
           $limit: 1000,
         },
         timeout: this.timeout,
-      });
+      }), 'getEmbassamentsList');
 
       const embassaments = response.data
         .map(r => r.estaci)

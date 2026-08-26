@@ -15,6 +15,30 @@ class PrecipitationExtractor {
     this.precipitationVariableCode = '1300'; // Precipitació acumulada diària
   }
 
+  sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  isRetryable(error) {
+    if (error.response?.status === 404) return false;
+    if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT' || error.code === 'ECONNRESET') return true;
+    if (!error.response) return true;
+    return error.response.status >= 500;
+  }
+
+  async requestWithRetry(requestFn, label) {
+    const maxAttempts = 3;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        return await requestFn();
+      } catch (error) {
+        const retryable = this.isRetryable(error);
+        if (!retryable || attempt === maxAttempts) throw error;
+        const delay = process.env.NODE_ENV === 'test' ? 10 : attempt * 2000;
+        console.warn(`⚠️ ${label} failed (attempt ${attempt}/${maxAttempts}): ${error.message}. Retrying in ${delay}ms...`);
+        await this.sleep(delay);
+      }
+    }
+  }
+
   /**
    * Fetch all precipitation data
    * @returns {Promise<Array>} Array of precipitation records
@@ -24,7 +48,7 @@ class PrecipitationExtractor {
       console.log('\n🔄 Extracting Precipitation Data...');
       console.log(`API URL: ${this.apiUrl}`);
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $order: 'data_lectura DESC',
           $limit: this.maxRecords,
@@ -33,7 +57,7 @@ class PrecipitationExtractor {
         headers: {
           'User-Agent': 'Water-Visualization-ETL/1.0',
         },
-      });
+      }), 'extract precipitation');
 
       const records = response.data;
       console.log(`✅ Successfully extracted ${records.length} precipitation records`);
@@ -65,14 +89,14 @@ class PrecipitationExtractor {
     try {
       console.log('\n🔄 Extracting Precipitation Data (1300 - Standard Daily)...');
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $where: `codi_variable = '${this.precipitationVariableCode}'`,
           $order: 'data_lectura DESC',
           $limit: this.maxRecords,
         },
         timeout: this.timeout,
-      });
+      }), 'extractPrecipitationOnly');
 
       console.log(`✅ Extracted ${response.data.length} precipitation records`);
 
@@ -109,7 +133,7 @@ class PrecipitationExtractor {
           await new Promise(resolve => setTimeout(resolve, 500)); // 500ms politeness delay
         }
 
-        const response = await axios.get(this.apiUrl, {
+        const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
           params: {
             $where: `codi_variable = '${this.precipitationVariableCode}'`,
             $order: 'data_lectura DESC',
@@ -120,7 +144,7 @@ class PrecipitationExtractor {
           headers: {
             'User-Agent': 'Water-Visualization-ETL/1.0',
           },
-        });
+        }), `extractAll offset ${offset}`);
 
         const records = response.data;
         if (!Array.isArray(records) || records.length === 0) {
@@ -163,14 +187,14 @@ class PrecipitationExtractor {
 
       console.log(`\n🔄 Extracting Precipitation (${startISO} to ${endISO})...`);
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $where: `codi_variable = '${this.precipitationVariableCode}' AND data_lectura >= '${startISO}T00:00:00' AND data_lectura <= '${endISO}T23:59:59'`,
           $order: 'data_lectura DESC',
           $limit: this.maxRecords,
         },
         timeout: this.timeout,
-      });
+      }), `extractDateRange ${startISO}`);
 
       console.log(`✅ Extracted ${response.data.length} records in date range`);
       return response.data;
@@ -188,14 +212,14 @@ class PrecipitationExtractor {
     try {
       console.log('\n🔄 Fetching Weather Stations List...');
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $select: 'DISTINCT nom_estacio, codi_estacio',
           $order: 'nom_estacio ASC',
           $limit: 1000,
         },
         timeout: this.timeout,
-      });
+      }), 'getStationsList');
 
       const stations = response.data
         .map(r => ({ 
@@ -228,14 +252,14 @@ class PrecipitationExtractor {
     try {
       console.log('\n🔄 Fetching Available Variables...');
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $select: 'DISTINCT codi_variable, nom_variable, unitat',
           $order: 'codi_variable ASC',
           $limit: 1000,
         },
         timeout: this.timeout,
-      });
+      }), 'getVariablesList');
 
       const variables = response.data
         .filter(r => r.codi_variable && r.nom_variable)
@@ -267,14 +291,14 @@ class PrecipitationExtractor {
 
       console.log(`\n🔄 Extracting data for station: ${stationName}`);
 
-      const response = await axios.get(this.apiUrl, {
+      const response = await this.requestWithRetry(() => axios.get(this.apiUrl, {
         params: {
           $where: `nom_estacio = '${stationName}' AND codi_variable = '${this.precipitationVariableCode}' AND data_lectura >= '${startISO}T00:00:00' AND data_lectura <= '${endISO}T23:59:59'`,
           $order: 'data_lectura DESC',
           $limit: this.maxRecords,
         },
         timeout: this.timeout,
-      });
+      }), `extractByStation ${stationName}`);
 
       console.log(`✅ Extracted ${response.data.length} records for ${stationName}`);
       return response.data;

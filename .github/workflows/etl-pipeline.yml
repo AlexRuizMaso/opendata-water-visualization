@@ -18,6 +18,8 @@ on:
 jobs:
   etl-pipeline:
     runs-on: ubuntu-latest
+    env:
+      API_TIMEOUT: '60000'
     
     steps:
       - name: Checkout repository

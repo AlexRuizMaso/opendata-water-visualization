@@ -62,15 +62,24 @@ class ETLPipeline {
       }
       this.results.embassamentsExtracted = embassamentsRaw.length;
 
-      // Step 3: Extract Precipitation
+      // Step 3: Extract Precipitation (with fallback to cache on timeout)
       console.log('\n📋 STEP 3: Extract Precipitation Data\n');
-      let precipitationRaw;
-      if (fullSync) {
-        precipitationRaw = await this.precipitationExtractor.extractAllPrecipitationOnly();
-      } else {
-        precipitationRaw = await this.precipitationExtractor.extractPrecipitationOnly();
+      let precipitationRaw = [];
+      let precipitationError = null;
+      try {
+        if (fullSync) {
+          precipitationRaw = await this.precipitationExtractor.extractAllPrecipitationOnly();
+        } else {
+          precipitationRaw = await this.precipitationExtractor.extractPrecipitationOnly();
+        }
+      } catch (e) {
+        precipitationError = e.message;
+        console.warn(`⚠️ Precipitation extraction failed after retries: ${e.message}`);
+        console.warn('   → Using cached yearly archives as fallback (embassaments will still be updated)');
+        precipitationRaw = [];
       }
       this.results.precipitationExtracted = precipitationRaw.length;
+      this.results.precipitationError = precipitationError;
 
       // Step 4: Transform Embassaments
       console.log('\n📋 STEP 4: Transform Embassaments Data\n');
@@ -79,8 +88,21 @@ class ETLPipeline {
 
       // Step 5: Transform Precipitation
       console.log('\n📋 STEP 5: Transform Precipitation Data\n');
-      const precipitationTransformed = this.precipitationTransformer.transform(precipitationRaw);
-      this.results.precipitationTransformed = precipitationTransformed.records.length;
+      let precipitationTransformed;
+      if (precipitationError && precipitationRaw.length === 0) {
+        // Fallback: empty transform, will be filled from cache in STEP 7
+        precipitationTransformed = {
+          records: [],
+          precipitationOnly: [],
+          totalRecords: 0,
+          statistics: { totalStations: 0, totalDays: 0 },
+          metadata: { lastUpdated: new Date().toISOString(), fallback: true },
+        };
+        this.results.precipitationTransformed = 0;
+      } else {
+        precipitationTransformed = this.precipitationTransformer.transform(precipitationRaw);
+        this.results.precipitationTransformed = precipitationTransformed.records.length;
+      }
 
       // Step 6: Load (Save) Embassaments with Incremental Merging
       console.log('\n📋 STEP 6: Merge and Load Embassaments (Full History)\n');
@@ -184,6 +206,19 @@ class ETLPipeline {
 
       this.endTime = Date.now();
       this.printSummary();
+
+      if (precipitationError) {
+        console.warn(`\n⚠️ Pipeline completed with precipitation fallback: ${precipitationError}`);
+        return {
+          success: false,
+          fallback: true,
+          error: precipitationError,
+          warning: 'precipitation fallback used, embassaments updated from cache',
+          timestamp: new Date().toISOString(),
+          duration: `${((this.endTime - this.startTime) / 1000).toFixed(2)}s`,
+          results: this.results,
+        };
+      }
 
       return {
         success: true,
