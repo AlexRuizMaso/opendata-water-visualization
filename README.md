@@ -71,7 +71,7 @@ opendata-water-visualization/
 
 ```bash
 # Clonar repositori
-git clone <repo-url>
+git clone https://github.com/AlexRuizMaso/opendata-water-visualization.git
 cd opendata-water-visualization
 
 # Instal·lar dependències (mode workspaces)
@@ -127,4 +127,4 @@ MIT License - veure fitxer LICENSE per a més detalls.
 
 ---
 
-**Última actualització**: 8 de Juliol de 2026
+**Última actualització**: 27 d'agost de 2026
