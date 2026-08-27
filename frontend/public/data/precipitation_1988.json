@@ -1,12 +1,36 @@
 {
-  "timestamp": "2026-05-20T18:06:22.253Z",
-  "totalRecords": 192,
-  "precipitationRecords": 192,
+  "timestamp": "2026-08-27T12:16:04.030Z",
+  "totalRecords": 194,
+  "precipitationRecords": 194,
   "statistics": {
     "totalStations": 2,
-    "totalDaysCovered": 122
+    "totalDaysCovered": 123
   },
   "records": [
+    {
+      "id": "VK1300018901",
+      "stationCode": "VK",
+      "stationName": "Raimat",
+      "date": "1988-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "VD1300018901",
+      "stationCode": "VD",
+      "stationName": "el Canós",
+      "date": "1988-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
     {
       "id": "VK1300128831",
       "stationCode": "VK",
@@ -2313,6 +2337,30 @@
     }
   ],
   "precipitationOnly": [
+    {
+      "id": "VK1300018901",
+      "stationCode": "VK",
+      "stationName": "Raimat",
+      "date": "1988-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "VD1300018901",
+      "stationCode": "VD",
+      "stationName": "el Canós",
+      "date": "1988-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
     {
       "id": "VK1300128831",
       "stationCode": "VK",
@@ -4622,6 +4670,6 @@
     "version": "1.0",
     "dataType": "precipitation_yearly",
     "year": 1988,
-    "lastUpdated": "2026-05-20T18:06:22.253Z"
+    "lastUpdated": "2026-08-27T12:16:04.030Z"
   }
 }

@@ -1,12 +1,84 @@
 {
-  "timestamp": "2026-05-20T18:06:22.256Z",
-  "totalRecords": 1315,
-  "precipitationRecords": 1315,
+  "timestamp": "2026-08-27T12:16:04.032Z",
+  "totalRecords": 1319,
+  "precipitationRecords": 1319,
   "statistics": {
     "totalStations": 6,
     "totalDaysCovered": 365
   },
   "records": [
+    {
+      "id": "U61300019001",
+      "stationCode": "U6",
+      "stationName": "Vinyols i els Arcs - Cambrils",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "VK1300019001",
+      "stationCode": "VK",
+      "stationName": "Raimat",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "VD1300019001",
+      "stationCode": "VD",
+      "stationName": "el Canós",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0.2,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "V81300019001",
+      "stationCode": "V8",
+      "stationName": "el Poal",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0.2,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "UB1300019001",
+      "stationCode": "UB",
+      "stationName": "la Tallada d'Empordà",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0.2,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "U21300019001",
+      "stationCode": "U2",
+      "stationName": "Sant Pere Pescador",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
     {
       "id": "U61300128931",
       "stationCode": "U6",
@@ -15756,30 +15828,6 @@
       "stationCode": "VK",
       "stationName": "Raimat",
       "date": "1989-01-01T23:00:00.000Z",
-      "variableCode": "1300",
-      "variableName": "precipitation_daily",
-      "variableLabel": "Precipitació acumulada diària",
-      "value": 0,
-      "unit": "mm",
-      "status": "Representatiu"
-    },
-    {
-      "id": "VK1300018901",
-      "stationCode": "VK",
-      "stationName": "Raimat",
-      "date": "1988-12-31T23:00:00.000Z",
-      "variableCode": "1300",
-      "variableName": "precipitation_daily",
-      "variableLabel": "Precipitació acumulada diària",
-      "value": 0,
-      "unit": "mm",
-      "status": "Representatiu"
-    },
-    {
-      "id": "VD1300018901",
-      "stationCode": "VD",
-      "stationName": "el Canós",
-      "date": "1988-12-31T23:00:00.000Z",
       "variableCode": "1300",
       "variableName": "precipitation_daily",
       "variableLabel": "Precipitació acumulada diària",
@@ -15790,6 +15838,78 @@
   ],
   "precipitationOnly": [
     {
+      "id": "U61300019001",
+      "stationCode": "U6",
+      "stationName": "Vinyols i els Arcs - Cambrils",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "VK1300019001",
+      "stationCode": "VK",
+      "stationName": "Raimat",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "VD1300019001",
+      "stationCode": "VD",
+      "stationName": "el Canós",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0.2,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "V81300019001",
+      "stationCode": "V8",
+      "stationName": "el Poal",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0.2,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "UB1300019001",
+      "stationCode": "UB",
+      "stationName": "la Tallada d'Empordà",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0.2,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
+      "id": "U21300019001",
+      "stationCode": "U2",
+      "stationName": "Sant Pere Pescador",
+      "date": "1989-12-31T23:00:00.000Z",
+      "variableCode": "1300",
+      "variableName": "precipitation_daily",
+      "variableLabel": "Precipitació acumulada diària",
+      "value": 0,
+      "unit": "mm",
+      "status": "Representatiu"
+    },
+    {
       "id": "U61300128931",
       "stationCode": "U6",
       "stationName": "Vinyols i els Arcs - Cambrils",
@@ -31538,30 +31658,6 @@
       "stationCode": "VK",
       "stationName": "Raimat",
       "date": "1989-01-01T23:00:00.000Z",
-      "variableCode": "1300",
-      "variableName": "precipitation_daily",
-      "variableLabel": "Precipitació acumulada diària",
-      "value": 0,
-      "unit": "mm",
-      "status": "Representatiu"
-    },
-    {
-      "id": "VK1300018901",
-      "stationCode": "VK",
-      "stationName": "Raimat",
-      "date": "1988-12-31T23:00:00.000Z",
-      "variableCode": "1300",
-      "variableName": "precipitation_daily",
-      "variableLabel": "Precipitació acumulada diària",
-      "value": 0,
-      "unit": "mm",
-      "status": "Representatiu"
-    },
-    {
-      "id": "VD1300018901",
-      "stationCode": "VD",
-      "stationName": "el Canós",
-      "date": "1988-12-31T23:00:00.000Z",
       "variableCode": "1300",
       "variableName": "precipitation_daily",
       "variableLabel": "Precipitació acumulada diària",
@@ -31574,6 +31670,6 @@
     "version": "1.0",
     "dataType": "precipitation_yearly",
     "year": 1989,
-    "lastUpdated": "2026-05-20T18:06:22.257Z"
+    "lastUpdated": "2026-08-27T12:16:04.032Z"
   }
 }
