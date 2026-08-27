@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-08-27T12:16:18.987Z",
+  "timestamp": "2026-08-27T12:41:08.903Z",
   "pipelineVersion": "1.0",
-  "duration": "-1787832944.54s",
+  "duration": "-1787834433.68s",
   "statistics": {
     "embassaments": {
       "averageVolumePercentage": "65.76",
