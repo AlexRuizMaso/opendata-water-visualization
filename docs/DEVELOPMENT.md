@@ -30,7 +30,7 @@ Accedeix a: http://localhost:3000
 ```
 opendata-water-visualization/
 │
-├── frontend/                    # 🎨 Aplicació React
+├── frontend/                    # Aplicació React
 │   ├── src/
 │   │   ├── components/         # Components React reutilitzables
 │   │   │   ├── Navigation.jsx
@@ -47,7 +47,7 @@ opendata-water-visualization/
 │   ├── package.json
 │   └── .env.example
 │
-├── etl/                         # 🔄 Pipeline ETL (Node.js)
+├── etl/                         # Pipeline ETL (Node.js)
 │   ├── src/
 │   │   ├── extractors/         # Extracció de dades (embassaments, precipitation)
 │   │   ├── transformers/       # Transformació de dades (embassaments, precipitation)
@@ -56,17 +56,17 @@ opendata-water-visualization/
 │   │   ├── config.js           # Configuració central
 │   │   ├── index.js            # Punt d'entrada
 │   │   └── pipeline.js         # Orquestrador del ETL
-│   ├── data/                   # 📊 Dades JSON processades (versionades)
-│   ├── logs/                   # 📝 Logs del ETL
+│   ├── data/                   # Dades JSON processades (versionades)
+│   ├── logs/                   # Logs del ETL
 │   ├── package.json
 │   └── .env.example
 │
 ├── .github/workflows/
-│   ├── etl-pipeline.yml        # 🤖 Automatització ETL (diària a les 2:00 AM UTC)
+│   ├── etl-pipeline.yml        # Automatització ETL (diària a les 2:00 AM UTC)
 │   └── deploy-frontend-pages.yml # Desplegament a GitHub Pages
 │
 ├── docs/
-│   ├── ARCHITECTURE.md         # 📐 Arquitectura del projecte
+│   ├── ARCHITECTURE.md         # Arquitectura del projecte
 │   ├── DEVELOPMENT.md          # Aquesta guia
 │   └── API_REFERENCE.md        # Referència de l'API de dades
 │

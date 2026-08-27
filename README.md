@@ -2,7 +2,7 @@
 
 Aplicació web per a la visualització de dades obertes sobre recursos hídrics de Catalunya.
 
-## 📋 Descripció del Projecte
+## Descripció del Projecte
 
 Aquest Treball de Fi de Grau combina desenvolupament web, gestió de dades i visualització d'informació per oferir una eina pràctica que faciliti l'accés, la comprensió i l'explotació de dades públiques sobre recursos hídrics.
 
@@ -14,7 +14,7 @@ L'aplicació consumeix dades automàticament de les APIs públiques de la Genera
 - **Embassaments**: Dades de capacitat i nivells dels embassaments de les conques internes
 - **Portal de Dades Obertes**: https://analisi.transparenciacatalunya.cat/
 
-## 🏗️ Estructura del Projecte
+## Estructura del Projecte
 
 ```
 opendata-water-visualization/
@@ -43,7 +43,7 @@ opendata-water-visualization/
 
 ```
 
-## 🚀 Tecnologies
+## Tecnologies
 
 ### Frontend
 - **React 18**: Biblioteca principal
@@ -61,7 +61,7 @@ opendata-water-visualization/
 - **GitHub Actions**: Automatització del pipeline ETL
 - **Vite**: Build optimization
 
-## 📦 Instal·lació
+## Instal·lació
 
 ### Prerequisits
 - Node.js >= 18
@@ -87,7 +87,7 @@ npm run etl
 npm run build
 ```
 
-## 🔄 Pipeline ETL
+## Pipeline ETL
 
 El pipeline ETL s'executa automàticament diàriament gràcies a GitHub Actions:
 
@@ -97,15 +97,15 @@ El pipeline ETL s'executa automàticament diàriament gràcies a GitHub Actions:
 
 Els resultats es guarden en fitxers JSON que es versionan a Git per garantir l'historial de dades.
 
-## 🎨 Funcionalitats
+## Funcionalitats
 
-- 📊 **Panell de Control**: Visió general de l'estat dels recursos hídrics
-- 📈 **Gràfics Interactius**: Evolució temporal dels nivells d'embassaments
-- 🌧️ **Dades Meteorològiques**: Precipitacions i condicions climàtiques
-- 🗺️ **Mapa Interactiu**: Localització de embassaments i estacions meteorològiques
-- 📱 **Responsive Design**: Compatible amb dispositius mòbils
+- **Panell de Control**: Visió general de l'estat dels recursos hídrics
+- **Gràfics Interactius**: Evolució temporal dels nivells d'embassaments
+- **Dades Meteorològiques**: Precipitacions i condicions climàtiques
+- **Mapa Interactiu**: Localització de embassaments i estacions meteorològiques
+- **Responsive Design**: Compatible amb dispositius mòbils
 
-## 📚 Documentació
+## Documentació
 
 Podeu trobar documentació més detallada a la carpeta `docs/`:
 
@@ -113,15 +113,15 @@ Podeu trobar documentació més detallada a la carpeta `docs/`:
 - [Guia de Desenvolupament](docs/DEVELOPMENT.md)
 - [API Reference](docs/API_REFERENCE.md)
 
-## 🤝 Contribucions
+## Contribucions
 
 Aquest és un projecte educatiu (TFG). Les contribucions i suggeriments són benvinguts!
 
-## 📄 Llicència
+## Llicència
 
 MIT License - veure fitxer LICENSE per a més detalls.
 
-## 👤 Autor
+## Autor
 
 Àlex - Universitat de Girona
 
