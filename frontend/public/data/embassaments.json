@@ -1,28 +1,154 @@
 {
-  "timestamp": "2026-10-16T06:58:47.863Z",
-  "totalRecords": 88012,
+  "timestamp": "2026-10-17T06:51:54.751Z",
+  "totalRecords": 88021,
   "statistics": {
-    "averageVolumePercentage": "65.77",
+    "averageVolumePercentage": "65.84",
     "minVolumePercentage": "0.60",
-    "maxVolumePercentage": "151.70",
+    "maxVolumePercentage": "1990.70",
     "criticalDams": 5412,
-    "warningDams": 20979,
+    "warningDams": 20981,
     "normalDams": 21636,
-    "optimalDams": 39985,
+    "optimalDams": 39992,
     "uniqueEmbassaments": 9,
     "dateRange": {
-      "latest": "2026-10-15T00:00:00.000Z",
+      "latest": "2026-10-16T00:00:00.000Z",
       "oldest": "1999-12-31T23:00:00.000Z"
     }
   },
   "records": [
     {
+      "id": "Riudecanyes-2026-10-16T00:00:00.000",
+      "name": "Riudecanyes",
+      "fullName": "Embassament de Riudecanyes",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 206.35,
+      "volumePercentage": 27,
+      "volumeHm3": 1.44,
+      "location": {
+        "lat": 41.1444,
+        "lng": 0.9602
+      },
+      "status": "warning"
+    },
+    {
+      "id": "Siurana-2026-10-16T00:00:00.000",
+      "name": "Siurana",
+      "fullName": "Embassament de Siurana (Cornudella de Montsant)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 480.56,
+      "volumePercentage": 71.2,
+      "volumeHm3": 8.56,
+      "location": {
+        "lat": 41.2581,
+        "lng": 0.9314
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Llosa del Cavall-2026-10-16T00:00:00.000",
+      "name": "Llosa del Cavall",
+      "fullName": "Embassament de la Llosa del Cavall (Navès)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 800.99,
+      "volumePercentage": 82.4,
+      "volumeHm3": 58.99,
+      "location": {
+        "lat": 42.0993,
+        "lng": 1.6033
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Sant Ponç-2026-10-16T00:00:00.000",
+      "name": "Sant Ponç",
+      "fullName": "Embassament de Sant Ponç (Clariana de Cardener)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 527.29,
+      "volumePercentage": 84.9,
+      "volumeHm3": 20.73,
+      "location": {
+        "lat": 41.9658,
+        "lng": 1.6015
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Susqueda-2026-10-16T00:00:00.000",
+      "name": "Susqueda",
+      "fullName": "Embassament de Susqueda (Osor)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 343.47,
+      "volumePercentage": 82.3,
+      "volumeHm3": 183.94,
+      "location": {
+        "lat": 41.9791,
+        "lng": 2.5298
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Darnius-Boadella-2026-10-16T00:00:00.000",
+      "name": "Darnius-Boadella",
+      "fullName": "Embassament de Darnius Boadella (Darnius)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 151.2,
+      "volumePercentage": 60.3,
+      "volumeHm3": 38.17,
+      "location": {
+        "lat": 42.3427,
+        "lng": 2.8139
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Sau-2026-10-16T00:00:00.000",
+      "name": "Sau",
+      "fullName": "Embassament de Sau (Vilanova de Sau)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 415.37,
+      "volumePercentage": 68.9,
+      "volumeHm3": 114.31,
+      "location": {
+        "lat": 41.9702,
+        "lng": 2.3983
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Baells-2026-10-16T00:00:00.000",
+      "name": "Baells",
+      "fullName": "Embassament de la Baells (Cercs)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 620.31,
+      "volumePercentage": 71.1,
+      "volumeHm3": 77.3,
+      "location": {
+        "lat": 42.1215,
+        "lng": 1.8845
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Foix-2026-10-16T00:00:00.000",
+      "name": "Foix",
+      "fullName": "Embassament de Foix (Castellet i la Gornal)",
+      "date": "2026-10-16T00:00:00.000Z",
+      "absoluteLevel": 97.55,
+      "volumePercentage": 53.2,
+      "volumeHm3": 1.79,
+      "location": {
+        "lat": 41.252,
+        "lng": 1.6521
+      },
+      "status": "normal"
+    },
+    {
       "id": "Riudecanyes-2026-10-15T00:00:00.000",
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-10-15T00:00:00.000Z",
-      "absoluteLevel": 206.38,
-      "volumePercentage": 27.1,
+      "absoluteLevel": 206.37,
+      "volumePercentage": 27,
       "volumeHm3": 1.44,
       "location": {
         "lat": 41.1444,
@@ -49,9 +175,9 @@
       "name": "Llosa del Cavall",
       "fullName": "Embassament de la Llosa del Cavall (Navès)",
       "date": "2026-10-15T00:00:00.000Z",
-      "absoluteLevel": 801.05,
+      "absoluteLevel": 801.03,
       "volumePercentage": 82.6,
-      "volumeHm3": 59.14,
+      "volumeHm3": 59.08,
       "location": {
         "lat": 42.0993,
         "lng": 1.6033
@@ -63,9 +189,9 @@
       "name": "Sant Ponç",
       "fullName": "Embassament de Sant Ponç (Clariana de Cardener)",
       "date": "2026-10-15T00:00:00.000Z",
-      "absoluteLevel": 527.27,
-      "volumePercentage": 84.8,
-      "volumeHm3": 20.71,
+      "absoluteLevel": 527.28,
+      "volumePercentage": 84.9,
+      "volumeHm3": 20.72,
       "location": {
         "lat": 41.9658,
         "lng": 1.6015
@@ -77,9 +203,9 @@
       "name": "Susqueda",
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-10-15T00:00:00.000Z",
-      "absoluteLevel": 343.2,
-      "volumePercentage": 81.7,
-      "volumeHm3": 182.6,
+      "absoluteLevel": 343.32,
+      "volumePercentage": 81.9,
+      "volumeHm3": 183.2,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -105,9 +231,9 @@
       "name": "Sau",
       "fullName": "Embassament de Sau (Vilanova de Sau)",
       "date": "2026-10-15T00:00:00.000Z",
-      "absoluteLevel": 415.75,
-      "volumePercentage": 70,
-      "volumeHm3": 116.09,
+      "absoluteLevel": 415.6,
+      "volumePercentage": 69.6,
+      "volumeHm3": 115.37,
       "location": {
         "lat": 41.9702,
         "lng": 2.3983
@@ -119,9 +245,9 @@
       "name": "Baells",
       "fullName": "Embassament de la Baells (Cercs)",
       "date": "2026-10-15T00:00:00.000Z",
-      "absoluteLevel": 620.34,
+      "absoluteLevel": 620.33,
       "volumePercentage": 71.2,
-      "volumeHm3": 77.39,
+      "volumeHm3": 77.36,
       "location": {
         "lat": 42.1215,
         "lng": 1.8845
@@ -135,7 +261,7 @@
       "date": "2026-10-15T00:00:00.000Z",
       "absoluteLevel": 97.56,
       "volumePercentage": 53.3,
-      "volumeHm3": 1.8,
+      "volumeHm3": 1.79,
       "location": {
         "lat": 41.252,
         "lng": 1.6521
@@ -525,8 +651,8 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-10-11T00:00:00.000Z",
-      "absoluteLevel": 206.53,
-      "volumePercentage": 27.6,
+      "absoluteLevel": 206.55,
+      "volumePercentage": 27.7,
       "volumeHm3": 1.47,
       "location": {
         "lat": 41.1444,
@@ -539,9 +665,9 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-11T00:00:00.000Z",
-      "absoluteLevel": 480.64,
+      "absoluteLevel": 480.58,
       "volumePercentage": 71.4,
-      "volumeHm3": 8.58,
+      "volumeHm3": 8.57,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -637,9 +763,9 @@
       "name": "Foix",
       "fullName": "Embassament de Foix (Castellet i la Gornal)",
       "date": "2026-10-11T00:00:00.000Z",
-      "absoluteLevel": 97.86,
-      "volumePercentage": 57.4,
-      "volumeHm3": 1.93,
+      "absoluteLevel": 97.91,
+      "volumePercentage": 58.1,
+      "volumeHm3": 1.96,
       "location": {
         "lat": 41.252,
         "lng": 1.6521
@@ -665,7 +791,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-10T00:00:00.000Z",
-      "absoluteLevel": 480.65,
+      "absoluteLevel": 480.59,
       "volumePercentage": 71.4,
       "volumeHm3": 8.57,
       "location": {
@@ -791,7 +917,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-09T00:00:00.000Z",
-      "absoluteLevel": 480.66,
+      "absoluteLevel": 480.6,
       "volumePercentage": 71.4,
       "volumeHm3": 8.58,
       "location": {
@@ -1001,7 +1127,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-08T00:00:00.000Z",
-      "absoluteLevel": 480.67,
+      "absoluteLevel": 480.61,
       "volumePercentage": 71.5,
       "volumeHm3": 8.59,
       "location": {
@@ -1127,7 +1253,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-07T00:00:00.000Z",
-      "absoluteLevel": 480.69,
+      "absoluteLevel": 480.63,
       "volumePercentage": 71.6,
       "volumeHm3": 8.6,
       "location": {
@@ -1213,7 +1339,7 @@
       "date": "2026-10-06T00:00:00.000Z",
       "absoluteLevel": 206.74,
       "volumePercentage": 28.3,
-      "volumeHm3": 1.51,
+      "volumeHm3": 217.57,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -1253,7 +1379,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-06T00:00:00.000Z",
-      "absoluteLevel": 480.69,
+      "absoluteLevel": 480.63,
       "volumePercentage": 71.6,
       "volumeHm3": 8.6,
       "location": {
@@ -1295,7 +1421,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-05T00:00:00.000Z",
-      "absoluteLevel": 480.71,
+      "absoluteLevel": 480.64,
       "volumePercentage": 71.6,
       "volumeHm3": 8.6,
       "location": {
@@ -1421,7 +1547,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-04T00:00:00.000Z",
-      "absoluteLevel": 480.72,
+      "absoluteLevel": 480.65,
       "volumePercentage": 71.7,
       "volumeHm3": 8.61,
       "location": {
@@ -1520,7 +1646,7 @@
       "fullName": "Embassament de Foix (Castellet i la Gornal)",
       "date": "2026-10-04T00:00:00.000Z",
       "absoluteLevel": 99.06,
-      "volumePercentage": 75,
+      "volumePercentage": 570.8,
       "volumeHm3": 2.53,
       "location": {
         "lat": 41.252,
@@ -1535,7 +1661,7 @@
       "date": "2026-10-03T00:00:00.000Z",
       "absoluteLevel": 206.83,
       "volumePercentage": 28.7,
-      "volumeHm3": 1.53,
+      "volumeHm3": 1.52,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -1547,7 +1673,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-03T00:00:00.000Z",
-      "absoluteLevel": 480.71,
+      "absoluteLevel": 480.65,
       "volumePercentage": 71.7,
       "volumeHm3": 8.61,
       "location": {
@@ -1645,7 +1771,7 @@
       "name": "Foix",
       "fullName": "Embassament de Foix (Castellet i la Gornal)",
       "date": "2026-10-03T00:00:00.000Z",
-      "absoluteLevel": 98.49,
+      "absoluteLevel": 98.51,
       "volumePercentage": 66.7,
       "volumeHm3": 2.25,
       "location": {
@@ -1673,7 +1799,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-10-02T00:00:00.000Z",
-      "absoluteLevel": 480.7,
+      "absoluteLevel": 480.66,
       "volumePercentage": 71.7,
       "volumeHm3": 8.61,
       "location": {
@@ -1785,9 +1911,9 @@
       "name": "Foix",
       "fullName": "Embassament de Foix (Castellet i la Gornal)",
       "date": "2026-10-01T00:00:00.000Z",
-      "absoluteLevel": 98.42,
+      "absoluteLevel": 218.59,
       "volumePercentage": 65.4,
-      "volumeHm3": 2.2,
+      "volumeHm3": 218.59,
       "location": {
         "lat": 41.252,
         "lng": 1.6521
@@ -2009,7 +2135,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-30T00:00:00.000Z",
-      "absoluteLevel": 480.7,
+      "absoluteLevel": 480.67,
       "volumePercentage": 71.8,
       "volumeHm3": 8.62,
       "location": {
@@ -2038,8 +2164,8 @@
       "fullName": "Embassament de Foix (Castellet i la Gornal)",
       "date": "2026-09-29T00:00:00.000Z",
       "absoluteLevel": 98.33,
-      "volumePercentage": 54.4,
-      "volumeHm3": 1.83,
+      "volumePercentage": 64.3,
+      "volumeHm3": 2.17,
       "location": {
         "lat": 41.252,
         "lng": 1.6521
@@ -2135,7 +2261,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-29T00:00:00.000Z",
-      "absoluteLevel": 480.7,
+      "absoluteLevel": 480.67,
       "volumePercentage": 71.8,
       "volumeHm3": 8.62,
       "location": {
@@ -2177,7 +2303,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-28T00:00:00.000Z",
-      "absoluteLevel": 480.69,
+      "absoluteLevel": 152.42,
       "volumePercentage": 71.7,
       "volumeHm3": 8.61,
       "location": {
@@ -2303,7 +2429,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-27T00:00:00.000Z",
-      "absoluteLevel": 480.69,
+      "absoluteLevel": 480.67,
       "volumePercentage": 71.8,
       "volumeHm3": 8.62,
       "location": {
@@ -2429,7 +2555,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-26T00:00:00.000Z",
-      "absoluteLevel": 480.7,
+      "absoluteLevel": 480.68,
       "volumePercentage": 71.8,
       "volumeHm3": 8.62,
       "location": {
@@ -2555,7 +2681,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-25T00:00:00.000Z",
-      "absoluteLevel": 480.72,
+      "absoluteLevel": 152.42,
       "volumePercentage": 71.9,
       "volumeHm3": 8.63,
       "location": {
@@ -2669,7 +2795,7 @@
       "date": "2026-09-24T00:00:00.000Z",
       "absoluteLevel": 207.46,
       "volumePercentage": 30.9,
-      "volumeHm3": 1.65,
+      "volumeHm3": 1.64,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -2681,7 +2807,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-24T00:00:00.000Z",
-      "absoluteLevel": 480.72,
+      "absoluteLevel": 480.7,
       "volumePercentage": 71.9,
       "volumeHm3": 8.64,
       "location": {
@@ -2807,7 +2933,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-23T00:00:00.000Z",
-      "absoluteLevel": 480.73,
+      "absoluteLevel": 480.71,
       "volumePercentage": 72,
       "volumeHm3": 8.64,
       "location": {
@@ -3017,7 +3143,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-22T00:00:00.000Z",
-      "absoluteLevel": 480.73,
+      "absoluteLevel": 480.72,
       "volumePercentage": 72,
       "volumeHm3": 8.65,
       "location": {
@@ -3059,7 +3185,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-21T00:00:00.000Z",
-      "absoluteLevel": 480.74,
+      "absoluteLevel": 480.73,
       "volumePercentage": 72.1,
       "volumeHm3": 8.65,
       "location": {
@@ -3185,7 +3311,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-20T00:00:00.000Z",
-      "absoluteLevel": 480.75,
+      "absoluteLevel": 480.74,
       "volumePercentage": 72.1,
       "volumeHm3": 8.66,
       "location": {
@@ -3242,8 +3368,8 @@
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-09-20T00:00:00.000Z",
       "absoluteLevel": 151.23,
-      "volumePercentage": 60.4,
-      "volumeHm3": 38.26,
+      "volumePercentage": 60.9,
+      "volumeHm3": 38.59,
       "location": {
         "lat": 42.3427,
         "lng": 2.8139
@@ -3311,7 +3437,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-19T00:00:00.000Z",
-      "absoluteLevel": 480.76,
+      "absoluteLevel": 480.75,
       "volumePercentage": 72.1,
       "volumeHm3": 8.66,
       "location": {
@@ -3423,7 +3549,7 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-09-18T00:00:00.000Z",
-      "absoluteLevel": 208,
+      "absoluteLevel": 207.99,
       "volumePercentage": 32.9,
       "volumeHm3": 1.75,
       "location": {
@@ -3494,13 +3620,13 @@
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-09-18T00:00:00.000Z",
       "absoluteLevel": 151.27,
-      "volumePercentage": 60.6,
-      "volumeHm3": 38.37,
+      "volumePercentage": 112.8,
+      "volumeHm3": 71.28,
       "location": {
         "lat": 42.3427,
         "lng": 2.8139
       },
-      "status": "normal"
+      "status": "optimal"
     },
     {
       "id": "Sau-2026-09-18T00:00:00.000",
@@ -3620,13 +3746,13 @@
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-09-17T00:00:00.000Z",
       "absoluteLevel": 151.3,
-      "volumePercentage": 60.7,
+      "volumePercentage": 166.2,
       "volumeHm3": 38.44,
       "location": {
         "lat": 42.3427,
         "lng": 2.8139
       },
-      "status": "normal"
+      "status": "optimal"
     },
     {
       "id": "Sau-2026-09-17T00:00:00.000",
@@ -3815,7 +3941,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-15T00:00:00.000Z",
-      "absoluteLevel": 480.8,
+      "absoluteLevel": 480.79,
       "volumePercentage": 72.3,
       "volumeHm3": 8.69,
       "location": {
@@ -4067,7 +4193,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-13T00:00:00.000Z",
-      "absoluteLevel": 480.82,
+      "absoluteLevel": 480.81,
       "volumePercentage": 72.4,
       "volumeHm3": 8.7,
       "location": {
@@ -4193,7 +4319,7 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-12T00:00:00.000Z",
-      "absoluteLevel": 480.83,
+      "absoluteLevel": 480.82,
       "volumePercentage": 72.5,
       "volumeHm3": 8.71,
       "location": {
@@ -4249,7 +4375,7 @@
       "name": "Darnius-Boadella",
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-09-12T00:00:00.000Z",
-      "absoluteLevel": 151.39,
+      "absoluteLevel": 562.32,
       "volumePercentage": 61.1,
       "volumeHm3": 38.69,
       "location": {
@@ -4727,7 +4853,7 @@
       "date": "2026-09-08T00:00:00.000Z",
       "absoluteLevel": 151.46,
       "volumePercentage": 61.4,
-      "volumeHm3": 38.88,
+      "volumeHm3": 38.87,
       "location": {
         "lat": 42.3427,
         "lng": 2.8139
@@ -4950,7 +5076,7 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-09-06T00:00:00.000Z",
       "absoluteLevel": 480.89,
-      "volumePercentage": 72.9,
+      "volumePercentage": 72.8,
       "volumeHm3": 8.75,
       "location": {
         "lat": 41.2581,
@@ -5061,8 +5187,8 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-09-05T00:00:00.000Z",
-      "absoluteLevel": 209.15,
-      "volumePercentage": 37.4,
+      "absoluteLevel": 209.14,
+      "volumePercentage": 37.3,
       "volumeHm3": 1.99,
       "location": {
         "lat": 41.1444,
@@ -5189,7 +5315,7 @@
       "date": "2026-09-04T00:00:00.000Z",
       "absoluteLevel": 209.22,
       "volumePercentage": 37.7,
-      "volumeHm3": 2.01,
+      "volumeHm3": 2,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -5440,7 +5566,7 @@
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-09-02T00:00:00.000Z",
       "absoluteLevel": 209.4,
-      "volumePercentage": 38.5,
+      "volumePercentage": 38.4,
       "volumeHm3": 2.05,
       "location": {
         "lat": 41.1444,
@@ -5509,7 +5635,7 @@
       "name": "Darnius-Boadella",
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-09-02T00:00:00.000Z",
-      "absoluteLevel": 151.8,
+      "absoluteLevel": 562.32,
       "volumePercentage": 62.9,
       "volumeHm3": 39.81,
       "location": {
@@ -5693,7 +5819,7 @@
       "date": "2026-08-31T00:00:00.000Z",
       "absoluteLevel": 209.57,
       "volumePercentage": 39.2,
-      "volumeHm3": 2.09,
+      "volumeHm3": 2.08,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -6140,7 +6266,7 @@
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-08-28T00:00:00.000Z",
       "absoluteLevel": 152.01,
-      "volumePercentage": 63.8,
+      "volumePercentage": 64.1,
       "volumeHm3": 40.41,
       "location": {
         "lat": 42.3427,
@@ -6210,7 +6336,7 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-27T00:00:00.000Z",
       "absoluteLevel": 481,
-      "volumePercentage": 73.4,
+      "volumePercentage": 73.3,
       "volumeHm3": 8.81,
       "location": {
         "lat": 41.2581,
@@ -6337,7 +6463,7 @@
       "date": "2026-08-26T00:00:00.000Z",
       "absoluteLevel": 481.01,
       "volumePercentage": 73.4,
-      "volumeHm3": 8.82,
+      "volumeHm3": 8.81,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -6448,7 +6574,7 @@
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-08-25T00:00:00.000Z",
       "absoluteLevel": 210.43,
-      "volumePercentage": 43.3,
+      "volumePercentage": 43.2,
       "volumeHm3": 2.3,
       "location": {
         "lat": 41.1444,
@@ -6517,7 +6643,7 @@
       "name": "Darnius-Boadella",
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-08-25T00:00:00.000Z",
-      "absoluteLevel": 152.1,
+      "absoluteLevel": 562.32,
       "volumePercentage": 64.2,
       "volumeHm3": 40.67,
       "location": {
@@ -6701,7 +6827,7 @@
       "date": "2026-08-23T00:00:00.000Z",
       "absoluteLevel": 210.67,
       "volumePercentage": 44.5,
-      "volumeHm3": 2.37,
+      "volumeHm3": 2.36,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -6840,13 +6966,13 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-22T00:00:00.000Z",
       "absoluteLevel": 481.03,
-      "volumePercentage": 73.5,
+      "volumePercentage": 1309.9,
       "volumeHm3": 8.83,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
       },
-      "status": "normal"
+      "status": "optimal"
     },
     {
       "id": "Llosa del Cavall-2026-08-22T00:00:00.000",
@@ -6895,7 +7021,7 @@
       "name": "Darnius-Boadella",
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-08-22T00:00:00.000Z",
-      "absoluteLevel": 152.2,
+      "absoluteLevel": 562.32,
       "volumePercentage": 64.7,
       "volumeHm3": 40.94,
       "location": {
@@ -6966,7 +7092,7 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-21T00:00:00.000Z",
       "absoluteLevel": 481.04,
-      "volumePercentage": 73.5,
+      "volumePercentage": 73.6,
       "volumeHm3": 8.83,
       "location": {
         "lat": 41.2581,
@@ -7329,7 +7455,7 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-08-18T00:00:00.000Z",
-      "absoluteLevel": 211.46,
+      "absoluteLevel": 570.28,
       "volumePercentage": 48.7,
       "volumeHm3": 2.59,
       "location": {
@@ -7471,7 +7597,7 @@
       "date": "2026-08-17T00:00:00.000Z",
       "absoluteLevel": 481.09,
       "volumePercentage": 73.8,
-      "volumeHm3": 8.86,
+      "volumeHm3": 8.87,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -7834,13 +7960,13 @@
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-08-14T00:00:00.000Z",
       "absoluteLevel": 212.03,
-      "volumePercentage": 51.7,
+      "volumePercentage": 570.8,
       "volumeHm3": 2.75,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
       },
-      "status": "normal"
+      "status": "optimal"
     },
     {
       "id": "Siurana-2026-08-14T00:00:00.000",
@@ -7903,7 +8029,7 @@
       "name": "Darnius-Boadella",
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-08-14T00:00:00.000Z",
-      "absoluteLevel": 152.76,
+      "absoluteLevel": 152.73,
       "volumePercentage": 67.1,
       "volumeHm3": 42.45,
       "location": {
@@ -8101,7 +8227,7 @@
       "date": "2026-08-12T00:00:00.000Z",
       "absoluteLevel": 481.15,
       "volumePercentage": 74.1,
-      "volumeHm3": 8.9,
+      "volumeHm3": 8.89,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -8226,8 +8352,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-11T00:00:00.000Z",
       "absoluteLevel": 481.15,
-      "volumePercentage": 74.2,
-      "volumeHm3": 8.91,
+      "volumePercentage": 74.1,
+      "volumeHm3": 70.89,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -8436,13 +8562,13 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-10T00:00:00.000Z",
       "absoluteLevel": 481.16,
-      "volumePercentage": 74.3,
-      "volumeHm3": 8.92,
+      "volumePercentage": 578.5,
+      "volumeHm3": 8.91,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
       },
-      "status": "normal"
+      "status": "optimal"
     },
     {
       "id": "Riudecanyes-2026-08-10T00:00:00.000",
@@ -8562,8 +8688,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-09T00:00:00.000Z",
       "absoluteLevel": 481.18,
-      "volumePercentage": 74.3,
-      "volumeHm3": 8.93,
+      "volumePercentage": 74.2,
+      "volumeHm3": 8.91,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -8575,14 +8701,14 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-08-09T00:00:00.000Z",
-      "absoluteLevel": 212.77,
-      "volumePercentage": 55.9,
+      "absoluteLevel": 151.62,
+      "volumePercentage": 1990.7,
       "volumeHm3": 2.97,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
       },
-      "status": "normal"
+      "status": "optimal"
     },
     {
       "id": "Riudecanyes-2026-08-08T00:00:00.000",
@@ -8603,9 +8729,9 @@
       "name": "Siurana",
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-08T00:00:00.000Z",
-      "absoluteLevel": 481.18,
-      "volumePercentage": 74.4,
-      "volumeHm3": 8.93,
+      "absoluteLevel": 481.19,
+      "volumePercentage": 74.3,
+      "volumeHm3": 8.92,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -8814,8 +8940,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-07T00:00:00.000Z",
       "absoluteLevel": 481.2,
-      "volumePercentage": 74.4,
-      "volumeHm3": 8.94,
+      "volumePercentage": 74.3,
+      "volumeHm3": 8.93,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -8953,9 +9079,9 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-08-06T00:00:00.000Z",
-      "absoluteLevel": 213.24,
-      "volumePercentage": 58.6,
-      "volumeHm3": 3.12,
+      "absoluteLevel": 213.17,
+      "volumePercentage": 58.2,
+      "volumeHm3": 3.09,
       "location": {
         "lat": 41.1444,
         "lng": 0.9602
@@ -9066,8 +9192,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-05T00:00:00.000Z",
       "absoluteLevel": 481.22,
-      "volumePercentage": 74.5,
-      "volumeHm3": 8.95,
+      "volumePercentage": 74.4,
+      "volumeHm3": 8.94,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9108,8 +9234,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-04T00:00:00.000Z",
       "absoluteLevel": 481.23,
-      "volumePercentage": 74.6,
-      "volumeHm3": 8.96,
+      "volumePercentage": 74.5,
+      "volumeHm3": 8.95,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9234,8 +9360,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-03T00:00:00.000Z",
       "absoluteLevel": 481.24,
-      "volumePercentage": 74.6,
-      "volumeHm3": 8.96,
+      "volumePercentage": 74.5,
+      "volumeHm3": 8.95,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9360,8 +9486,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-02T00:00:00.000Z",
       "absoluteLevel": 481.26,
-      "volumePercentage": 74.7,
-      "volumeHm3": 8.97,
+      "volumePercentage": 74.6,
+      "volumeHm3": 8.96,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9486,8 +9612,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-08-01T00:00:00.000Z",
       "absoluteLevel": 481.26,
-      "volumePercentage": 74.7,
-      "volumeHm3": 8.98,
+      "volumePercentage": 74.6,
+      "volumeHm3": 8.96,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9612,8 +9738,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-31T00:00:00.000Z",
       "absoluteLevel": 481.28,
-      "volumePercentage": 74.8,
-      "volumeHm3": 8.98,
+      "volumePercentage": 74.7,
+      "volumeHm3": 8.97,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9738,8 +9864,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-30T00:00:00.000Z",
       "absoluteLevel": 481.29,
-      "volumePercentage": 74.9,
-      "volumeHm3": 8.99,
+      "volumePercentage": 74.8,
+      "volumeHm3": 8.98,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -9864,8 +9990,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-29T00:00:00.000Z",
       "absoluteLevel": 481.3,
-      "volumePercentage": 74.9,
-      "volumeHm3": 9,
+      "volumePercentage": 74.8,
+      "volumeHm3": 8.98,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -10074,13 +10200,13 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-28T00:00:00.000Z",
       "absoluteLevel": 481.32,
-      "volumePercentage": 75,
-      "volumeHm3": 9.01,
+      "volumePercentage": 74.9,
+      "volumeHm3": 9,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
       },
-      "status": "optimal"
+      "status": "normal"
     },
     {
       "id": "Riudecanyes-2026-07-28T00:00:00.000",
@@ -10116,8 +10242,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-27T00:00:00.000Z",
       "absoluteLevel": 481.34,
-      "volumePercentage": 75.1,
-      "volumeHm3": 9.02,
+      "volumePercentage": 578.5,
+      "volumeHm3": 9.01,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -10242,8 +10368,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-26T00:00:00.000Z",
       "absoluteLevel": 481.36,
-      "volumePercentage": 75.2,
-      "volumeHm3": 9.03,
+      "volumePercentage": 75.1,
+      "volumeHm3": 9.02,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -10746,8 +10872,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-22T00:00:00.000Z",
       "absoluteLevel": 481.41,
-      "volumePercentage": 75.5,
-      "volumeHm3": 9.06,
+      "volumePercentage": 75.4,
+      "volumeHm3": 9.05,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -10956,8 +11082,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-21T00:00:00.000Z",
       "absoluteLevel": 481.43,
-      "volumePercentage": 75.5,
-      "volumeHm3": 9.07,
+      "volumePercentage": 75.4,
+      "volumeHm3": 9.06,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -10998,8 +11124,8 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-20T00:00:00.000Z",
       "absoluteLevel": 481.43,
-      "volumePercentage": 75.6,
-      "volumeHm3": 9.08,
+      "volumePercentage": 75.5,
+      "volumeHm3": 9.06,
       "location": {
         "lat": 41.2581,
         "lng": 0.9314
@@ -11124,7 +11250,7 @@
       "fullName": "Embassament de Siurana (Cornudella de Montsant)",
       "date": "2026-07-19T00:00:00.000Z",
       "absoluteLevel": 481.45,
-      "volumePercentage": 75.6,
+      "volumePercentage": 75.5,
       "volumeHm3": 9.07,
       "location": {
         "lat": 41.2581,
@@ -14317,7 +14443,7 @@
       "date": "2026-06-24T00:00:00.000Z",
       "absoluteLevel": 349.76,
       "volumePercentage": 96.9,
-      "volumeHm3": 216.7,
+      "volumeHm3": 105.34,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -15451,7 +15577,7 @@
       "date": "2026-06-15T00:00:00.000Z",
       "absoluteLevel": 349.95,
       "volumePercentage": 97.4,
-      "volumeHm3": 217.74,
+      "volumeHm3": 568.95,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -16332,13 +16458,13 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-06-08T00:00:00.000Z",
       "absoluteLevel": 350.17,
-      "volumePercentage": 97.9,
+      "volumePercentage": 32,
       "volumeHm3": 218.96,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
       },
-      "status": "optimal"
+      "status": "warning"
     },
     {
       "id": "Darnius-Boadella-2026-06-08T00:00:00.000",
@@ -17844,7 +17970,7 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-05-27T00:00:00.000Z",
       "absoluteLevel": 349.82,
-      "volumePercentage": 97.1,
+      "volumePercentage": 97.9,
       "volumeHm3": 217.01,
       "location": {
         "lat": 41.9791,
@@ -18349,7 +18475,7 @@
       "date": "2026-05-23T00:00:00.000Z",
       "absoluteLevel": 350.27,
       "volumePercentage": 98.2,
-      "volumeHm3": 219.54,
+      "volumeHm3": 220.28,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -19609,7 +19735,7 @@
       "date": "2026-05-13T00:00:00.000Z",
       "absoluteLevel": 349.31,
       "volumePercentage": 95.8,
-      "volumeHm3": 214.21,
+      "volumeHm3": 217.51,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -19860,7 +19986,7 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-05-11T00:00:00.000Z",
       "absoluteLevel": 349.15,
-      "volumePercentage": 95.4,
+      "volumePercentage": 571,
       "volumeHm3": 213.34,
       "location": {
         "lat": 41.9791,
@@ -20617,7 +20743,7 @@
       "date": "2026-05-05T00:00:00.000Z",
       "absoluteLevel": 349.05,
       "volumePercentage": 95.2,
-      "volumeHm3": 212.8,
+      "volumeHm3": 215.08,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -20868,7 +20994,7 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-05-03T00:00:00.000Z",
       "absoluteLevel": 349.4,
-      "volumePercentage": 96,
+      "volumePercentage": 96.3,
       "volumeHm3": 214.69,
       "location": {
         "lat": 41.9791,
@@ -21316,7 +21442,7 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-04-29T00:00:00.000Z",
       "absoluteLevel": 349.36,
-      "volumePercentage": 95.9,
+      "volumePercentage": 95.5,
       "volumeHm3": 214.49,
       "location": {
         "lat": 41.9791,
@@ -21498,7 +21624,7 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-04-28T00:00:00.000Z",
       "absoluteLevel": 349.3,
-      "volumePercentage": 95.8,
+      "volumePercentage": 95.5,
       "volumeHm3": 214.2,
       "location": {
         "lat": 41.9791,
@@ -23248,7 +23374,7 @@
       "fullName": "Embassament de Susqueda (Osor)",
       "date": "2026-04-14T00:00:00.000Z",
       "absoluteLevel": 348.06,
-      "volumePercentage": 92.8,
+      "volumePercentage": 92.6,
       "volumeHm3": 207.46,
       "location": {
         "lat": 41.9791,
@@ -1232189,6 +1232315,6 @@
     "version": "1.0",
     "dataType": "embassaments",
     "sourceAPI": "https://analisi.transparenciacatalunya.cat",
-    "lastUpdated": "2026-10-16T06:58:47.863Z"
+    "lastUpdated": "2026-10-17T06:51:54.751Z"
   }
 }
