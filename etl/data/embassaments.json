@@ -1,21 +1,147 @@
 {
-  "timestamp": "2026-11-02T09:18:17.441Z",
-  "totalRecords": 88165,
+  "timestamp": "2026-11-03T09:20:45.382Z",
+  "totalRecords": 88174,
   "statistics": {
     "averageVolumePercentage": "65.78",
     "minVolumePercentage": "0.60",
     "maxVolumePercentage": "151.70",
     "criticalDams": 5412,
-    "warningDams": 20996,
-    "normalDams": 21709,
-    "optimalDams": 40048,
+    "warningDams": 20997,
+    "normalDams": 21713,
+    "optimalDams": 40052,
     "uniqueEmbassaments": 9,
     "dateRange": {
-      "latest": "2026-11-01T00:00:00.000Z",
+      "latest": "2026-11-02T00:00:00.000Z",
       "oldest": "1999-12-31T23:00:00.000Z"
     }
   },
   "records": [
+    {
+      "id": "Riudecanyes-2026-11-02T00:00:00.000",
+      "name": "Riudecanyes",
+      "fullName": "Embassament de Riudecanyes",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 206.4,
+      "volumePercentage": 27.2,
+      "volumeHm3": 1.45,
+      "location": {
+        "lat": 41.1444,
+        "lng": 0.9602
+      },
+      "status": "warning"
+    },
+    {
+      "id": "Siurana-2026-11-02T00:00:00.000",
+      "name": "Siurana",
+      "fullName": "Embassament de Siurana (Cornudella de Montsant)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 480.52,
+      "volumePercentage": 71.1,
+      "volumeHm3": 8.54,
+      "location": {
+        "lat": 41.2581,
+        "lng": 0.9314
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Llosa del Cavall-2026-11-02T00:00:00.000",
+      "name": "Llosa del Cavall",
+      "fullName": "Embassament de la Llosa del Cavall (Navès)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 801.22,
+      "volumePercentage": 83.2,
+      "volumeHm3": 59.53,
+      "location": {
+        "lat": 42.0993,
+        "lng": 1.6033
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Sant Ponç-2026-11-02T00:00:00.000",
+      "name": "Sant Ponç",
+      "fullName": "Embassament de Sant Ponç (Clariana de Cardener)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 528.12,
+      "volumePercentage": 89.3,
+      "volumeHm3": 21.81,
+      "location": {
+        "lat": 41.9658,
+        "lng": 1.6015
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Susqueda-2026-11-02T00:00:00.000",
+      "name": "Susqueda",
+      "fullName": "Embassament de Susqueda (Osor)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 344.97,
+      "volumePercentage": 85.6,
+      "volumeHm3": 191.41,
+      "location": {
+        "lat": 41.9791,
+        "lng": 2.5298
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Darnius-Boadella-2026-11-02T00:00:00.000",
+      "name": "Darnius-Boadella",
+      "fullName": "Embassament de Darnius Boadella (Darnius)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 151.28,
+      "volumePercentage": 60.6,
+      "volumeHm3": 38.39,
+      "location": {
+        "lat": 42.3427,
+        "lng": 2.8139
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Sau-2026-11-02T00:00:00.000",
+      "name": "Sau",
+      "fullName": "Embassament de Sau (Vilanova de Sau)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 416.41,
+      "volumePercentage": 71.9,
+      "volumeHm3": 119.26,
+      "location": {
+        "lat": 41.9702,
+        "lng": 2.3983
+      },
+      "status": "normal"
+    },
+    {
+      "id": "Baells-2026-11-02T00:00:00.000",
+      "name": "Baells",
+      "fullName": "Embassament de la Baells (Cercs)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 624.27,
+      "volumePercentage": 82.1,
+      "volumeHm3": 89.24,
+      "location": {
+        "lat": 42.1215,
+        "lng": 1.8845
+      },
+      "status": "optimal"
+    },
+    {
+      "id": "Foix-2026-11-02T00:00:00.000",
+      "name": "Foix",
+      "fullName": "Embassament de Foix (Castellet i la Gornal)",
+      "date": "2026-11-02T00:00:00.000Z",
+      "absoluteLevel": 97.64,
+      "volumePercentage": 54.4,
+      "volumeHm3": 1.83,
+      "location": {
+        "lat": 41.252,
+        "lng": 1.6521
+      },
+      "status": "normal"
+    },
     {
       "id": "Foix-2026-11-01T00:00:00.000",
       "name": "Foix",
@@ -35,9 +161,9 @@
       "name": "Baells",
       "fullName": "Embassament de la Baells (Cercs)",
       "date": "2026-11-01T00:00:00.000Z",
-      "absoluteLevel": 624.25,
+      "absoluteLevel": 624.26,
       "volumePercentage": 82,
-      "volumeHm3": 89.18,
+      "volumeHm3": 89.19,
       "location": {
         "lat": 42.1215,
         "lng": 1.8845
@@ -50,8 +176,8 @@
       "fullName": "Embassament de Sau (Vilanova de Sau)",
       "date": "2026-11-01T00:00:00.000Z",
       "absoluteLevel": 416.52,
-      "volumePercentage": 72.3,
-      "volumeHm3": 119.81,
+      "volumePercentage": 72.2,
+      "volumeHm3": 119.79,
       "location": {
         "lat": 41.9702,
         "lng": 2.3983
@@ -63,9 +189,9 @@
       "name": "Darnius-Boadella",
       "fullName": "Embassament de Darnius Boadella (Darnius)",
       "date": "2026-11-01T00:00:00.000Z",
-      "absoluteLevel": 151.31,
-      "volumePercentage": 60.8,
-      "volumeHm3": 38.47,
+      "absoluteLevel": 151.3,
+      "volumePercentage": 60.7,
+      "volumeHm3": 38.44,
       "location": {
         "lat": 42.3427,
         "lng": 2.8139
@@ -79,7 +205,7 @@
       "date": "2026-11-01T00:00:00.000Z",
       "absoluteLevel": 344.88,
       "volumePercentage": 85.4,
-      "volumeHm3": 190.96,
+      "volumeHm3": 190.92,
       "location": {
         "lat": 41.9791,
         "lng": 2.5298
@@ -93,7 +219,7 @@
       "date": "2026-11-01T00:00:00.000Z",
       "absoluteLevel": 528.13,
       "volumePercentage": 89.4,
-      "volumeHm3": 21.83,
+      "volumeHm3": 21.82,
       "location": {
         "lat": 41.9658,
         "lng": 1.6015
@@ -105,9 +231,9 @@
       "name": "Llosa del Cavall",
       "fullName": "Embassament de la Llosa del Cavall (Navès)",
       "date": "2026-11-01T00:00:00.000Z",
-      "absoluteLevel": 801.25,
-      "volumePercentage": 83.3,
-      "volumeHm3": 59.6,
+      "absoluteLevel": 801.24,
+      "volumePercentage": 83.2,
+      "volumeHm3": 59.57,
       "location": {
         "lat": 42.0993,
         "lng": 1.6033
@@ -133,7 +259,7 @@
       "name": "Riudecanyes",
       "fullName": "Embassament de Riudecanyes",
       "date": "2026-11-01T00:00:00.000Z",
-      "absoluteLevel": 206.44,
+      "absoluteLevel": 206.43,
       "volumePercentage": 27.3,
       "volumeHm3": 1.45,
       "location": {
@@ -1234331,6 +1234457,6 @@
     "version": "1.0",
     "dataType": "embassaments",
     "sourceAPI": "https://analisi.transparenciacatalunya.cat",
-    "lastUpdated": "2026-11-02T09:18:17.441Z"
+    "lastUpdated": "2026-11-03T09:20:45.382Z"
   }
 }
