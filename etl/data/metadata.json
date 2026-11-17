@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-11-16T09:23:22.687Z",
+  "timestamp": "2026-11-17T10:34:23.260Z",
   "pipelineVersion": "1.0",
-  "duration": "-1794820964.00s",
+  "duration": "-1794911623.06s",
   "statistics": {
     "embassaments": {
       "averageVolumePercentage": "65.78",
@@ -23,11 +23,11 @@
       "maxPrecipitation": "276.00",
       "minPrecipitation": "0.00",
       "totalDaysCovered": 729,
-      "daysWithPrecipitation": 42842,
-      "drySituation": "68.22%",
+      "daysWithPrecipitation": 42826,
+      "drySituation": "68.23%",
       "dateRange": {
-        "latest": "2026-11-14T00:00:00.000Z",
-        "oldest": "2024-11-16T23:00:00.000Z"
+        "latest": "2026-11-15T00:00:00.000Z",
+        "oldest": "2024-11-17T23:00:00.000Z"
       }
     }
   },
