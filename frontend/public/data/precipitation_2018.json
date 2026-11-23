@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-22T09:37:11.172Z",
+  "timestamp": "2026-11-23T10:37:21.432Z",
   "totalRecords": 67856,
   "precipitationRecords": 67856,
   "statistics": {
@@ -1628558,6 +1628558,6 @@
     "version": "1.0",
     "dataType": "precipitation_yearly",
     "year": 2018,
-    "lastUpdated": "2026-11-22T09:37:11.180Z"
+    "lastUpdated": "2026-11-23T10:37:21.448Z"
   }
 }
